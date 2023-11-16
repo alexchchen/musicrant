@@ -5,3 +5,7 @@ from django.template import loader
 def FirstView(request):
     template = loader.get_template('myfirst.html')
     return HttpResponse(template.render())
+
+def homePage(request):
+    template = loader.get_template('index.html')
+    return HttpResponse(template.render())

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Musicrant Home</title>
+        <style>
+            header {
+                margin:0%;
+                background-color: black;
+                border-style: dotted;
+            }
+            #headerTitle {
+                color: white;
+                padding-left: 10px;
+                padding-bottom: 0;
+            }
+            #searchText {
+                color: white;
+            }
+
+            .searchField {
+                text-align:right;
+                padding-right: 3%;
+                padding-bottom: 10px;
+            }
+            .homePageReview {
+                border-style: solid;
+                padding: 20px, 20px, 20px, 20px;
+            }
+
+            .reviewTitleSection {
+                text-align:center
+            }
+            
+            #reviewScore {
+                text-align: right;
+                padding-right: 5%;
+            }
+        </style>
+    </head>
+
+    <header>
+        <h1 id="headerTitle">
+            Musicrant
+        </h1>
+        <div class="searchField">
+            <form action = "", method = "SEARCH">
+                <label id="searchText"> Search: </label>
+                <input id="searchBox" type="text" name="Search: ">
+                <input type = "submit" name="submit" value="Submit">
+            </form>
+        </div>
+    </header>
+    <br>
+    <section id="mainSection">
+        <div class="homePageReview">
+            <article>
+                <div class = "reviewTitleSection">
+                    <h3 id="reviewTitle">
+                        Review Title
+                    </h3>
+                    <h4 id="reviewScore">
+                        Score: 
+                    </h4>
+                </div>
+                <h4 id="reviewAlbumSongName">
+                    Album/Song: 
+                </h4>
+                <h4 id="reviewArtistName">
+                    Artist: 
+                </h4>
+                <p id="reviewBody">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio?
+                </p>
+                <label>Upvotes: </label> 
+                <button type="button">Upvote</button>
+                <label>Downvotes: </label> 
+                <button type="button">Downvote</button>
+            </article>
+        </div>
+    </section>
+</html>
