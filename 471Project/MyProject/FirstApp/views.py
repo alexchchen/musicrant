@@ -1,7 +1,24 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from .models import User
 
 def FirstView(request):
-    template = loader.get_template('myfirst.html')
+    users = User.objects.all().values()
+    template = loader.get_template('all_users.html')
+    context = {
+        'users': users,
+    }
+    return HttpResponse(template.render(context, request))
+
+def profile(request, username):
+    user = User.objects.get(username=username)
+    template = loader.get_template('profile.html')
+    context = {
+        'user': user,
+    }
+    return HttpResponse(template.render(context, request))
+
+def main(request):
+    template = loader.get_template('main.html')
     return HttpResponse(template.render())
