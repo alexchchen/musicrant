@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import CheckConstraint, Q, F
 
 # Create your models here.
 
@@ -9,5 +10,14 @@ class User(models.Model):
     age = models.IntegerField(null=True)
     gender = models.CharField(max_length=15, null=True)
     password = models.CharField(max_length=15)
-    adminFlag = models.BooleanField(null=True)
-    clientFlag = models.BooleanField(null=True)
+    admin_flag = models.BooleanField(default=False)
+    client_flag = models.BooleanField(default=True)
+    date_joined = models.DateField()
+    
+    class Meta:
+        constraints = [
+            CheckConstraint(
+                check = Q(age__gt=0) & Q(age__lte=120),
+                name = 'check_age'
+            ),
+        ]
