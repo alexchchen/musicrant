@@ -26,3 +26,7 @@ def main(request):
 def homePage(request):
     template = loader.get_template('index.html')
     return HttpResponse(template.render())
+
+def topArtistsPage(request):
+    template = loader.get_template('topArtists.html')
+    return HttpResponse(template.render())
