@@ -5,6 +5,7 @@
     <head>
         <title>Musicrant Home</title>
         <style>
+            {% block pageStyle %}
             .homePageReview {
                 padding-left: 150px;
             }
@@ -99,9 +100,11 @@
             #timeFilter {
                 padding-left: 5px;
             }
+            {% endblock %}
         </style>
     </head>
     <br>
+    {% block content %}
     <div class="sortBy">
         <form action = "", method = "SORT">
             <label for="sortByLabel">Sort by: </label>
@@ -325,5 +328,6 @@
             </article>
         </div>
         <br>
+        {% endblock %}
     </section>
 </html>
