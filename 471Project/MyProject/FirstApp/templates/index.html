@@ -4,7 +4,38 @@
     <head>
         <title>Musicrant Home</title>
         <style>
-            {% block pageStyle %}
+            header {
+                height: 5em;
+                border-bottom-style: solid;
+                border-bottom-width: 2px;
+                border-color: lightgray;
+                position: sticky;
+                top: 0;
+                z-index: 999;
+                background-color: white;
+            }
+
+            #headerTitle {
+                color: rgb(66, 66, 144);
+                padding-left: 10px;
+                float: left;
+                font-size: 60px;
+                margin-block-start: 10px;
+                margin-block-end: 0;
+            }
+            #searchText {
+                color: black;
+            }
+
+            #searchBox {
+                width: 230px;
+            }
+            .searchField {
+                text-align:right;
+                padding-right: 3%;
+                float: right;
+                padding-top: 50px;
+            }
             .homePageReview {
                 padding-left: 150px;
             }
@@ -139,7 +170,6 @@
             #timeFilter {
                 padding-left: 5px;
             }
-            {% endblock %}
         </style>
     </head>
     <header>
@@ -157,232 +187,240 @@
         </div>
     </header>
     <br>
-    <div class="content">
-        {% block content %}
-        <div class="sortBy">
-            <form action = "", method = "SORT">
-                <label for="sortByLabel">Sort by: </label>
-                <select name="sortingOptions" id = "sortOpt">
-                    <option value="Most Popular">Popular</option>
-                    <option value="Newest">Recently uploaded</option>
-                    <option value="Controversial">Controversial</option>
-                </select>
-                <label id="timeFilter">From: </label>
-                <select name="timeFilter" id="filter">
-                    <option value="All time">All time</option>
-                    <option value="Today">Today</option>
-                    <option value="This month">This month</option>
-                    <option value="This year">This year</option>
-                </select>
-                <input type="submit" name="submit" value="apply">
-            </form>
-        </div>
-        <section id="mainSection">
-            <div class="homePageReview">
-                <article id="reviewArticle">
-                    <div class = "reviewTitleSection">
-                        <a href="#" id = "reviewTitleLink"> <h3 id="reviewTitle">
-                            Review Title Link
-                        </h3> </a>
-                        <h4 id="reviewScore">
-                            Score: *overall Score here*
-                        </h4>
-                    </div>
-                    <br>
-                    <br>
-                    <h4 id="reviewAlbumSongName">
-                        Album/Song: <a href="#" id="albumLink">*link to album/song page*</a>
-                    </h4>
-                    <h4 id="reviewArtistName">
-                        Artist: <a href="#" id="artistLink">*link to artist page* </a>
-                    </h4>
-                    <p id="reviewBody">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime.
-                    </p>
-                    <p id="genreParagraph">
-                        Genres: *place genres for album/song here*
-                    </p>
-                    <label id = "upvotesLabel">Upvotes:___</label> 
-                    <button id = "upButton" type="button">👍</button>
-                    <label id = "downvotesLabel">Downvotes___: </label> 
-                    <button id = "downButton" type="button">👎</button>
-                </article>
-            </div>
-            <br>
-            <div class="homePageReview">
-                <article id="reviewArticle">
-                    <div class = "reviewTitleSection">
-                        <a href="#" id = "reviewTitleLink"> <h3 id="reviewTitle">
-                            Review Title Link
-                        </h3> </a>
-                        <h4 id="reviewScore">
-                            Score: *overall Score here*
-                        </h4>
-                    </div>
-                    <br>
-                    <br>
-                    <h4 id="reviewAlbumSongName">
-                        Album/Song: <a href="#" id="albumLink">*link to album/song page*</a>
-                    </h4>
-                    <h4 id="reviewArtistName">
-                        Artist: <a href="#" id="artistLink">*link to artist page* </a>
-                    </h4>
-                    <p id="reviewBody">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime.
-                    </p>
-                    <p id="genreParagraph">
-                        Genres: *place genres for album/song here*
-                    </p>
-                    <label id = "upvotesLabel">Upvotes:___</label> 
-                    <button id = "upButton" type="button">👍</button>
-                    <label id = "downvotesLabel">Downvotes___: </label> 
-                    <button id = "downButton" type="button">👎</button>
-                </article>
-            </div>
-            <br>
-            <div class="homePageReview">
-                <article id="reviewArticle">
-                    <div class = "reviewTitleSection">
-                        <a href="#" id = "reviewTitleLink"> <h3 id="reviewTitle">
-                            Review Title Link
-                        </h3> </a>
-                        <h4 id="reviewScore">
-                            Score: *overall Score here*
-                        </h4>
-                    </div>
-                    <br>
-                    <br>
-                    <h4 id="reviewAlbumSongName">
-                        Album/Song: <a href="#" id="albumLink">*link to album/song page*</a>
-                    </h4>
-                    <h4 id="reviewArtistName">
-                        Artist: <a href="#" id="artistLink">*link to artist page* </a>
-                    </h4>
-                    <p id="reviewBody">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime.
-                    </p>
-                    <p id="genreParagraph">
-                        Genres: *place genres for album/song here*
-                    </p>
-                    <label id = "upvotesLabel">Upvotes:___</label> 
-                    <button id = "upButton" type="button">👍</button>
-                    <label id = "downvotesLabel">Downvotes___: </label> 
-                    <button id = "downButton" type="button">👎</button>
-                </article>
-            </div>
-            <br>
-            <div class="homePageReview">
-                <article id="reviewArticle">
-                    <div class = "reviewTitleSection">
-                        <a href="#" id = "reviewTitleLink"> <h3 id="reviewTitle">
-                            Review Title Link
-                        </h3> </a>
-                        <h4 id="reviewScore">
-                            Score: *overall Score here*
-                        </h4>
-                    </div>
-                    <br>
-                    <br>
-                    <h4 id="reviewAlbumSongName">
-                        Album/Song: <a href="#" id="albumLink">*link to album/song page*</a>
-                    </h4>
-                    <h4 id="reviewArtistName">
-                        Artist: <a href="#" id="artistLink">*link to artist page* </a>
-                    </h4>
-                    <p id="reviewBody">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
-                        repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
-                        dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
-                        consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
-                        veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
-                        temporibus autem quidem, culpa sunt maxime.
-                    </p>
-                    <p id="genreParagraph">
-                        Genres: *place genres for album/song here*
-                    </p>
-                    <label id = "upvotesLabel">Upvotes:___</label> 
-                    <button id = "upButton" type="button">👍</button>
-                    <label id = "downvotesLabel">Downvotes___: </label> 
-                    <button id = "downButton" type="button">👎</button>
-                </article>
-            </div>
-            <br>
-        {% endblock %}
+    <div class="sortBy">
+        <form action = "", method = "SORT">
+            <label for="sortByLabel">Sort by: </label>
+            <select name="sortingOptions" id = "sortOpt">
+                <option value="Most Popular">Popular</option>
+                <option value="Newest">Recently uploaded</option>
+                <option value="Controversial">Controversial</option>
+            </select>
+            <label id="timeFilter">From: </label>
+            <select name="timeFilter" id="filter">
+                <option value="All time">All time</option>
+                <option value="Today">Today</option>
+                <option value="This month">This month</option>
+                <option value="This year">This year</option>
+            </select>
+            <input type="submit" name="submit" value="apply">
+        </form>
     </div>
+    <section id="mainSection">
+        <div class="sidenav">
+            <aside id="sidebar">
+                <a href="#">Top artists</a>
+                <a href="#">Top albums</a>
+                <a href="#">Top songs</a>
+                {% if adminFlag == 1%}
+                    <a href="#">Admin tools</a>
+                {%endif%}
+                <a href="#">Profile</a>
+                <a href="#">Logout</a>
+            </aside>
+        </div>
+        <div class="homePageReview">
+            <article id="reviewArticle">
+                <div class = "reviewTitleSection">
+                    <a href="#" id = "reviewTitleLink"> <h3 id="reviewTitle">
+                        Review Title Link
+                    </h3> </a>
+                    <h4 id="reviewScore">
+                        Score: *overall Score here*
+                    </h4>
+                </div>
+                <br>
+                <br>
+                <h4 id="reviewAlbumSongName">
+                    Album/Song: <a href="#" id="albumLink">*link to album/song page*</a>
+                </h4>
+                <h4 id="reviewArtistName">
+                    Artist: <a href="#" id="artistLink">*link to artist page* </a>
+                </h4>
+                <p id="reviewBody">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime.
+                </p>
+                <p id="genreParagraph">
+                    Genres: *place genres for album/song here*
+                </p>
+                <label id = "upvotesLabel">Upvotes:___</label> 
+                <button id = "upButton" type="button">👍</button>
+                <label id = "downvotesLabel">Downvotes___: </label> 
+                <button id = "downButton" type="button">👎</button>
+            </article>
+        </div>
+        <br>
+        <div class="homePageReview">
+            <article id="reviewArticle">
+                <div class = "reviewTitleSection">
+                    <a href="#" id = "reviewTitleLink"> <h3 id="reviewTitle">
+                        Review Title Link
+                    </h3> </a>
+                    <h4 id="reviewScore">
+                        Score: *overall Score here*
+                    </h4>
+                </div>
+                <br>
+                <br>
+                <h4 id="reviewAlbumSongName">
+                    Album/Song: <a href="#" id="albumLink">*link to album/song page*</a>
+                </h4>
+                <h4 id="reviewArtistName">
+                    Artist: <a href="#" id="artistLink">*link to artist page* </a>
+                </h4>
+                <p id="reviewBody">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime.
+                </p>
+                <p id="genreParagraph">
+                    Genres: *place genres for album/song here*
+                </p>
+                <label id = "upvotesLabel">Upvotes:___</label> 
+                <button id = "upButton" type="button">👍</button>
+                <label id = "downvotesLabel">Downvotes___: </label> 
+                <button id = "downButton" type="button">👎</button>
+            </article>
+        </div>
+        <br>
+        <div class="homePageReview">
+            <article id="reviewArticle">
+                <div class = "reviewTitleSection">
+                    <a href="#" id = "reviewTitleLink"> <h3 id="reviewTitle">
+                        Review Title Link
+                    </h3> </a>
+                    <h4 id="reviewScore">
+                        Score: *overall Score here*
+                    </h4>
+                </div>
+                <br>
+                <br>
+                <h4 id="reviewAlbumSongName">
+                    Album/Song: <a href="#" id="albumLink">*link to album/song page*</a>
+                </h4>
+                <h4 id="reviewArtistName">
+                    Artist: <a href="#" id="artistLink">*link to artist page* </a>
+                </h4>
+                <p id="reviewBody">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime.
+                </p>
+                <p id="genreParagraph">
+                    Genres: *place genres for album/song here*
+                </p>
+                <label id = "upvotesLabel">Upvotes:___</label> 
+                <button id = "upButton" type="button">👍</button>
+                <label id = "downvotesLabel">Downvotes___: </label> 
+                <button id = "downButton" type="button">👎</button>
+            </article>
+        </div>
+        <br>
+        <div class="homePageReview">
+            <article id="reviewArticle">
+                <div class = "reviewTitleSection">
+                    <a href="#" id = "reviewTitleLink"> <h3 id="reviewTitle">
+                        Review Title Link
+                    </h3> </a>
+                    <h4 id="reviewScore">
+                        Score: *overall Score here*
+                    </h4>
+                </div>
+                <br>
+                <br>
+                <h4 id="reviewAlbumSongName">
+                    Album/Song: <a href="#" id="albumLink">*link to album/song page*</a>
+                </h4>
+                <h4 id="reviewArtistName">
+                    Artist: <a href="#" id="artistLink">*link to artist page* </a>
+                </h4>
+                <p id="reviewBody">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime. Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima voluptate beatae 
+                    repudiandae aliquid maxime, porro, totam accusantium maiores illo optio ipsa veniam 
+                    dolore reprehenderit, nobis aspernatur similique quam odio? Lorem ipsum dolor sit amet 
+                    consectetur adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae eos 
+                    veritatis provident corrupti molestiae, deleniti excepturi nam repellat quisquam aliquam 
+                    temporibus autem quidem, culpa sunt maxime.
+                </p>
+                <p id="genreParagraph">
+                    Genres: *place genres for album/song here*
+                </p>
+                <label id = "upvotesLabel">Upvotes:___</label> 
+                <button id = "upButton" type="button">👍</button>
+                <label id = "downvotesLabel">Downvotes___: </label> 
+                <button id = "downButton" type="button">👎</button>
+            </article>
+        </div>
+        <br>
     </section>
 </html>
