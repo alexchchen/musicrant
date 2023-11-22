@@ -40,7 +40,7 @@ class Artist(models.Model):
         
         
 class Album(models.Model):
-    album_id = models.IntegerField()
+    album_id = models.IntegerField(primary_key=True)
     artist_id = models.ForeignKey('Artist', on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
     date_released = models.DateField()
@@ -54,7 +54,7 @@ class Album(models.Model):
 
 
 class Song(models.Model):
-    song_id = models.IntegerField()
+    song_id = models.IntegerField(primary_key=True)
     artist_id = models.ForeignKey('Artist', on_delete=models.CASCADE)
     name = models.CharField(max_length=128)
     album_id = models.ForeignKey('Album', null=True, blank=True, on_delete=models.SET_NULL)
