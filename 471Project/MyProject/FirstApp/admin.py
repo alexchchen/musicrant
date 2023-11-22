@@ -9,6 +9,9 @@ class UserAdmin(admin.ModelAdmin):
 class ArtistAdmin(admin.ModelAdmin):
     list_display = ("artist_id", "name", "age", "gender")
     
+class ProducerAdmin(admin.ModelAdmin):
+    list_display = ("producer_id", "name", "age", "gender")
+    
 class AlbumAdmin(admin.ModelAdmin):
     list_display = ("album_id", "artist_id", "name", "date_released")
     
@@ -20,6 +23,7 @@ class SongRatingAdmin(admin.ModelAdmin):
     
 admin.site.register(User, UserAdmin)
 admin.site.register(Artist, ArtistAdmin)
+admin.site.register(Producer, ProducerAdmin)
 admin.site.register(Album, AlbumAdmin)
 admin.site.register(Song, SongAdmin)
 admin.site.register(Song_Rating, SongRatingAdmin)

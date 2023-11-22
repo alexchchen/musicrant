@@ -38,6 +38,22 @@ class Artist(models.Model):
             )
         ]
         
+
+class Producer(models.Model):
+    producer_id = models.IntegerField(primary_key=True)
+    name = models.CharField(max_length=128)
+    age = models.IntegerField(null=True)
+    gender = models.CharField(max_length=15, blank=True)
+    bio = models.TextField(blank=True)
+    
+    class Meta:
+        constraints = [
+            CheckConstraint(
+                check = Q(age__gt=0) & Q(age__lte=120),
+                name = 'check_producer_age'
+            )
+        ]
+        
         
 class Album(models.Model):
     album_id = models.IntegerField(primary_key=True)
