@@ -1,9 +1,12 @@
+{% extends "master.html" %}
+
 <!DOCTYPE html>
 
 <html>
   <head>
     <title>Top Artists</title>
     <style>
+      {% block pageStyle %}
       .TopArtistsPageTitle {
         margin-left: 52%;
         margin-top: 5%;
@@ -36,9 +39,11 @@
         padding-left: 2%;
         padding-right: 2%;
       }
+      {% endblock %}
     </style>
   </head>
   <body>
+    {% block content %}
     <h4 class="TopArtistsPageTitle">Top Artists</h4>
     <div class="SingleArtist">
       <div class="FirstLine">
@@ -200,5 +205,6 @@
         eum blanditiis iure.
       </p>
     </div>
+    {% endblock %}
   </body>
 </html>
