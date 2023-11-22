@@ -6,5 +6,6 @@ urlpatterns = [
     path('', views.homePage, name='homePage'),
     path('topArtists/', views.topArtistsPage, name ='topArtistsPage'),
     path('topAlbums/', views.topAlbumsPage, name ='topAlbumsPage'),
+    path('topSongs/', views.topSongsPage, name ='topSongsPage'),
     path('FirstApp/profile/<username>', views.profile, name='profile')
 ]

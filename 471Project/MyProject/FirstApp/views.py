@@ -34,3 +34,7 @@ def topArtistsPage(request):
 def topAlbumsPage(request):
     template = loader.get_template('topAlbums.html')
     return HttpResponse(template.render())
+
+def topSongsPage(request):
+    template = loader.get_template('topSongs.html')
+    return HttpResponse(template.render())
