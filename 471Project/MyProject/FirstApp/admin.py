@@ -21,9 +21,13 @@ class SongAdmin(admin.ModelAdmin):
 class SongRatingAdmin(admin.ModelAdmin):
     list_display = ("rating_id", "username", "song_id", "date_given")
     
+class AlbumRatingAdmin(admin.ModelAdmin):
+    list_display = ("rating_id", "username", "album_id", "date_given")
+    
 admin.site.register(User, UserAdmin)
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(Producer, ProducerAdmin)
 admin.site.register(Album, AlbumAdmin)
 admin.site.register(Song, SongAdmin)
 admin.site.register(Song_Rating, SongRatingAdmin)
+admin.site.register(Album_Rating, AlbumRatingAdmin)

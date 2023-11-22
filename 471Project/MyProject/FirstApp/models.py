@@ -112,5 +112,47 @@ class Song_Rating(models.Model):
                 check = Q(instrumental_score__gte=0) & Q(instrumental_score__lte=10),
                 name = 'check_song_rating_instrumental_score'
             ),
+            models.UniqueConstraint(
+                fields=['rating_id', 'username'], name='song_rating_primary_key'
+            )
         ]
         
+
+class Album_Rating(models.Model):
+    rating_id = models.IntegerField(primary_key=True)
+    originality_score = models.IntegerField()
+    lyric_score = models.IntegerField()
+    vibe_score = models.IntegerField()
+    instrumental_score = models.IntegerField()
+    album_flow_score = models.IntegerField()
+    username = models.ForeignKey('User', on_delete=models.CASCADE)
+    album_id = models.ForeignKey('Album', on_delete=models.CASCADE)
+    date_given = models.DateField(auto_now_add=True)
+    
+    class Meta:
+        constraints = [
+            CheckConstraint(
+                check = Q(originality_score__gte=0) & Q(originality_score__lte=10),
+                name = 'check_album_rating_originality_score'
+            ),
+            CheckConstraint(
+                check = Q(lyric_score__gte=0) & Q(lyric_score__lte=10),
+                name = 'check_album_rating_lyric_score'
+            ),
+            CheckConstraint(
+                check = Q(vibe_score__gte=0) & Q(vibe_score__lte=10),
+                name = 'check_album_rating_vibe_score'
+            ),
+            CheckConstraint(
+                check = Q(instrumental_score__gte=0) & Q(instrumental_score__lte=10),
+                name = 'check_album_rating_instrumental_score'
+            ),
+            CheckConstraint(
+                check = Q(album_flow_score__gte=0) & Q(album_flow_score__lte=10),
+                name = 'check_album_rating_album_flow_score'
+            ),
+            models.UniqueConstraint(
+                fields=['rating_id', 'username'], name='album_rating_primary_key'
+            )
+        ]
+
