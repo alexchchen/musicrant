@@ -72,8 +72,8 @@ class Album(models.Model):
 class Song(models.Model):
     song_id = models.IntegerField(primary_key=True)
     artist_id = models.ForeignKey('Artist', on_delete=models.CASCADE)
-    name = models.CharField(max_length=128)
     album_id = models.ForeignKey('Album', null=True, blank=True, on_delete=models.SET_NULL)
+    name = models.CharField(max_length=128)
     date_released = models.DateField()
     
     class Meta:
@@ -86,12 +86,12 @@ class Song(models.Model):
         
 class Song_Rating(models.Model):
     rating_id = models.IntegerField(primary_key=True)
+    username = models.ForeignKey('User', on_delete=models.CASCADE)
+    song_id = models.ForeignKey('Song', on_delete=models.CASCADE)
     originality_score = models.IntegerField()
     lyric_score = models.IntegerField()
     vibe_score = models.IntegerField()
     instrumental_score = models.IntegerField()
-    username = models.ForeignKey('User', on_delete=models.CASCADE)
-    song_id = models.ForeignKey('Song', on_delete=models.CASCADE)
     date_given = models.DateField(auto_now_add=True)
     
     class Meta:
@@ -156,3 +156,40 @@ class Album_Rating(models.Model):
             )
         ]
 
+
+class Song_Review(models.Model):
+    review_id = models.IntegerField(primary_key=True)
+    username = models.ForeignKey('User', on_delete=models.CASCADE)
+    song_id = models.ForeignKey('Song', on_delete=models.CASCADE)
+    rating_id = models.ForeignKey('Song_Rating', on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    body = models.TextField()
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
+    date_posted = models.DateField(auto_now_add=True)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['review_id', 'username'], name='song_review_primary_key'
+            )
+        ]
+
+
+class Album_Review(models.Model):
+    review_id = models.IntegerField(primary_key=True)
+    username = models.ForeignKey('User', on_delete=models.CASCADE)
+    album_id = models.ForeignKey('Album', on_delete=models.CASCADE)
+    rating_id = models.ForeignKey('Album_Rating', on_delete=models.CASCADE)
+    title = models.CharField(max_length=50)
+    body = models.TextField()
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
+    date_posted = models.DateField(auto_now_add=True)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['review_id', 'username'], name='album_review_primary_key'
+            )
+        ]
