@@ -1,0 +1,141 @@
+{% extends "master.html" %}
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Top Albums</title>
+    <style>
+      {% block pageStyle %}
+      .TopAlbumsPageTitle {
+        margin-left: 50%;
+        font-size: 50px;
+        font-weight: bold;
+      }
+      .FirstLine {
+        display: flex;
+      }
+      .RankingNumber {
+        font-size: 25px;
+        margin-left: 13%;
+      }
+      .AlbumLink {
+        flex: 2;
+        font-size: 25px;
+        margin-left: 25px;
+        margin-top: 18px;
+        color: black;
+      }
+      .AlbumLink:hover {
+        color: grey;
+      }
+      .ArtistPart {
+        display: flex;
+      }
+      .MadeBy {
+        margin-top: 25px;
+        margin-right: 10px;
+      }
+      .ArtistLink {
+        margin-top: 24px;
+        color: black;
+      }
+      .ArtistLink:hover {
+        color: grey;
+      }
+      .ProducerPart {
+        Margin-left: 45px;
+        display: flex;
+      }
+      .ProducedBy {
+        margin-top: 25px;
+        margin-right: 10px;
+      }
+      .ProducerLink {
+        margin-top: 24px;
+        color: black;
+      }
+      .ProducerLink:Hover {
+        color: grey;
+      }
+      .OverallScore {
+        margin-left: 300px;
+      }
+      .GenreParagraph {
+        margin-bottom: 50px;
+        margin-left: 16%;
+        font-size: 16px;
+      }
+      {% endblock %}
+    </style>
+  </head>
+  <body>
+    {% block content %}
+    <h4 class="TopAlbumsPageTitle">Top Albums</h4>
+    <div class="SingleAlbum">
+      <div class="FirstLine">
+        <h2 class="RankingNumber">1.</h2>
+        <a href="#" class="AlbumLink">Album Name</a>
+        <div class="ArtistPart">
+          <p class="MadeBy">Made By:</p>
+          <a href="#" class="ArtistLink">Artist Name</a>
+        </div>
+        <div class="ProducerPart">
+          <p class="ProducedBy">Produced By:</p>
+          <a href="#" class="ProducerLink">Producer Name</a>
+        </div>
+        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
+      </div>
+      <p class="GenreParagraph">Genres: *place albums genres here*</p>
+    </div>
+    <div class="SingleAlbum">
+      <div class="FirstLine">
+        <h2 class="RankingNumber">2.</h2>
+        <a href="#" class="AlbumLink">Album Name</a>
+        <div class="ArtistPart">
+          <p class="MadeBy">Made By:</p>
+          <a href="#" class="ArtistLink">Artist Name</a>
+        </div>
+        <div class="ProducerPart">
+          <p class="ProducedBy">Produced By:</p>
+          <a href="#" class="ProducerLink">Producer Name</a>
+        </div>
+        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
+      </div>
+      <p class="GenreParagraph">Genres: *place albums genres here*</p>
+    </div>
+    <div class="SingleAlbum">
+      <div class="FirstLine">
+        <h2 class="RankingNumber">3.</h2>
+        <a href="#" class="AlbumLink">Album Name</a>
+        <div class="ArtistPart">
+          <p class="MadeBy">Made By:</p>
+          <a href="#" class="ArtistLink">Artist Name</a>
+        </div>
+        <div class="ProducerPart">
+          <p class="ProducedBy">Produced By:</p>
+          <a href="#" class="ProducerLink">Producer Name</a>
+        </div>
+        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
+      </div>
+      <p class="GenreParagraph">Genres: *place albums genres here*</p>
+    </div>
+    <div class="SingleAlbum">
+      <div class="FirstLine">
+        <h2 class="RankingNumber">4.</h2>
+        <a href="#" class="AlbumLink">Album Name</a>
+        <div class="ArtistPart">
+          <p class="MadeBy">Made By:</p>
+          <a href="#" class="ArtistLink">Artist Name</a>
+        </div>
+        <div class="ProducerPart">
+          <p class="ProducedBy">Produced By:</p>
+          <a href="#" class="ProducerLink">Producer Name</a>
+        </div>
+        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
+      </div>
+      <p class="GenreParagraph">Genres: *place albums genres here*</p>
+    </div>
+    {% endblock %}
+  </body>
+</html>
