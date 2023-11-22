@@ -1,7 +1,27 @@
 from django.db import models
 from django.db.models import CheckConstraint, Q, F
+from django.utils.translation import gettext_lazy as _
 
 # Create your models here.
+
+class Genre(models.TextChoices):
+    POP = "POP", _("Pop")
+    ROCK = "ROCK", _("Rock")
+    HIPHOP = "HIPHOP", _("Hip Hop")
+    RNB = "RNB", _("R&B")
+    JAZZ = "JAZZ", _("Jazz")
+    CLASSICAL = "CLASSICAL", _("Classical")
+    FOLK = "FOLK", _("Folk")
+    PUNK = "PUNK", _("Punk")
+    METAL = "METAL", _("Metal")
+    ELECTRONIC = "ELECTRONIC", _("Electronic")
+    COUNTRY = "COUNTRY", _("Country")
+    SOUL = "SOUL", _("Soul")
+    FUNK = "FUNK", _("Funk")
+    ACOUSTIC = "ACOUSTIC", _("Acoustic")
+    DUBSTEP = "DUBSTEP", _("Dubstep")
+    TRAP = "TRAP", _("Trap")
+    
 
 class User(models.Model):
     username = models.CharField(max_length=15, primary_key=True)
@@ -38,6 +58,18 @@ class Artist(models.Model):
             )
         ]
         
+        
+class Artist_Genre(models.Model):
+    artist_id = models.ForeignKey('Artist', on_delete=models.CASCADE)
+    genre = models.CharField(max_length=50, choices=Genre.choices)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['artist_id', 'genre'], name='artist_genre_primary_key'
+            )
+        ]
+    
 
 class Producer(models.Model):
     producer_id = models.AutoField(primary_key=True)
@@ -54,6 +86,18 @@ class Producer(models.Model):
             )
         ]
         
+
+class Producer_Genre(models.Model):
+    producer_id = models.ForeignKey('Producer', on_delete=models.CASCADE)
+    genre = models.CharField(max_length=50, choices=Genre.choices)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['producer_id', 'genre'], name='producer_genre_primary_key'
+            )
+        ]
+        
         
 class Album(models.Model):
     album_id = models.AutoField(primary_key=True)
@@ -65,6 +109,18 @@ class Album(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=['album_id', 'artist_id'], name='album_primary_key'
+            )
+        ]
+        
+        
+class Album_Genre(models.Model):
+    album_id = models.ForeignKey('Album', on_delete=models.CASCADE)
+    genre = models.CharField(max_length=50, choices=Genre.choices)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['album_id', 'genre'], name='album_genre_primary_key'
             )
         ]
 
@@ -80,6 +136,18 @@ class Song(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=['song_id', 'artist_id'], name='song_primary_key'
+            )
+        ]
+        
+        
+class Song_Genre(models.Model):
+    song_id = models.ForeignKey('Song', on_delete=models.CASCADE)
+    genre = models.CharField(max_length=50, choices=Genre.choices)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['song_id', 'genre'], name='song_genre_primary_key'
             )
         ]
         
