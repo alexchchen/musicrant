@@ -38,3 +38,11 @@ def topAlbumsPage(request):
 def topSongsPage(request):
     template = loader.get_template('topSongs.html')
     return HttpResponse(template.render())
+
+def loginPage(request):
+    template = loader.get_template('login.html')
+    return HttpResponse(template.render())
+
+def userPage(request):
+    template = loader.get_template('user.html')
+    return HttpResponse(template.render())
