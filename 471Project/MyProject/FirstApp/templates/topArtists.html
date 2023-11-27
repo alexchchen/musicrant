@@ -13,16 +13,18 @@
         font-weight: bold;
       }
       .FirstLine {
-        display: flex;
+        margin-left: 170px;
+        display: grid;
       }
       .RankingNumber {
         font-size: 25px;
-        margin-left: 13%;
+        grid-column-start: 1;
+        grid-column-end: 5;
       }
       .ArtistLink {
-        flex: 4;
+        grid-column-start: 5;
+        grid-column-end: 10;
         font-size: 25px;
-        margin-left: 25px;
         margin-top: 18px;
         color: black;
       }
@@ -30,16 +32,14 @@
         color: grey;
       }
       .OverallScore {
-        flex: 2;
-        margin-left: 300px;
+        grid-column-start: 100;
+        grid-column-end: 110;
       }
       .ArtistBio {
-        margin-left: 14%;
-        padding-left: 2%;
-        padding-right: 2%;
+        margin-left: 15%;
       }
       .GenreParagraph {
-        margin-left: 16%;
+        margin-left: 15%;
       }
       {% endblock %}
     </style>

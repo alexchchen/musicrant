@@ -46,3 +46,7 @@ def loginPage(request):
 def userPage(request):
     template = loader.get_template('user.html')
     return HttpResponse(template.render())
+
+def singleSongPage(request):
+    template = loader.get_template('singleSong.html')
+    return HttpResponse(template.render())

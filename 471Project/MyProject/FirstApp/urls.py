@@ -9,5 +9,6 @@ urlpatterns = [
     path('topSongs/', views.topSongsPage, name ='topSongsPage'),
     path('login/', views.loginPage, name ='loginPage'),
     path('user/', views.userPage, name ='userPage'),
+    path('singleSong/', views.singleSongPage, name ='singleSongPage'),
     path('FirstApp/profile/<username>', views.profile, name='profile')
 ]

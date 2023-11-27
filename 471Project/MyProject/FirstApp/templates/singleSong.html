@@ -1,0 +1,108 @@
+{% extends "master.html" %}
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Single Song</title>
+    <style>
+      {% block pageStyle %}
+      .songPageTitle {
+        margin-left: 50%;
+        font-size: 50px;
+        font-weight: bold;
+      }
+      .firstLine {
+        margin-left: 170px;
+        display: grid;
+      }
+      .dateReleased {
+        font-size: 20px;
+        grid-column-start: 0;
+        grid-column-end: 1;
+      }
+      .date {
+        margin-left: 10px;
+        font-size: 20px;
+      }
+      .ArtistName {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        font-size: 20px;
+      }
+      #artistLink {
+        color: black;
+        text-decoration: none;
+      }
+      #artistLink:hover {
+        color: grey;
+      }
+      .ProducerName {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        font-size: 20px;
+      }
+      #producerLink {
+        color: black;
+        text-decoration: none;
+      }
+      #producerLink:hover {
+        color: grey;
+      }
+      .score {
+        grid-column-start: 3;
+        grid-column-end: 4;
+        font-size: 20px;
+        margin-left: 3%;
+      }
+      .secondLine {
+        margin-left: 170px;
+        display: grid;
+      }
+      .originality {
+        grid-column-start: 0;
+        grid-column-end: 2;
+        font-size: 15px;
+      }
+      .lyric {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        font-size: 15px;
+      }
+      .vibe {
+        grid-column-start: 3;
+        grid-column-end: 4;
+        font-size: 15px;
+      }
+      .instrumental {
+        margin-left: 13%;
+        grid-column-start: 4;
+        grid-column-end: 5;
+        font-size: 15px;
+      }
+      {% endblock %}
+    </style>
+  </head>
+  <body>
+    {% block content %}
+    <h4 class="songPageTitle">Song Name</h4>
+    <div class="firstLine">
+      <h1 class="dateReleased">Date Released: *release date*</h1>
+      <h1 class="ArtistName">
+        Artist: <a href="#" id="artistLink">*link to artists page*</a>
+      </h1>
+      <h1 class="ProducerName">
+        Producer: <a href="#" id="producerLink">*link to producers page*</a>
+      </h1>
+      <h1 class="score">Score: *overall Score here*</h1>
+    </div>
+    <hr />
+    <div class="secondLine">
+      <h1 class="originality">Originality Score: *score here*</h1>
+      <h1 class="lyric">Lyrics Score: *score here*</h1>
+      <h1 class="vibe">Vibe Score: *score here*</h1>
+      <h1 class="instrumental">Instrumental Score: *score here*</h1>
+    </div>
+    {% endblock %}
+  </body>
+</html>
