@@ -261,3 +261,37 @@ class Album_Review(models.Model):
                 fields=['review_id', 'username'], name='album_review_primary_key'
             )
         ]
+        
+        
+class Song_Review_Comment(models.Model):
+    comment_id = models.AutoField(primary_key=True)
+    review_id = models.ForeignKey('Song_Review', on_delete=models.CASCADE)
+    username = models.ForeignKey('User', on_delete=models.CASCADE)
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
+    body = models.TextField()
+    date_posted = models.DateField(auto_now_add=True)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['comment_id', 'review_id'], name='song_review_comment_primary_key'
+            )
+        ]
+        
+        
+class Album_Review_Comment(models.Model):
+    comment_id = models.AutoField(primary_key=True)
+    review_id = models.ForeignKey('Album_Review', on_delete=models.CASCADE)
+    username = models.ForeignKey('User', on_delete=models.CASCADE)
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
+    body = models.TextField()
+    date_posted = models.DateField(auto_now_add=True)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['comment_id', 'review_id'], name='album_review_comment_primary_key'
+            )
+        ]
