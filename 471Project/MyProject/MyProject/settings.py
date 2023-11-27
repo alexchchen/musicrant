@@ -78,9 +78,9 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'musicrant',
-        'USER': 'root',
-        'PASSWORD': 'admin',
-        'HOST':'localhost',
+        'USER': 'admin',
+        'PASSWORD': 'adminadmin',
+        'HOST':'musicrant.cwswt2zkdh07.us-east-2.rds.amazonaws.com',
         'PORT':'3306',
     }
 }
