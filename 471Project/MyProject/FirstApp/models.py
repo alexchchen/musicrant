@@ -49,6 +49,8 @@ class Artist(models.Model):
     age = models.IntegerField(null=True)
     gender = models.CharField(max_length=15, blank=True)
     bio = models.TextField(blank=True)
+    albums_produced = models.ManyToManyField('Album', through='Produces_Their_Album')
+    singles_produced = models.ManyToManyField('Song', through='Produces_Their_Single')
     
     class Meta:
         constraints = [
@@ -77,6 +79,8 @@ class Producer(models.Model):
     age = models.IntegerField(null=True)
     gender = models.CharField(max_length=15, blank=True)
     bio = models.TextField(blank=True)
+    albums_produced = models.ManyToManyField('Album', through='Produces_Album')
+    singles_produced = models.ManyToManyField('Song', through='Produces_Single')
     
     class Meta:
         constraints = [
@@ -349,5 +353,53 @@ class Upvotes_Downvotes_Album_Review_Comment(models.Model):
         constraints = [
             models.UniqueConstraint(
                 fields=['username', 'comment_id'], name='upvotes_downvotes_album_review_comment_primary_key'
+            )
+        ]
+        
+
+class Produces_Album(models.Model):
+    producer_id = models.ForeignKey('Producer', on_delete=models.CASCADE)
+    album_id = models.ForeignKey('Album', on_delete=models.CASCADE)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['producer_id', 'album_id'], name='produces_album_primary_key'
+            )
+        ]
+        
+        
+class Produces_Single(models.Model):
+    producer_id = models.ForeignKey('Producer', on_delete=models.CASCADE)
+    song_id = models.ForeignKey('Song', on_delete=models.CASCADE)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['producer_id', 'song_id'], name='produces_single_primary_key'
+            )
+        ]
+        
+
+class Produces_Their_Album(models.Model):
+    artist_id = models.ForeignKey('Artist', on_delete=models.CASCADE)
+    album_id = models.ForeignKey('Album', on_delete=models.CASCADE)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['artist_id', 'album_id'], name='produces_their_album_primary_key'
+            )
+        ]
+        
+        
+class Produces_Their_Single(models.Model):
+    artist_id = models.ForeignKey('Artist', on_delete=models.CASCADE)
+    song_id = models.ForeignKey('Song', on_delete=models.CASCADE)
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['artist_id', 'song_id'], name='produces_their_single_primary_key'
             )
         ]

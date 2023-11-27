@@ -60,6 +60,18 @@ class UpvotesDownvotesSongReviewCommentAdmin(admin.ModelAdmin):
 class UpvotesDownvotesAlbumReviewCommentAdmin(admin.ModelAdmin):
     list_display = ("username", "comment_id", "vote_type")
     
+class ProducesAlbumAdmin(admin.ModelAdmin):
+    list_display = ("producer_id", "album_id")
+    
+class ProducesSingleAdmin(admin.ModelAdmin):
+    list_display = ("producer_id", "song_id")
+    
+class ProducesTheirAlbumAdmin(admin.ModelAdmin):
+    list_display = ("artist_id", "album_id")
+    
+class ProducesTheirSingleAdmin(admin.ModelAdmin):
+    list_display = ("artist_id", "song_id")
+    
 admin.site.register(User, UserAdmin)
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(Artist_Genre, ArtistGenreAdmin)
@@ -79,3 +91,7 @@ admin.site.register(Upvotes_Downvotes_Song_Review, UpvotesDownvotesSongReviewAdm
 admin.site.register(Upvotes_Downvotes_Album_Review, UpvotesDownvotesAlbumReviewAdmin)
 admin.site.register(Upvotes_Downvotes_Song_Review_Comment, UpvotesDownvotesSongReviewCommentAdmin)
 admin.site.register(Upvotes_Downvotes_Album_Review_Comment, UpvotesDownvotesAlbumReviewCommentAdmin)
+admin.site.register(Produces_Album, ProducesAlbumAdmin)
+admin.site.register(Produces_Single, ProducesSingleAdmin)
+admin.site.register(Produces_Their_Album, ProducesTheirAlbumAdmin)
+admin.site.register(Produces_Their_Single, ProducesTheirSingleAdmin)
