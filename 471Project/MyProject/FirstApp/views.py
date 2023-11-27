@@ -50,3 +50,7 @@ def userPage(request):
 def singleSongPage(request):
     template = loader.get_template('singleSong.html')
     return HttpResponse(template.render())
+
+def singleAlbumPage(request):
+    template = loader.get_template('singleAlbum.html')
+    return HttpResponse(template.render())

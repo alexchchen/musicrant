@@ -4,10 +4,10 @@
 
 <html>
   <head>
-    <title>Single Song</title>
+    <title>Single Album</title>
     <style>
       {% block pageStyle %}
-      .songPageTitle {
+      .albumPageTitle {
         margin-left: 43.5%;
         font-size: 50px;
         font-weight: bold;
@@ -75,9 +75,13 @@
         font-size: 15px;
       }
       .instrumental {
-        margin-left: 13%;
         grid-column-start: 4;
         grid-column-end: 5;
+        font-size: 15px;
+      }
+      .albumFlow {
+        grid-column-start: 5;
+        grid-column-end: 6;
         font-size: 15px;
       }
       .ThirdLine {
@@ -98,7 +102,7 @@
       .allReviews {
         margin-left: 170px;
       }
-      .singleSongPageReview {
+      .singleAlbumPageReview {
         padding-left: 143px;
       }
       #reviewArticle {
@@ -129,16 +133,16 @@
         margin-block-start: 12px;
         margin-block-end: 0px;
       }
-      #reviewSongName {
+      #reviewAlbumName {
         padding-left: 2%;
         margin-block-end: 0px;
         margin-block-start: 12px;
       }
-      #songLink {
+      #albumLink {
         color: black;
         text-decoration: none;
       }
-      #songLink:hover {
+      #albumLink:hover {
         color: gray;
       }
       #reviewArtistName {
@@ -174,7 +178,7 @@
   </head>
   <body>
     {% block content %}
-    <h4 class="songPageTitle">Song Name</h4>
+    <h4 class="albumPageTitle">Album Name</h4>
     <div class="firstLine">
       <h1 class="dateReleased">Date Released: *release date*</h1>
       <h1 class="ArtistName">
@@ -191,14 +195,15 @@
       <h1 class="lyric">Lyrics Score: *score here*</h1>
       <h1 class="vibe">Vibe Score: *score here*</h1>
       <h1 class="instrumental">Instrumental Score: *score here*</h1>
+      <h1 class="albumFlow">Album Flow Score: *score here*</h1>
     </div>
     <div class="ThirdLine">
-      <p class="GenreParagraph">Genres: *place songs genres here*</p>
+      <p class="GenreParagraph">Genres: *place albums genres here*</p>
       <button class="Rating">Give Rating</button>
       <button class="Review">Give Review</button>
     </div>
     <h2 class="allReviews">All Reviews:</h2>
-    <div class="singleSongPageReview">
+    <div class="singleAlbumPageReview">
       <article id="reviewArticle">
         <div class="reviewTitleSection">
           <a href="#" id="reviewTitleLink">
@@ -208,8 +213,8 @@
         </div>
         <br />
         <br />
-        <h4 id="reviewSongName">
-          Song: <a href="#" id="songLink">*link to song page*</a>
+        <h4 id="reviewAlbumName">
+          Album: <a href="#" id="albumLink">*link to album page*</a>
         </h4>
         <h4 id="reviewArtistName">
           Artist: <a href="#" id="artistLink">*link to artist page* </a>
@@ -244,7 +249,7 @@
           eos veritatis provident corrupti molestiae, deleniti excepturi nam
           repellat quisquam aliquam temporibus autem quidem, culpa sunt maxime.
         </p>
-        <p id="genreParagraph">Genres: *place genres for song here*</p>
+        <p id="genreParagraph">Genres: *place genres for album here*</p>
         <label id="upvotesLabel">Upvotes:___</label>
         <button id="upButton" type="button">👍</button>
         <label id="downvotesLabel">Downvotes___: </label>
@@ -252,7 +257,7 @@
       </article>
     </div>
     <br />
-    <div class="singleSongPageReview">
+    <div class="singleAlbumPageReview">
       <article id="reviewArticle">
         <div class="reviewTitleSection">
           <a href="#" id="reviewTitleLink">
@@ -262,8 +267,8 @@
         </div>
         <br />
         <br />
-        <h4 id="reviewSongName">
-          Song: <a href="#" id="songLink">*link to song page*</a>
+        <h4 id="reviewAlbumName">
+          Album: <a href="#" id="albumLink">*link to album page*</a>
         </h4>
         <h4 id="reviewArtistName">
           Artist: <a href="#" id="artistLink">*link to artist page* </a>
@@ -298,7 +303,7 @@
           eos veritatis provident corrupti molestiae, deleniti excepturi nam
           repellat quisquam aliquam temporibus autem quidem, culpa sunt maxime.
         </p>
-        <p id="genreParagraph">Genres: *place genres for song here*</p>
+        <p id="genreParagraph">Genres: *place genres for album here*</p>
         <label id="upvotesLabel">Upvotes:___</label>
         <button id="upButton" type="button">👍</button>
         <label id="downvotesLabel">Downvotes___: </label>
@@ -306,7 +311,7 @@
       </article>
     </div>
     <br />
-    <div class="singleSongPageReview">
+    <div class="singleAlbumPageReview">
       <article id="reviewArticle">
         <div class="reviewTitleSection">
           <a href="#" id="reviewTitleLink">
@@ -316,8 +321,8 @@
         </div>
         <br />
         <br />
-        <h4 id="reviewSongName">
-          Song: <a href="#" id="songLink">*link to song page*</a>
+        <h4 id="reviewAlbumName">
+          Album: <a href="#" id="albumLink">*link to album page*</a>
         </h4>
         <h4 id="reviewArtistName">
           Artist: <a href="#" id="artistLink">*link to artist page* </a>
@@ -352,7 +357,7 @@
           eos veritatis provident corrupti molestiae, deleniti excepturi nam
           repellat quisquam aliquam temporibus autem quidem, culpa sunt maxime.
         </p>
-        <p id="genreParagraph">Genres: *place genres for song here*</p>
+        <p id="genreParagraph">Genres: *place genres for album here*</p>
         <label id="upvotesLabel">Upvotes:___</label>
         <button id="upButton" type="button">👍</button>
         <label id="downvotesLabel">Downvotes___: </label>
@@ -360,7 +365,7 @@
       </article>
     </div>
     <br />
-    <div class="singleSongPageReview">
+    <div class="singleAlbumPageReview">
       <article id="reviewArticle">
         <div class="reviewTitleSection">
           <a href="#" id="reviewTitleLink">
@@ -370,8 +375,8 @@
         </div>
         <br />
         <br />
-        <h4 id="reviewSongName">
-          Song: <a href="#" id="songLink">*link to song page*</a>
+        <h4 id="reviewAlbumName">
+          Album: <a href="#" id="albumLink">*link to album page*</a>
         </h4>
         <h4 id="reviewArtistName">
           Artist: <a href="#" id="artistLink">*link to artist page* </a>
@@ -406,7 +411,7 @@
           eos veritatis provident corrupti molestiae, deleniti excepturi nam
           repellat quisquam aliquam temporibus autem quidem, culpa sunt maxime.
         </p>
-        <p id="genreParagraph">Genres: *place genres for song here*</p>
+        <p id="genreParagraph">Genres: *place genres for album here*</p>
         <label id="upvotesLabel">Upvotes:___</label>
         <button id="upButton" type="button">👍</button>
         <label id="downvotesLabel">Downvotes___: </label>
@@ -414,7 +419,7 @@
       </article>
     </div>
     <br />
-    <div class="singleSongPageReview">
+    <div class="singleAlbumPageReview">
       <article id="reviewArticle">
         <div class="reviewTitleSection">
           <a href="#" id="reviewTitleLink">
@@ -424,8 +429,8 @@
         </div>
         <br />
         <br />
-        <h4 id="reviewSongName">
-          Song: <a href="#" id="songLink">*link to song page*</a>
+        <h4 id="reviewAlbumName">
+          Album: <a href="#" id="albumLink">*link to album page*</a>
         </h4>
         <h4 id="reviewArtistName">
           Artist: <a href="#" id="artistLink">*link to artist page* </a>
@@ -460,7 +465,7 @@
           eos veritatis provident corrupti molestiae, deleniti excepturi nam
           repellat quisquam aliquam temporibus autem quidem, culpa sunt maxime.
         </p>
-        <p id="genreParagraph">Genres: *place genres for song here*</p>
+        <p id="genreParagraph">Genres: *place genres for album here*</p>
         <label id="upvotesLabel">Upvotes:___</label>
         <button id="upButton" type="button">👍</button>
         <label id="downvotesLabel">Downvotes___: </label>
