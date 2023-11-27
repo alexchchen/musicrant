@@ -1,0 +1,106 @@
+{% extends "master.html" %}
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Give Rating</title>
+        <style>
+            {% block pageStyle %}
+            #artistName {
+                padding-left: 170px;
+                color: gray;
+            }
+            #title {
+                padding-left: 170px;
+            }
+            .form {
+                padding-left: 170px;
+            }
+            {% endblock %}
+        </style>
+    </head>
+    <body>
+        {% block content %}
+            <h1 id="title">Give rating: *song/album Name here*</h1>
+            <h2 id="artistName">*Artist name here*</h2>
+            <div class="form">
+                <form action="", method = "RATE">
+                    <label for="originality">Originality Score: </label>
+                    <select name="origScore" id="originalityScore">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                    <label for="lyric">Lyric Score: </label>
+                    <select name="lyrScore" id="lyricScore">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                    <label for="vibe">Vibe Score: </label>
+                    <select name="vibScore" id="vibeScore">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                    <label for="instrumental">Instrumental Score: </label>
+                    <select name="instScore" id="instrumentalScore">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                    {% if albumFlag == 1%}
+                    <label for="flow">Album flow Score: </label>
+                    <select name="instScore" id="instrumentalScore">
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                    </select>
+                    {% endif %}
+                    <input type="submit" name = "submit" value="submit"
+                </form>
+            </div>
+        {% endblock %}
+    </body>
+    
+</html>
