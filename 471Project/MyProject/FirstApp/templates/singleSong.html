@@ -1,130 +1,204 @@
 {% extends "master.html" %}
+
 <!DOCTYPE html>
 
 <html>
   <head>
-    <title>Musicrant Home</title>
+    <title>Single Song</title>
     <style>
       {% block pageStyle %}
-      .homePageReview {
-          padding-left: 150px;
+      .songPageTitle {
+        margin-left: 43.5%;
+        font-size: 50px;
+        font-weight: bold;
       }
-
-      .reviewTitleSection {
-          text-align: center;
-          clear: both;
+      .firstLine {
+        margin-left: 170px;
+        display: grid;
       }
-
-      #reviewTitle {
-          font-size: 1.3em;
-          padding-left: 2%;
-          float:left;
-          margin-block-end: 0px;
-          margin-block-start: 12px;
+      .dateReleased {
+        font-size: 20px;
+        grid-column-start: 0;
+        grid-column-end: 1;
       }
-
-      #reviewScore {
-          font-size: 1.2em;
-          float: right;
-          padding-right: 5%;
-          margin-block-start: 12px;
-          margin-block-end: 0px;
+      .date {
+        margin-left: 10px;
+        font-size: 20px;
       }
-
-      #reviewArtistName {
-          padding-left: 2%;
-          margin-block-end: 0px;
-          margin-block-start: 2px;
+      .ArtistName {
+        grid-column-start: 1;
+        grid-column-end: 2;
+        font-size: 20px;
       }
-
-      #reviewBody {
-          padding-left: 2%;
-          padding-right: 2%;
-          text-align: justify;
-      }
-
-      #upvotesLabel {
-          padding-left: 2%;
-          margin-block-end: 5px;
-      }
-
-      #downvotesLabel {
-          margin-block: 5px;
-      }
-      #reviewAlbumSongName {
-          padding-left: 2%;
-          margin-block-end: 0px;
-          margin-block-start: 12px;
-      }
-
-      #genreParagraph {
-          color: gray;
-          padding-left: 2%;
-      }
-
-      #reviewArticle {
-          padding-bottom: 5px;
-      }
-
-      #reviewTitleLink {
-          color: black;
-          text-decoration: none;
-      }
-
-      #reviewTitleLink:hover {
-          color: gray;
-      }
-
-      #albumLink {
-          color: black;
-          text-decoration: none;
-      }
-
-      #albumLink:hover {
-          color: gray;
-      }
-
       #artistLink {
-          color: black;
-          text-decoration: none;
+        color: black;
+        text-decoration: none;
       }
-
       #artistLink:hover {
-          color: gray;
+        color: grey;
       }
-
-      .sortBy {
-          padding-left: 38%;
+      .ProducerName {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        font-size: 20px;
       }
-
-      #timeFilter {
-          padding-left: 5px;
+      #producerLink {
+        color: black;
+        text-decoration: none;
+      }
+      #producerLink:hover {
+        color: grey;
+      }
+      .score {
+        grid-column-start: 3;
+        grid-column-end: 4;
+        font-size: 20px;
+        margin-left: 3%;
+      }
+      .secondLine {
+        margin-left: 170px;
+        display: grid;
+      }
+      .originality {
+        grid-column-start: 0;
+        grid-column-end: 2;
+        font-size: 15px;
+      }
+      .lyric {
+        grid-column-start: 2;
+        grid-column-end: 3;
+        font-size: 15px;
+      }
+      .vibe {
+        grid-column-start: 3;
+        grid-column-end: 4;
+        font-size: 15px;
+      }
+      .instrumental {
+        margin-left: 13%;
+        grid-column-start: 4;
+        grid-column-end: 5;
+        font-size: 15px;
+      }
+      .ThirdLine {
+        margin-left: 170px;
+      }
+      .Rating {
+        font-size: 30px;
+        margin-left: 26%;
+        margin-top: 2%;
+      }
+      .Review {
+        font-size: 30px;
+        margin-left: 11%;
+      }
+      .GenreParagraph {
+        font-size: 16px;
+      }
+      .allReviews {
+        margin-left: 170px;
+      }
+      .singleSongPageReview {
+        padding-left: 143px;
+      }
+      #reviewArticle {
+        padding-bottom: 5px;
+      }
+      .reviewTitleSection {
+        text-align: center;
+        clear: both;
+      }
+      #reviewTitleLink {
+        color: black;
+        text-decoration: none;
+      }
+      #reviewTitleLink:hover {
+        color: gray;
+      }
+      #reviewTitle {
+        font-size: 1.3em;
+        padding-left: 2%;
+        float:left;
+        margin-block-end: 0px;
+        margin-block-start: 12px;
+      }
+      #reviewScore {
+        font-size: 1.2em;
+        float: right;
+        padding-right: 5%;
+        margin-block-start: 12px;
+        margin-block-end: 0px;
+      }
+      #reviewSongName {
+        padding-left: 2%;
+        margin-block-end: 0px;
+        margin-block-start: 12px;
+      }
+      #songLink {
+        color: black;
+        text-decoration: none;
+      }
+      #songLink:hover {
+        color: gray;
+      }
+      #reviewArtistName {
+        padding-left: 2%;
+        margin-block-end: 0px;
+        margin-block-start: 2px;
+      }
+      #artistLink {
+        color: black;
+        text-decoration: none;
+      }
+      #artistLink:hover {
+        color: gray;
+      }
+      #reviewBody {
+        padding-left: 2%;
+        padding-right: 2%;
+        text-align: justify;
+      }
+      #genreParagraph {
+        color: gray;
+        padding-left: 2%;
+      }
+      #upvotesLabel {
+        padding-left: 2%;
+        margin-block-end: 5px;
+      }
+      #downvotesLabel {
+        margin-block: 5px;
       }
       {% endblock %}
     </style>
   </head>
-  <br />
-  {% block content %}
-  <div class="sortBy">
-    <form action="" , method="SORT">
-      <label for="sortByLabel">Sort by: </label>
-      <select name="sortingOptions" id="sortOpt">
-        <option value="Most Popular">Popular</option>
-        <option value="Newest">Recently uploaded</option>
-        <option value="Controversial">Controversial</option>
-      </select>
-      <label id="timeFilter">From: </label>
-      <select name="timeFilter" id="filter">
-        <option value="All time">All time</option>
-        <option value="Today">Today</option>
-        <option value="This month">This month</option>
-        <option value="This year">This year</option>
-      </select>
-      <input type="submit" name="submit" value="apply" />
-    </form>
-  </div>
-  <section id="mainSection">
-    <div class="homePageReview">
+  <body>
+    {% block content %}
+    <h4 class="songPageTitle">Song Name</h4>
+    <div class="firstLine">
+      <h1 class="dateReleased">Date Released: *release date*</h1>
+      <h1 class="ArtistName">
+        Artist: <a href="#" id="artistLink">*link to artists page*</a>
+      </h1>
+      <h1 class="ProducerName">
+        Producer: <a href="#" id="producerLink">*link to producers page*</a>
+      </h1>
+      <h1 class="score">Score: *overall Score here*</h1>
+    </div>
+    <hr />
+    <div class="secondLine">
+      <h1 class="originality">Originality Score: *score here*</h1>
+      <h1 class="lyric">Lyrics Score: *score here*</h1>
+      <h1 class="vibe">Vibe Score: *score here*</h1>
+      <h1 class="instrumental">Instrumental Score: *score here*</h1>
+    </div>
+    <div class="ThirdLine">
+      <p class="GenreParagraph">Genres: *place songs genres here*</p>
+      <button class="Rating">Give Rating</button>
+      <button class="Review">Give Review</button>
+    </div>
+    <h2 class="allReviews">All Reviews:</h2>
+    <div class="singleSongPageReview">
       <article id="reviewArticle">
         <div class="reviewTitleSection">
           <a href="#" id="reviewTitleLink">
@@ -134,8 +208,8 @@
         </div>
         <br />
         <br />
-        <h4 id="reviewAlbumSongName">
-          Album/Song: <a href="#" id="albumLink">*link to album/song page*</a>
+        <h4 id="reviewSongName">
+          Song: <a href="#" id="songLink">*link to song page*</a>
         </h4>
         <h4 id="reviewArtistName">
           Artist: <a href="#" id="artistLink">*link to artist page* </a>
@@ -170,7 +244,7 @@
           eos veritatis provident corrupti molestiae, deleniti excepturi nam
           repellat quisquam aliquam temporibus autem quidem, culpa sunt maxime.
         </p>
-        <p id="genreParagraph">Genres: *place genres for album/song here*</p>
+        <p id="genreParagraph">Genres: *place genres for song here*</p>
         <label id="upvotesLabel">Upvotes:___</label>
         <button id="upButton" type="button">👍</button>
         <label id="downvotesLabel">Downvotes___: </label>
@@ -178,7 +252,7 @@
       </article>
     </div>
     <br />
-    <div class="homePageReview">
+    <div class="singleSongPageReview">
       <article id="reviewArticle">
         <div class="reviewTitleSection">
           <a href="#" id="reviewTitleLink">
@@ -188,8 +262,8 @@
         </div>
         <br />
         <br />
-        <h4 id="reviewAlbumSongName">
-          Album/Song: <a href="#" id="albumLink">*link to album/song page*</a>
+        <h4 id="reviewSongName">
+          Song: <a href="#" id="songLink">*link to song page*</a>
         </h4>
         <h4 id="reviewArtistName">
           Artist: <a href="#" id="artistLink">*link to artist page* </a>
@@ -224,7 +298,7 @@
           eos veritatis provident corrupti molestiae, deleniti excepturi nam
           repellat quisquam aliquam temporibus autem quidem, culpa sunt maxime.
         </p>
-        <p id="genreParagraph">Genres: *place genres for album/song here*</p>
+        <p id="genreParagraph">Genres: *place genres for song here*</p>
         <label id="upvotesLabel">Upvotes:___</label>
         <button id="upButton" type="button">👍</button>
         <label id="downvotesLabel">Downvotes___: </label>
@@ -232,7 +306,7 @@
       </article>
     </div>
     <br />
-    <div class="homePageReview">
+    <div class="singleSongPageReview">
       <article id="reviewArticle">
         <div class="reviewTitleSection">
           <a href="#" id="reviewTitleLink">
@@ -242,8 +316,8 @@
         </div>
         <br />
         <br />
-        <h4 id="reviewAlbumSongName">
-          Album/Song: <a href="#" id="albumLink">*link to album/song page*</a>
+        <h4 id="reviewSongName">
+          Song: <a href="#" id="songLink">*link to song page*</a>
         </h4>
         <h4 id="reviewArtistName">
           Artist: <a href="#" id="artistLink">*link to artist page* </a>
@@ -278,7 +352,7 @@
           eos veritatis provident corrupti molestiae, deleniti excepturi nam
           repellat quisquam aliquam temporibus autem quidem, culpa sunt maxime.
         </p>
-        <p id="genreParagraph">Genres: *place genres for album/song here*</p>
+        <p id="genreParagraph">Genres: *place genres for song here*</p>
         <label id="upvotesLabel">Upvotes:___</label>
         <button id="upButton" type="button">👍</button>
         <label id="downvotesLabel">Downvotes___: </label>
@@ -286,7 +360,7 @@
       </article>
     </div>
     <br />
-    <div class="homePageReview">
+    <div class="singleSongPageReview">
       <article id="reviewArticle">
         <div class="reviewTitleSection">
           <a href="#" id="reviewTitleLink">
@@ -296,8 +370,8 @@
         </div>
         <br />
         <br />
-        <h4 id="reviewAlbumSongName">
-          Album/Song: <a href="#" id="albumLink">*link to album/song page*</a>
+        <h4 id="reviewSongName">
+          Song: <a href="#" id="songLink">*link to song page*</a>
         </h4>
         <h4 id="reviewArtistName">
           Artist: <a href="#" id="artistLink">*link to artist page* </a>
@@ -332,7 +406,61 @@
           eos veritatis provident corrupti molestiae, deleniti excepturi nam
           repellat quisquam aliquam temporibus autem quidem, culpa sunt maxime.
         </p>
-        <p id="genreParagraph">Genres: *place genres for album/song here*</p>
+        <p id="genreParagraph">Genres: *place genres for song here*</p>
+        <label id="upvotesLabel">Upvotes:___</label>
+        <button id="upButton" type="button">👍</button>
+        <label id="downvotesLabel">Downvotes___: </label>
+        <button id="downButton" type="button">👎</button>
+      </article>
+    </div>
+    <br />
+    <div class="singleSongPageReview">
+      <article id="reviewArticle">
+        <div class="reviewTitleSection">
+          <a href="#" id="reviewTitleLink">
+            <h3 id="reviewTitle">Review Title Link</h3>
+          </a>
+          <h4 id="reviewScore">Score: *overall Score here*</h4>
+        </div>
+        <br />
+        <br />
+        <h4 id="reviewSongName">
+          Song: <a href="#" id="songLink">*link to song page*</a>
+        </h4>
+        <h4 id="reviewArtistName">
+          Artist: <a href="#" id="artistLink">*link to artist page* </a>
+        </h4>
+        <p id="reviewBody">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima
+          voluptate beatae repudiandae aliquid maxime, porro, totam accusantium
+          maiores illo optio ipsa veniam dolore reprehenderit, nobis aspernatur
+          similique quam odio? Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae
+          eos veritatis provident corrupti molestiae, deleniti excepturi nam
+          repellat quisquam aliquam temporibus autem quidem, culpa sunt maxime.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima
+          voluptate beatae repudiandae aliquid maxime, porro, totam accusantium
+          maiores illo optio ipsa veniam dolore reprehenderit, nobis aspernatur
+          similique quam odio? Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae
+          eos veritatis provident corrupti molestiae, deleniti excepturi nam
+          repellat quisquam aliquam temporibus autem quidem, culpa sunt maxime.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima
+          voluptate beatae repudiandae aliquid maxime, porro, totam accusantium
+          maiores illo optio ipsa veniam dolore reprehenderit, nobis aspernatur
+          similique quam odio? Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae
+          eos veritatis provident corrupti molestiae, deleniti excepturi nam
+          repellat quisquam aliquam temporibus autem quidem, culpa sunt maxime.
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem minima
+          voluptate beatae repudiandae aliquid maxime, porro, totam accusantium
+          maiores illo optio ipsa veniam dolore reprehenderit, nobis aspernatur
+          similique quam odio? Lorem ipsum dolor sit amet consectetur
+          adipisicing elit. Tenetur dignissimos facilis doloremque repudiandae
+          eos veritatis provident corrupti molestiae, deleniti excepturi nam
+          repellat quisquam aliquam temporibus autem quidem, culpa sunt maxime.
+        </p>
+        <p id="genreParagraph">Genres: *place genres for song here*</p>
         <label id="upvotesLabel">Upvotes:___</label>
         <button id="upButton" type="button">👍</button>
         <label id="downvotesLabel">Downvotes___: </label>
@@ -341,5 +469,5 @@
     </div>
     <br />
     {% endblock %}
-  </section>
+  </body>
 </html>

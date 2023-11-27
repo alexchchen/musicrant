@@ -41,4 +41,26 @@ def producerPage(request):
 
 def giveRating(request):
     template = loader.get_template('giveRating.html')
+def topAlbumsPage(request):
+    template = loader.get_template('topAlbums.html')
+    return HttpResponse(template.render())
+
+def topSongsPage(request):
+    template = loader.get_template('topSongs.html')
+    return HttpResponse(template.render())
+
+def loginPage(request):
+    template = loader.get_template('login.html')
+    return HttpResponse(template.render())
+
+def userPage(request):
+    template = loader.get_template('user.html')
+    return HttpResponse(template.render())
+
+def singleSongPage(request):
+    template = loader.get_template('singleSong.html')
+    return HttpResponse(template.render())
+
+def singleAlbumPage(request):
+    template = loader.get_template('singleAlbum.html')
     return HttpResponse(template.render())

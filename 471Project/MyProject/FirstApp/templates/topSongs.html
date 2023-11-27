@@ -1,0 +1,162 @@
+{% extends "master.html" %}
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Top Songs</title>
+    <style>
+      {% block pageStyle %}
+      .TopSongsPageTitle {
+        margin-left: 45%;
+        font-size: 50px;
+        font-weight: bold;
+      }
+      .FirstLine {
+        margin-left: 170px;
+        display: grid;
+      }
+      .RankingNumber {
+        grid-column-start: 0;
+        grid-column-end: 3;
+        font-size: 25px;
+      }
+      .SongLink {
+        grid-column-start: 3;
+        grid-column-end: 6;
+        font-size: 25px;
+        margin-top: 18px;
+        color: black;
+      }
+      .SongLink:hover {
+        color: grey;
+      }
+      .MadeBy {
+        grid-column-start: 6;
+        grid-column-end: 9;
+        margin-top: 25px;
+        margin-right: 10px;
+      }
+      .ArtistLink {
+        margin-top: 24px;
+        color: black;
+      }
+      .ArtistLink:hover {
+        color: grey;
+      }
+      .ProducedBy {
+        grid-column-start: 9;
+        grid-column-end: 12;
+        margin-top: 25px;
+        margin-right: 10px;
+      }
+      .ProducerLink {
+        margin-top: 24px;
+        color: black;
+      }
+      .ProducerLink:Hover {
+        color: grey;
+      }
+      .OverallScore {
+        grid-column-start: 12;
+        grid-column-end: 15;
+        margin-left: 300px;
+      }
+      .GenreParagraph {
+        margin-bottom: 50px;
+        margin-left: 15%;
+        font-size: 16px;
+      }
+      {% endblock %}
+    </style>
+  </head>
+  <body>
+    {% block content %}
+    <h4 class="TopSongsPageTitle">Top Songs</h4>
+    <div class="SingleSong">
+      <div class="FirstLine">
+        <h2 class="RankingNumber">1.</h2>
+        <a href="#" class="SongLink">Song Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
+      </div>
+      <p class="GenreParagraph">Genres: *place songs genres here*</p>
+    </div>
+    <div class="SingleSong">
+      <div class="FirstLine">
+        <h2 class="RankingNumber">2.</h2>
+        <a href="#" class="SongLink">Song Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
+      </div>
+      <p class="GenreParagraph">Genres: *place songs genres here*</p>
+    </div>
+    <div class="SingleSong">
+      <div class="FirstLine">
+        <h2 class="RankingNumber">3.</h2>
+        <a href="#" class="SongLink">Song Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
+      </div>
+      <p class="GenreParagraph">Genres: *place songs genres here*</p>
+    </div>
+    <div class="SingleSong">
+      <div class="FirstLine">
+        <h2 class="RankingNumber">4.</h2>
+        <a href="#" class="SongLink">Song Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
+      </div>
+      <p class="GenreParagraph">Genres: *place songs genres here*</p>
+    </div>
+    <div class="SingleSong">
+      <div class="FirstLine">
+        <h2 class="RankingNumber">5.</h2>
+        <a href="#" class="SongLink">Song Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
+      </div>
+      <p class="GenreParagraph">Genres: *place songs genres here*</p>
+    </div>
+    <div class="SingleSong">
+      <div class="FirstLine">
+        <h2 class="RankingNumber">6.</h2>
+        <a href="#" class="SongLink">Song Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
+      </div>
+      <p class="GenreParagraph">Genres: *place song genres here*</p>
+    </div>
+    {% endblock %}
+  </body>
+</html>

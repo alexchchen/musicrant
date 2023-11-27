@@ -1,26 +1,30 @@
+{% extends "master.html" %}
+
 <!DOCTYPE html>
 
 <html>
   <head>
     <title>Top Artists</title>
     <style>
+      {% block pageStyle %}
       .TopArtistsPageTitle {
-        margin-left: 52%;
-        margin-top: 5%;
+        margin-left: 45%;
         font-size: 50px;
         font-weight: bold;
       }
       .FirstLine {
-        display: flex;
+        margin-left: 170px;
+        display: grid;
       }
       .RankingNumber {
         font-size: 25px;
-        margin-left: 25%;
+        grid-column-start: 1;
+        grid-column-end: 5;
       }
       .ArtistLink {
-        flex: 4;
+        grid-column-start: 5;
+        grid-column-end: 10;
         font-size: 25px;
-        margin-left: 25px;
         margin-top: 18px;
         color: black;
       }
@@ -28,17 +32,20 @@
         color: grey;
       }
       .OverallScore {
-        flex: 2;
-        margin-left: 375px;
+        grid-column-start: 100;
+        grid-column-end: 110;
       }
       .ArtistBio {
-        margin-left: 25%;
-        padding-left: 2%;
-        padding-right: 2%;
+        margin-left: 15%;
       }
+      .GenreParagraph {
+        margin-left: 15%;
+      }
+      {% endblock %}
     </style>
   </head>
   <body>
+    {% block content %}
     <h4 class="TopArtistsPageTitle">Top Artists</h4>
     <div class="SingleArtist">
       <div class="FirstLine">
@@ -71,6 +78,7 @@
         repellat commodi delectus aut distinctio voluptatibus. Sed doloremque
         eum blanditiis iure.
       </p>
+      <p class="GenreParagraph">Genres: *place artists genres here*</p>
     </div>
     <div class="SingleArtist">
       <div class="FirstLine">
@@ -103,6 +111,7 @@
         repellat commodi delectus aut distinctio voluptatibus. Sed doloremque
         eum blanditiis iure.
       </p>
+      <p class="GenreParagraph">Genres: *place artists genres here*</p>
     </div>
     <div class="SingleArtist">
       <div class="FirstLine">
@@ -135,6 +144,7 @@
         repellat commodi delectus aut distinctio voluptatibus. Sed doloremque
         eum blanditiis iure.
       </p>
+      <p class="GenreParagraph">Genres: *place artists genres here*</p>
     </div>
     <div class="SingleArtist">
       <div class="FirstLine">
@@ -167,6 +177,7 @@
         repellat commodi delectus aut distinctio voluptatibus. Sed doloremque
         eum blanditiis iure.
       </p>
+      <p class="GenreParagraph">Genres: *place artists genres here*</p>
     </div>
     <div class="SingleArtist">
       <div class="FirstLine">
@@ -199,6 +210,8 @@
         repellat commodi delectus aut distinctio voluptatibus. Sed doloremque
         eum blanditiis iure.
       </p>
+      <p class="GenreParagraph">Genres: *place artists genres here*</p>
     </div>
+    {% endblock %}
   </body>
 </html>
