@@ -47,6 +47,18 @@ class SongReviewCommentAdmin(admin.ModelAdmin):
      
 class AlbumReviewCommentAdmin(admin.ModelAdmin):
     list_display = ("comment_id", "review_id", "username", "upvotes", "downvotes", "date_posted")
+
+class UpvotesDownvotesSongReviewAdmin(admin.ModelAdmin):
+    list_display = ("username", "review_id", "vote_type")
+
+class UpvotesDownvotesAlbumReviewAdmin(admin.ModelAdmin):
+    list_display = ("username", "review_id", "vote_type")
+
+class UpvotesDownvotesSongReviewCommentAdmin(admin.ModelAdmin):
+    list_display = ("username", "comment_id", "vote_type")
+    
+class UpvotesDownvotesAlbumReviewCommentAdmin(admin.ModelAdmin):
+    list_display = ("username", "comment_id", "vote_type")
     
 admin.site.register(User, UserAdmin)
 admin.site.register(Artist, ArtistAdmin)
@@ -63,3 +75,7 @@ admin.site.register(Song_Review, SongReviewAdmin)
 admin.site.register(Album_Review, AlbumReviewAdmin)
 admin.site.register(Song_Review_Comment, SongReviewCommentAdmin)
 admin.site.register(Album_Review_Comment, AlbumReviewCommentAdmin)
+admin.site.register(Upvotes_Downvotes_Song_Review, UpvotesDownvotesSongReviewAdmin)
+admin.site.register(Upvotes_Downvotes_Album_Review, UpvotesDownvotesAlbumReviewAdmin)
+admin.site.register(Upvotes_Downvotes_Song_Review_Comment, UpvotesDownvotesSongReviewCommentAdmin)
+admin.site.register(Upvotes_Downvotes_Album_Review_Comment, UpvotesDownvotesAlbumReviewCommentAdmin)

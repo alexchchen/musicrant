@@ -227,7 +227,7 @@ class Album_Rating(models.Model):
 
 class Song_Review(models.Model):
     review_id = models.AutoField(primary_key=True)
-    username = models.ForeignKey('User', on_delete=models.CASCADE)
+    username = models.ForeignKey('User', on_delete=models.CASCADE, related_name='song_reviews_posted')
     song_id = models.ForeignKey('Song', on_delete=models.CASCADE)
     rating_id = models.ForeignKey('Song_Rating', on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
@@ -235,6 +235,7 @@ class Song_Review(models.Model):
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
     date_posted = models.DateField(auto_now_add=True)
+    voted_users = models.ManyToManyField('User', through='Upvotes_Downvotes_Song_Review', related_name='song_reviews_voted')
     
     class Meta:
         constraints = [
@@ -246,7 +247,7 @@ class Song_Review(models.Model):
 
 class Album_Review(models.Model):
     review_id = models.AutoField(primary_key=True)
-    username = models.ForeignKey('User', on_delete=models.CASCADE)
+    username = models.ForeignKey('User', on_delete=models.CASCADE, related_name='album_reviews_posted')
     album_id = models.ForeignKey('Album', on_delete=models.CASCADE)
     rating_id = models.ForeignKey('Album_Rating', on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
@@ -254,6 +255,7 @@ class Album_Review(models.Model):
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
     date_posted = models.DateField(auto_now_add=True)
+    voted_users = models.ManyToManyField('User', through='Upvotes_Downvotes_Album_Review', related_name='album_reviews_voted')
     
     class Meta:
         constraints = [
@@ -266,12 +268,13 @@ class Album_Review(models.Model):
 class Song_Review_Comment(models.Model):
     comment_id = models.AutoField(primary_key=True)
     review_id = models.ForeignKey('Song_Review', on_delete=models.CASCADE)
-    username = models.ForeignKey('User', on_delete=models.CASCADE)
+    username = models.ForeignKey('User', on_delete=models.CASCADE, related_name='song_review_comments_posted')
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
     body = models.TextField()
     date_posted = models.DateField(auto_now_add=True)
-    
+    voted_users = models.ManyToManyField('User', through='Upvotes_Downvotes_Song_Review_Comment', related_name='song_review_comments_voted')
+
     class Meta:
         constraints = [
             models.UniqueConstraint(
@@ -283,15 +286,68 @@ class Song_Review_Comment(models.Model):
 class Album_Review_Comment(models.Model):
     comment_id = models.AutoField(primary_key=True)
     review_id = models.ForeignKey('Album_Review', on_delete=models.CASCADE)
-    username = models.ForeignKey('User', on_delete=models.CASCADE)
+    username = models.ForeignKey('User', on_delete=models.CASCADE, related_name='album_review_comments_posted')
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
     body = models.TextField()
     date_posted = models.DateField(auto_now_add=True)
+    voted_users = models.ManyToManyField('User', through='Upvotes_Downvotes_Album_Review_Comment', related_name='album_review_comments_voted')
     
     class Meta:
         constraints = [
             models.UniqueConstraint(
                 fields=['comment_id', 'review_id'], name='album_review_comment_primary_key'
+            )
+        ]
+        
+        
+class Upvotes_Downvotes_Song_Review(models.Model):
+    username = models.ForeignKey('User', on_delete=models.CASCADE)
+    review_id = models.ForeignKey('Song_Review', on_delete=models.CASCADE)
+    vote_type = models.BooleanField()
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['username', 'review_id'], name='upvotes_downvotes_song_review_primary_key'
+            )
+        ]
+        
+        
+class Upvotes_Downvotes_Album_Review(models.Model):
+    username = models.ForeignKey('User', on_delete=models.CASCADE)
+    review_id = models.ForeignKey('Album_Review', on_delete=models.CASCADE)
+    vote_type = models.BooleanField()
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['username', 'review_id'], name='upvotes_downvotes_album_review_primary_key'
+            )
+        ]
+        
+
+class Upvotes_Downvotes_Song_Review_Comment(models.Model):
+    username = models.ForeignKey('User', on_delete=models.CASCADE)
+    comment_id = models.ForeignKey('Song_Review_Comment', on_delete=models.CASCADE)
+    vote_type = models.BooleanField()
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['username', 'comment_id'], name='upvotes_downvotes_song_review_comment_primary_key'
+            )
+        ]
+        
+
+class Upvotes_Downvotes_Album_Review_Comment(models.Model):
+    username = models.ForeignKey('User', on_delete=models.CASCADE)
+    comment_id = models.ForeignKey('Album_Review_Comment', on_delete=models.CASCADE)
+    vote_type = models.BooleanField()
+    
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['username', 'comment_id'], name='upvotes_downvotes_album_review_comment_primary_key'
             )
         ]
