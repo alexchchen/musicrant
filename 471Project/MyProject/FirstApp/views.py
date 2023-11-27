@@ -30,3 +30,15 @@ def homePage(request):
 def topArtistsPage(request):
     template = loader.get_template('topArtists.html')
     return HttpResponse(template.render())
+
+def artistPage(request):
+    template = loader.get_template('artist.html')
+    return HttpResponse(template.render())
+
+def producerPage(request):
+    template = loader.get_template('producer.html')
+    return HttpResponse(template.render())
+
+def giveRating(request):
+    template = loader.get_template('giveRating.html')
+    return HttpResponse(template.render())
