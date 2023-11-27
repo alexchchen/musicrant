@@ -100,9 +100,9 @@
     </header>
     <div class="sidenav">
       <aside id="sidebar">
-        <a href="#">Top artists</a>
-        <a href="#">Top albums</a>
-        <a href="#">Top songs</a>
+        <a href="{% url 'topArtistsPage' %}">Top artists</a>
+        <a href="{% url 'topAlbumsPage' %}">Top albums</a>
+        <a href="{% url 'topSongsPage' %}">Top songs</a>
         {% if adminFlag == 1%}
         <a href="#">Admin tools</a>
         {%endif%}
