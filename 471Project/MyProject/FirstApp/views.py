@@ -41,6 +41,8 @@ def producerPage(request):
 
 def giveRating(request):
     template = loader.get_template('giveRating.html')
+    return HttpResponse(template.render())
+
 def topAlbumsPage(request):
     template = loader.get_template('topAlbums.html')
     return HttpResponse(template.render())
@@ -63,4 +65,12 @@ def singleSongPage(request):
 
 def singleAlbumPage(request):
     template = loader.get_template('singleAlbum.html')
+    return HttpResponse(template.render())
+
+def giveReview(request):
+    template = loader.get_template('giveReview.html')
+    return HttpResponse(template.render())
+
+def review(request):
+    template = loader.get_template('review.html')
     return HttpResponse(template.render())
