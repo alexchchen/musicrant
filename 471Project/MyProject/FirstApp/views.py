@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
-from .models import User
+from django.db.models import Avg, Value, ExpressionWrapper
+from .models import *
 
 def FirstView(request):
     users = User.objects.all().values()
@@ -28,8 +29,22 @@ def homePage(request):
     return HttpResponse(template.render())
 
 def topArtistsPage(request):
+    artists = Artist.objects.annotate(
+        overall_score = Avg(
+            (F('song__song_rating__originality_score') +
+             F('song__song_rating__lyric_score') +
+             F('song__song_rating__vibe_score') +
+             F('song__song_rating__instrumental_score')) / 4 
+        )
+    ).order_by('-overall_score')[:10]
+    
     template = loader.get_template('topArtists.html')
-    return HttpResponse(template.render())
+    
+    context = {
+        'artists': artists
+    }
+    
+    return HttpResponse(template.render(context, request))
 
 def artistPage(request):
     template = loader.get_template('artist.html')

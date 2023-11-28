@@ -48,7 +48,7 @@ class Artist(models.Model):
     name = models.CharField(max_length=128)
     age = models.IntegerField(null=True)
     gender = models.CharField(max_length=15, blank=True)
-    bio = models.TextField(blank=True)
+    bio = models.TextField()
     albums_produced = models.ManyToManyField('Album', through='Produces_Their_Album')
     singles_produced = models.ManyToManyField('Song', through='Produces_Their_Single')
     
