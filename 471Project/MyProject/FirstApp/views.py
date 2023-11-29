@@ -130,3 +130,7 @@ def giveReview(request):
 def review(request):
     template = loader.get_template('review.html')
     return HttpResponse(template.render())
+
+def search(request):
+    template = loader.get_template('search.html')
+    return HttpResponse(template.render())

@@ -1,0 +1,353 @@
+{% extends "master.html" %}
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>Search Page</title>
+    <style>
+      {% block pageStyle %}
+      .searchPageTitle {
+        margin-left: 43.5%;
+        font-size: 50px;
+        font-weight: bold;
+      }
+      .firstLine {
+        margin-left: 170px;
+        display: grid;
+      }
+      .secondLine {
+        margin-left: 170px;
+        display: grid;
+      }
+      .thirdLine {
+        margin-left: 170px;
+        display: grid;
+      }
+      .goToAlbumLink {
+        margin-top: 25px;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        color: black;
+      }
+      .goToAlbumLink:hover {
+        color: grey;
+      }
+      .goToArtistLink {
+        margin-top: 25px;
+        grid-column-start: 3;
+        grid-column-end: 30;
+        color: black;
+      }
+      .goToArtistLink:hover {
+        color: grey;
+      }
+      .goToSongLink {
+        margin-top: 25px;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        color: black;
+      }
+      .goToSongLink:hover {
+        color: grey;
+      }
+      .goToSongLink2 {
+        margin-top: 25px;
+        grid-column-start: 2;
+        grid-column-end: 3;
+        color: black;
+      }
+      .goToSongLink2:hover {
+        color: grey;
+      }
+      .goToAlbumLink2 {
+        margin-top: 25px;
+        grid-column-start: 3;
+        grid-column-end: 30;
+        color: black;
+      }
+      .goToAlbumLink2:hover {
+        color: grey;
+      }
+      .songBlock {
+        margin-left: 170px;
+      }
+      .singleSong {
+        display: grid;
+      }
+      .albumBlock {
+        margin-left: 170px;
+      }
+      .artistBlock {
+        margin-left: 170px;
+      }
+      .singleAlbum {
+        display: grid;
+      }
+      .SongLink {
+        grid-column-start: 0;
+        grid-column-end: 3;
+        margin-top: 11px;
+        font-size: 20px;
+        color: black;
+      }
+      .SongLink:hover {
+        color: grey;
+      }
+      .albumLink {
+        grid-column-start: 0;
+        grid-column-end: 3;
+        margin-top: 11px;
+        font-size: 20px;
+        color: black;
+      }
+      .albumLink:hover {
+        color: grey;
+      }
+      .MadeBy {
+        grid-column-start: 8;
+        grid-column-end: 10;
+        margin-bottom: px;
+      }
+      .ArtistLink {
+        margin-top: 24px;
+        color: black;
+      }
+      .ArtistLink:hover {
+        color: grey;
+      }
+      .ProducedBy {
+        grid-column-start: 15;
+        grid-column-end: 30;
+      }
+      .ProducerLink {
+        margin-top: 24px;
+        color: black;
+      }
+      .ProducerLink:Hover {
+        color: grey;
+      }
+      .firstLine {
+        display: grid;
+      }
+      .ArtistLink2 {
+        margin-left: 30px;
+        margin-top: 11px;
+        font-size: 20px;
+        color: black;
+      }
+      .ArtistLink2:hover {
+        color: grey;
+      }
+      {% endblock %}
+    </style>
+  </head>
+  <body>
+    {% block content %}
+    <h4 class="searchPageTitle">Search Results</h4>
+    <div class="firstLine">
+      <h2 id="songResults">Song Results:</h2>
+      <a href="#albumResults" class="goToAlbumLink">Go To Album Results</a>
+      <a href="#artistResults" class="goToArtistLink">Go To Artist Results</a>
+    </div>
+    <br />
+    <div class="songBlock">
+      <div class="singleSong">
+        <a href="{% url 'singleSongPage' %}" class="SongLink">Song Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <div class="singleSong">
+        <a href="{% url 'singleSongPage' %}" class="SongLink">Song Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <div class="singleSong">
+        <a href="{% url 'singleSongPage' %}" class="SongLink">Song Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <div class="singleSong">
+        <a href="{% url 'singleSongPage' %}" class="SongLink">Song Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <div class="singleSong">
+        <a href="{% url 'singleSongPage' %}" class="SongLink">Song Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <div class="singleSong">
+        <a href="{% url 'singleSongPage' %}" class="SongLink">Song Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <div class="singleSong">
+        <a href="{% url 'singleSongPage' %}" class="SongLink">Song Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <div class="singleSong">
+        <a href="{% url 'singleSongPage' %}" class="SongLink">Song Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <br />
+    </div>
+    <br />
+    <div class="secondLine">
+      <h2 id="albumResults">Album Results:</h2>
+      <a href="#" class="goToSongLink">Go To Song Results</a>
+      <a href="#artistResults" class="goToArtistLink">Go To Artist Results</a>
+    </div>
+    <br />
+    <div class="albumBlock">
+      <div class="singleAlbum">
+        <a href="{% url 'singleAlbumPage' %}" class="albumLink">Album Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <div class="singleAlbum">
+        <a href="{% url 'singleAlbumPage' %}" class="albumLink">Album Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <div class="singleAlbum">
+        <a href="{% url 'singleAlbumPage' %}" class="albumLink">Album Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <div class="singleAlbum">
+        <a href="{% url 'singleAlbumPage' %}" class="albumLink">Album Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <div class="singleAlbum">
+        <a href="{% url 'singleAlbumPage' %}" class="albumLink">Album Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <div class="singleAlbum">
+        <a href="{% url 'singleAlbumPage' %}" class="albumLink">Album Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <div class="singleAlbum">
+        <a href="{% url 'singleAlbumPage' %}" class="albumLink">Album Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+      <div class="singleAlbum">
+        <a href="{% url 'singleAlbumPage' %}" class="albumLink">Album Name</a>
+        <p class="MadeBy">
+          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+        </p>
+        <p class="ProducedBy">
+          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+        </p>
+      </div>
+    </div>
+    <br />
+    <div class="thirdLine">
+      <h2 id="artistResults">Artist Results:</h2>
+      <a href="#" class="goToSongLink2">Go To Song Results</a>
+      <a href="#albumResults" class="goToAlbumLink2">Go To Album Results</a>
+    </div>
+    <br />
+    <div class="artistBlock">
+      <div>
+        <a href="#" class="ArtistLink2">Artist Name</a>
+      </div>
+      <br />
+      <div>
+        <a href="#" class="ArtistLink2">Artist Name</a>
+      </div>
+      <br />
+      <div>
+        <a href="#" class="ArtistLink2">Artist Name</a>
+      </div>
+      <br />
+      <div>
+        <a href="#" class="ArtistLink2">Artist Name</a>
+      </div>
+      <br />
+      <div>
+        <a href="#" class="ArtistLink2">Artist Name</a>
+      </div>
+      <br />
+      <div>
+        <a href="#" class="ArtistLink2">Artist Name</a>
+      </div>
+      <br />
+      <div>
+        <a href="#" class="ArtistLink2">Artist Name</a>
+      </div>
+      <br />
+      <div>
+        <a href="#" class="ArtistLink2">Artist Name</a>
+      </div>
+      <br />
+    </div>
+    {% endblock %}
+  </body>
+</html>
