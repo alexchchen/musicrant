@@ -1,0 +1,139 @@
+{% extends "master.html" %}
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Give Rating</title>
+        <style>
+            {% block pageStyle %}
+            #artistName {
+                padding-left: 170px;
+                color: black;
+            }
+            #title {
+                padding-left: 170px;
+            }
+            .form {
+                padding-left: 170px;
+            }
+            #formList {
+                list-style-type: none;
+                padding-left: 0px;
+                font-size: 20px
+                
+            }
+            #reviewBod {
+                resize: none;
+                width: 99%;
+                height: 300px;
+                font-size: 20px;
+            }
+            #submitButton {
+                width: 50px;
+                height: 30px;
+                font-size: 15px;
+            }
+            #artistLink {
+                color: black;
+                text-decoration: none;
+            }
+            #artistLink:hover{
+                color: gray;
+            }
+            {% endblock %}
+        </style>
+    </head>
+    <body>
+        {% block content %}
+            <h1 id="title">Give review: *song/album Name here*</h1>
+            <h2 id="artistName">Artist: <a href="#"id="artistLink">*artist link here</a></h2>
+            <div class="form">
+                <form action="" , method="RATE">
+                    <ul id="formList">
+                        <li>
+                            <label for="originality">Originality Score: </label>
+                            <select name="origScore" id="originalityScore">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                            <label for="lyric">Lyric Score: </label>
+                            <select name="lyrScore" id="lyricScore">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                            <label for="vibe">Vibe Score: </label>
+                            <select name="vibScore" id="vibeScore">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                            <label for="instrumental">Instrumental Score: </label>
+                            <select name="instScore" id="instrumentalScore">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                            {% if albumFlag == 1%}
+                            <label for="flow">Album flow Score: </label>
+                            <select name="instScore" id="instrumentalScore">
+                                <option value="0">0</option>
+                                <option value="1">1</option>
+                                <option value="2">2</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="7">7</option>
+                                <option value="8">8</option>
+                                <option value="9">9</option>
+                                <option value="10">10</option>
+                            </select>
+                            {% endif %}
+                        </li>
+                        <li>
+                            <textarea name="reviewBody" placeholder="Write your review here..." required id="reviewBod"></textarea>
+                        </li>
+                        <li>
+                            <input type="submit" name = "submit" value="post" id="submitButton">
+                        </li>
+                    </ul>
+                </form>
+            </div>
+        {% endblock %}
+    </body>
+    
+</html>
