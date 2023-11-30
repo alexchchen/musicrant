@@ -105,29 +105,11 @@
   </head>
   <br />
   {% block content %}
-  <div class="sortBy">
-    <form action="" , method="SORT">
-      <label for="sortByLabel">Sort by: </label>
-      <select name="sortingOptions" id="sortOpt">
-        <option value="Most Popular">Popular</option>
-        <option value="Newest">Recently uploaded</option>
-        <option value="Controversial">Controversial</option>
-      </select>
-      <label id="timeFilter">From: </label>
-      <select name="timeFilter" id="filter">
-        <option value="All time">All time</option>
-        <option value="Today">Today</option>
-        <option value="This month">This month</option>
-        <option value="This year">This year</option>
-      </select>
-      <input type="submit" name="submit" value="apply" />
-    </form>
-  </div>
   <section id="mainSection">
     <div class="homePageReview">
       <article id="reviewArticle">
         <div class="reviewTitleSection">
-          <a href="#" id="reviewTitleLink">
+          <a href="{% url 'reviewPage' %}" id="reviewTitleLink">
             <h3 id="reviewTitle">Review Title Link</h3>
           </a>
           <h4 id="reviewScore">Score: *overall Score here*</h4>
@@ -181,7 +163,7 @@
     <div class="homePageReview">
       <article id="reviewArticle">
         <div class="reviewTitleSection">
-          <a href="#" id="reviewTitleLink">
+          <a href="{% url 'reviewPage' %}" id="reviewTitleLink">
             <h3 id="reviewTitle">Review Title Link</h3>
           </a>
           <h4 id="reviewScore">Score: *overall Score here*</h4>
@@ -235,7 +217,7 @@
     <div class="homePageReview">
       <article id="reviewArticle">
         <div class="reviewTitleSection">
-          <a href="#" id="reviewTitleLink">
+          <a href="{% url 'reviewPage' %}" id="reviewTitleLink">
             <h3 id="reviewTitle">Review Title Link</h3>
           </a>
           <h4 id="reviewScore">Score: *overall Score here*</h4>
@@ -289,7 +271,7 @@
     <div class="homePageReview">
       <article id="reviewArticle">
         <div class="reviewTitleSection">
-          <a href="#" id="reviewTitleLink">
+          <a href="{% url 'reviewPage' %}" id="reviewTitleLink">
             <h3 id="reviewTitle">Review Title Link</h3>
           </a>
           <h4 id="reviewScore">Score: *overall Score here*</h4>
