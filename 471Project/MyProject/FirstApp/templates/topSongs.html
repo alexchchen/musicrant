@@ -83,7 +83,12 @@
           Made By: <a href="#" class="ArtistLink">{{ song.artist_id.name }}</a>
         </p>
         <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink"></a>
+          Produced By:
+          {% for artist_producer in songs.}
+          {% endfor %}
+          {% for producer in songs.producers.all %}
+            <a href="#" class="ProducerLink">{{ producer.name }}</a>
+          {% endfor %}
         </p>
         <h2 class="OverallScore">
           Score: {{ song.overall_score|floatformat:2 }} / 10
