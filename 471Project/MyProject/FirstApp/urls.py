@@ -3,7 +3,6 @@ from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
-    path('FirstApp/', views.FirstView, name='FirstView'),
     path('', views.homePage, name='homePage'),
     path('topArtists/', views.topArtistsPage, name ='topArtistsPage'),
     path('artist/<int:artist_id>', views.artistPage, name='artistPage'),
