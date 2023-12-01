@@ -44,8 +44,25 @@ def giveRating(request):
     return HttpResponse(template.render())
 
 def topAlbumsPage(request):
+    albums = Album.objects.annotate(
+        overall_score = Avg(
+            (F('ratings__originality_score') + 
+             F('ratings__lyric_score') +
+             F('ratings__vibe_score') +
+             F('ratings__instrumental_score') +
+             F('ratings__album_flow_score')) / 5
+        )
+    ).order_by('-overall_score')[:10]
+    artists = Artist.objects.raw("""
+                                    SELECT a.artist_id, a.name
+                                    FROM Artist AS a JOIN Album AS al ON a.artist_id = al.artist_id
+                                 """)
     template = loader.get_template('topAlbums.html')
-    return HttpResponse(template.render())
+    context = {
+        'albums': albums,
+        'artists': artists
+    }
+    return HttpResponse(template.render(context, request))
 
 def topSongsPage(request):
     template = loader.get_template('topSongs.html')
@@ -63,9 +80,11 @@ def singleSongPage(request):
     template = loader.get_template('singleSong.html')
     return HttpResponse(template.render())
 
-def singleAlbumPage(request):
+
+def singleAlbumPage(request, album_id):
     template = loader.get_template('singleAlbum.html')
     return HttpResponse(template.render())
+
 
 def giveReview(request):
     template = loader.get_template('giveReview.html')

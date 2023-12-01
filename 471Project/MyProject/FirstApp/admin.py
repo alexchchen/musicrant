@@ -7,13 +7,13 @@ class UserAdmin(admin.ModelAdmin):
     list_display = ("username", "fname", "lname", "date_joined")
 
 class ArtistAdmin(admin.ModelAdmin):
-    list_display = ("artist_id", "name", "age", "gender")
+    list_display = ("artist_id", "name")
     
 class ArtistGenreAdmin(admin.ModelAdmin):
     list_display = ("artist_id", "genre")
     
 class ProducerAdmin(admin.ModelAdmin):
-    list_display = ("producer_id", "name", "age", "gender")
+    list_display = ("producer_id", "name")
     
 class ProducerGenreAdmin(admin.ModelAdmin):
     list_display = ("producer_id", "genre")

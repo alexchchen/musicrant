@@ -47,171 +47,22 @@
   <body>
     {% block content %}
     <h4 class="TopArtistsPageTitle">Top Artists</h4>
-    <div class="SingleArtist">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">1.</h2>
-        <a href="#" class="ArtistLink">Artist Name</a>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
+    
+    {% for artist in artists %}
+      <div class="SingleArtist">
+        <div class="FirstLine">
+          <h2 class="RankingNumber">{{ forloop.counter }}.</h2>
+          <a href="{% url 'artistPage' artist.artist_id %}" class="ArtistLink">{{ artist.name }}</a>
+          <h2 class="OverallScore">Score: {{ artist.overall_score|floatformat:2 }} / 10</h2>
+        </div>
+        <p class="ArtistBio">{{ artist.bio }}</p>
+        <p class="GenreParagraph">
+          Genres: 
+          {% for genre in artist.artist_genre_set.all %} 
+            {{ genre.get_genre_display }}{% if not forloop.last %}, {% endif %}
+          {% endfor %}
+        </p>
       </div>
-      <p class="ArtistBio">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem
-        magnam, itaque inventore modi aliquid illo cupiditate dignissimos
-        placeat, amet optio ducimus, ipsa commodi harum. Velit recusandae
-        consequatur error ipsum aut harum, cumque dolore qui! Possimus ab,
-        asperiores harum odit ipsam excepturi iste deleniti debitis cupiditate
-        tempora nulla molestias recusandae! Nesciunt neque, sapiente ab
-        consequuntur tenetur, qui voluptatem ratione culpa omnis iure dolores
-        laborum voluptas amet corporis quam harum, quasi asperiores mollitia
-        eveniet possimus molestiae inventore impedit sit? Consectetur quisquam,
-        voluptatem unde excepturi eligendi corrupti nesciunt similique accusamus
-        at tenetur consequuntur magni ipsa dolorem odit quis suscipit
-        recusandae? Voluptatibus aliquam maxime illum tempore consectetur enim
-        beatae modi nesciunt exercitationem quo iusto et facilis earum esse
-        asperiores dolore, veritatis mollitia temporibus sapiente laborum
-        inventore maiores voluptate nam? Non eum iure eligendi vel vitae
-        maiores, beatae impedit alias velit nemo. Officia molestiae architecto
-        nulla quas eos fuga culpa soluta voluptates odit sequi velit quod ab
-        molestias odio cum assumenda dicta, ea laborum quisquam, quam recusandae
-        praesentium, magni quo ex! Exercitationem cumque, autem enim nesciunt
-        ipsam doloribus deserunt saepe magni eveniet optio sed quia perferendis
-        nemo maxime architecto eaque debitis incidunt quibusdam consectetur
-        repellat commodi delectus aut distinctio voluptatibus. Sed doloremque
-        eum blanditiis iure.
-      </p>
-      <p class="GenreParagraph">Genres: *place artists genres here*</p>
-    </div>
-    <div class="SingleArtist">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">2.</h2>
-        <a href="#" class="ArtistLink">Artist Name</a>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
-      </div>
-      <p class="ArtistBio">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem
-        magnam, itaque inventore modi aliquid illo cupiditate dignissimos
-        placeat, amet optio ducimus, ipsa commodi harum. Velit recusandae
-        consequatur error ipsum aut harum, cumque dolore qui! Possimus ab,
-        asperiores harum odit ipsam excepturi iste deleniti debitis cupiditate
-        tempora nulla molestias recusandae! Nesciunt neque, sapiente ab
-        consequuntur tenetur, qui voluptatem ratione culpa omnis iure dolores
-        laborum voluptas amet corporis quam harum, quasi asperiores mollitia
-        eveniet possimus molestiae inventore impedit sit? Consectetur quisquam,
-        voluptatem unde excepturi eligendi corrupti nesciunt similique accusamus
-        at tenetur consequuntur magni ipsa dolorem odit quis suscipit
-        recusandae? Voluptatibus aliquam maxime illum tempore consectetur enim
-        beatae modi nesciunt exercitationem quo iusto et facilis earum esse
-        asperiores dolore, veritatis mollitia temporibus sapiente laborum
-        inventore maiores voluptate nam? Non eum iure eligendi vel vitae
-        maiores, beatae impedit alias velit nemo. Officia molestiae architecto
-        nulla quas eos fuga culpa soluta voluptates odit sequi velit quod ab
-        molestias odio cum assumenda dicta, ea laborum quisquam, quam recusandae
-        praesentium, magni quo ex! Exercitationem cumque, autem enim nesciunt
-        ipsam doloribus deserunt saepe magni eveniet optio sed quia perferendis
-        nemo maxime architecto eaque debitis incidunt quibusdam consectetur
-        repellat commodi delectus aut distinctio voluptatibus. Sed doloremque
-        eum blanditiis iure.
-      </p>
-      <p class="GenreParagraph">Genres: *place artists genres here*</p>
-    </div>
-    <div class="SingleArtist">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">3.</h2>
-        <a href="#" class="ArtistLink">Artist Name</a>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
-      </div>
-      <p class="ArtistBio">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem
-        magnam, itaque inventore modi aliquid illo cupiditate dignissimos
-        placeat, amet optio ducimus, ipsa commodi harum. Velit recusandae
-        consequatur error ipsum aut harum, cumque dolore qui! Possimus ab,
-        asperiores harum odit ipsam excepturi iste deleniti debitis cupiditate
-        tempora nulla molestias recusandae! Nesciunt neque, sapiente ab
-        consequuntur tenetur, qui voluptatem ratione culpa omnis iure dolores
-        laborum voluptas amet corporis quam harum, quasi asperiores mollitia
-        eveniet possimus molestiae inventore impedit sit? Consectetur quisquam,
-        voluptatem unde excepturi eligendi corrupti nesciunt similique accusamus
-        at tenetur consequuntur magni ipsa dolorem odit quis suscipit
-        recusandae? Voluptatibus aliquam maxime illum tempore consectetur enim
-        beatae modi nesciunt exercitationem quo iusto et facilis earum esse
-        asperiores dolore, veritatis mollitia temporibus sapiente laborum
-        inventore maiores voluptate nam? Non eum iure eligendi vel vitae
-        maiores, beatae impedit alias velit nemo. Officia molestiae architecto
-        nulla quas eos fuga culpa soluta voluptates odit sequi velit quod ab
-        molestias odio cum assumenda dicta, ea laborum quisquam, quam recusandae
-        praesentium, magni quo ex! Exercitationem cumque, autem enim nesciunt
-        ipsam doloribus deserunt saepe magni eveniet optio sed quia perferendis
-        nemo maxime architecto eaque debitis incidunt quibusdam consectetur
-        repellat commodi delectus aut distinctio voluptatibus. Sed doloremque
-        eum blanditiis iure.
-      </p>
-      <p class="GenreParagraph">Genres: *place artists genres here*</p>
-    </div>
-    <div class="SingleArtist">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">4.</h2>
-        <a href="#" class="ArtistLink">Artist Name</a>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
-      </div>
-      <p class="ArtistBio">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem
-        magnam, itaque inventore modi aliquid illo cupiditate dignissimos
-        placeat, amet optio ducimus, ipsa commodi harum. Velit recusandae
-        consequatur error ipsum aut harum, cumque dolore qui! Possimus ab,
-        asperiores harum odit ipsam excepturi iste deleniti debitis cupiditate
-        tempora nulla molestias recusandae! Nesciunt neque, sapiente ab
-        consequuntur tenetur, qui voluptatem ratione culpa omnis iure dolores
-        laborum voluptas amet corporis quam harum, quasi asperiores mollitia
-        eveniet possimus molestiae inventore impedit sit? Consectetur quisquam,
-        voluptatem unde excepturi eligendi corrupti nesciunt similique accusamus
-        at tenetur consequuntur magni ipsa dolorem odit quis suscipit
-        recusandae? Voluptatibus aliquam maxime illum tempore consectetur enim
-        beatae modi nesciunt exercitationem quo iusto et facilis earum esse
-        asperiores dolore, veritatis mollitia temporibus sapiente laborum
-        inventore maiores voluptate nam? Non eum iure eligendi vel vitae
-        maiores, beatae impedit alias velit nemo. Officia molestiae architecto
-        nulla quas eos fuga culpa soluta voluptates odit sequi velit quod ab
-        molestias odio cum assumenda dicta, ea laborum quisquam, quam recusandae
-        praesentium, magni quo ex! Exercitationem cumque, autem enim nesciunt
-        ipsam doloribus deserunt saepe magni eveniet optio sed quia perferendis
-        nemo maxime architecto eaque debitis incidunt quibusdam consectetur
-        repellat commodi delectus aut distinctio voluptatibus. Sed doloremque
-        eum blanditiis iure.
-      </p>
-      <p class="GenreParagraph">Genres: *place artists genres here*</p>
-    </div>
-    <div class="SingleArtist">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">5.</h2>
-        <a href="#" class="ArtistLink">Artist Name</a>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
-      </div>
-      <p class="ArtistBio">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorem
-        magnam, itaque inventore modi aliquid illo cupiditate dignissimos
-        placeat, amet optio ducimus, ipsa commodi harum. Velit recusandae
-        consequatur error ipsum aut harum, cumque dolore qui! Possimus ab,
-        asperiores harum odit ipsam excepturi iste deleniti debitis cupiditate
-        tempora nulla molestias recusandae! Nesciunt neque, sapiente ab
-        consequuntur tenetur, qui voluptatem ratione culpa omnis iure dolores
-        laborum voluptas amet corporis quam harum, quasi asperiores mollitia
-        eveniet possimus molestiae inventore impedit sit? Consectetur quisquam,
-        voluptatem unde excepturi eligendi corrupti nesciunt similique accusamus
-        at tenetur consequuntur magni ipsa dolorem odit quis suscipit
-        recusandae? Voluptatibus aliquam maxime illum tempore consectetur enim
-        beatae modi nesciunt exercitationem quo iusto et facilis earum esse
-        asperiores dolore, veritatis mollitia temporibus sapiente laborum
-        inventore maiores voluptate nam? Non eum iure eligendi vel vitae
-        maiores, beatae impedit alias velit nemo. Officia molestiae architecto
-        nulla quas eos fuga culpa soluta voluptates odit sequi velit quod ab
-        molestias odio cum assumenda dicta, ea laborum quisquam, quam recusandae
-        praesentium, magni quo ex! Exercitationem cumque, autem enim nesciunt
-        ipsam doloribus deserunt saepe magni eveniet optio sed quia perferendis
-        nemo maxime architecto eaque debitis incidunt quibusdam consectetur
-        repellat commodi delectus aut distinctio voluptatibus. Sed doloremque
-        eum blanditiis iure.
-      </p>
-      <p class="GenreParagraph">Genres: *place artists genres here*</p>
-    </div>
     {% endblock %}
   </body>
 </html>
