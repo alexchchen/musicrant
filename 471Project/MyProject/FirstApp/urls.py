@@ -1,4 +1,5 @@
 from django.urls import path
+from django.contrib.auth import views as auth_views
 from . import views
 
 urlpatterns = [
@@ -9,7 +10,7 @@ urlpatterns = [
     path('giveRating', views.giveRating, name='giveRating'),
     path('topAlbums/', views.topAlbumsPage, name ='topAlbumsPage'),
     path('topSongs/', views.topSongsPage, name ='topSongsPage'),
-    path('login/', views.loginPage, name ='loginPage'),
+    path('login/', auth_views.LoginView.as_view(template_name="login.html", next_page="/"), name ='login'),
     path('user/', views.userPage, name ='userPage'),
     path('singleSong/', views.singleSongPage, name ='singleSongPage'),
     path('singleAlbum/', views.singleAlbumPage, name ='singleAlbumPage'),

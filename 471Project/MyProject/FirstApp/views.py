@@ -2,16 +2,10 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django.db.models import Avg
+from django.contrib.auth.decorators import login_required
 from .models import *
 
-def FirstView(request):
-    users = User.objects.all().values()
-    template = loader.get_template('all_users.html')
-    context = {
-        'users': users,
-    }
-    return HttpResponse(template.render(context, request))
-
+@login_required
 def profile(request, username):
     user = User.objects.get(username=username)
     template = loader.get_template('profile.html')
@@ -20,16 +14,14 @@ def profile(request, username):
     }
     return HttpResponse(template.render(context, request))
 
-def main(request):
-    template = loader.get_template('main.html')
-    return HttpResponse(template.render())
 
-
+@login_required
 def homePage(request):
     template = loader.get_template('index.html')
     return HttpResponse(template.render())
 
 
+@login_required
 def topArtistsPage(request):
     artists = Artist.objects.annotate(
         overall_score = Avg(
@@ -47,6 +39,7 @@ def topArtistsPage(request):
     return HttpResponse(template.render(context, request))
 
 
+@login_required
 def artistPage(request, artist_id):
     artist = Artist.objects.filter(artist_id=artist_id).annotate(
         overall_score = Avg(
@@ -85,20 +78,25 @@ def artistPage(request, artist_id):
     return HttpResponse(template.render(context, request))
 
 
+@login_required
 def producerPage(request):
     template = loader.get_template('producer.html')
     return HttpResponse(template.render())
 
 
+@login_required
 def giveRating(request):
     template = loader.get_template('giveRating.html')
     return HttpResponse(template.render())
 
+
+@login_required
 def topAlbumsPage(request):
     template = loader.get_template('topAlbums.html')
     return HttpResponse(template.render())
 
 
+@login_required
 def topSongsPage(request):
     songs = Song.objects.annotate(
         overall_score = Avg(
@@ -119,33 +117,37 @@ def topSongsPage(request):
     return HttpResponse(template.render(context, request))
 
 
-def loginPage(request):
-    template = loader.get_template('login.html')
-    return HttpResponse(template.render())
-
-
+@login_required
 def userPage(request):
     template = loader.get_template('user.html')
     return HttpResponse(template.render())
 
 
+@login_required
 def singleSongPage(request):
     template = loader.get_template('singleSong.html')
     return HttpResponse(template.render())
 
 
+@login_required
 def singleAlbumPage(request):
     template = loader.get_template('singleAlbum.html')
     return HttpResponse(template.render())
 
+
+@login_required
 def giveReview(request):
     template = loader.get_template('giveReview.html')
     return HttpResponse(template.render())
 
+
+@login_required
 def review(request):
     template = loader.get_template('review.html')
     return HttpResponse(template.render())
 
+
+@login_required
 def search(request):
     template = loader.get_template('search.html')
     return HttpResponse(template.render())
