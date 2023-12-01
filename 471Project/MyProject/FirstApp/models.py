@@ -49,14 +49,6 @@ class Artist(models.Model):
     bio = models.TextField()
     albums_produced = models.ManyToManyField('Album', through='Produces_Their_Album')
     singles_produced = models.ManyToManyField('Song', through='Produces_Their_Single')
-    
-    class Meta:
-        constraints = [
-            CheckConstraint(
-                check = Q(age__gt=0) & Q(age__lte=120),
-                name = 'check_artist_age'
-            )
-        ]
         
         
 class Artist_Genre(models.Model):
@@ -77,14 +69,6 @@ class Producer(models.Model):
     bio = models.TextField(blank=True)
     albums_produced = models.ManyToManyField('Album', through='Produces_Album')
     singles_produced = models.ManyToManyField('Song', through='Produces_Single')
-    
-    class Meta:
-        constraints = [
-            CheckConstraint(
-                check = Q(age__gt=0) & Q(age__lte=120),
-                name = 'check_producer_age'
-            )
-        ]
         
 
 class Producer_Genre(models.Model):
