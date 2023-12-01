@@ -46,8 +46,6 @@ class User(models.Model):
 class Artist(models.Model):
     artist_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
-    age = models.IntegerField(null=True)
-    gender = models.CharField(max_length=15, blank=True)
     bio = models.TextField()
     albums_produced = models.ManyToManyField('Album', through='Produces_Their_Album')
     singles_produced = models.ManyToManyField('Song', through='Produces_Their_Single')
@@ -76,8 +74,6 @@ class Artist_Genre(models.Model):
 class Producer(models.Model):
     producer_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
-    age = models.IntegerField(null=True)
-    gender = models.CharField(max_length=15, blank=True)
     bio = models.TextField(blank=True)
     albums_produced = models.ManyToManyField('Album', through='Produces_Album')
     singles_produced = models.ManyToManyField('Song', through='Produces_Single')
