@@ -90,8 +90,12 @@ def producerPage(request):
     return HttpResponse(template.render())
 
 
-def giveRating(request):
-    template = loader.get_template('giveRating.html')
+def giveSongRating(request):
+    template = loader.get_template('giveSongRating.html')
+    return HttpResponse(template.render())
+
+def giveAlbumRating(request):
+    template = loader.get_template('giveAlbumRating.html')
     return HttpResponse(template.render())
 
 def topAlbumsPage(request):
@@ -104,14 +108,13 @@ def topAlbumsPage(request):
              F('ratings__album_flow_score')) / 5
         )
     ).order_by('-overall_score')[:10]
-    artists = Artist.objects.raw("""
-                                    SELECT a.artist_id, a.name
-                                    FROM Artist AS a JOIN Album AS al ON a.artist_id = al.artist_id
-                                 """)
+    artists = Artist.objects.all()
+    producers = Producer.objects.all()
     template = loader.get_template('topAlbums.html')
     context = {
         'albums': albums,
-        'artists': artists
+        'artists': artists,
+        'producers': producers
     }
     return HttpResponse(template.render(context, request))
 
@@ -141,8 +144,12 @@ def singleAlbumPage(request, album_id):
     return HttpResponse(template.render())
 
 
-def giveReview(request):
-    template = loader.get_template('giveReview.html')
+def giveSongReview(request):
+    template = loader.get_template('giveSongReview.html')
+    return HttpResponse(template.render())
+
+def giveAlbumReview(request):
+    template = loader.get_template('giveAlbumReview.html')
     return HttpResponse(template.render())
 
 def review(request):

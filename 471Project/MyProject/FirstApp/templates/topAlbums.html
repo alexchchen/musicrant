@@ -78,23 +78,29 @@
         <div class="FirstLine">
           <h2 class="RankingNumber">{{ forloop.counter }}.</h2>
           <a href="{% url 'singleAlbumPage' album.album_id %}" class="AlbumLink">{{ album.name }}</a>
-
-              {% for artist in artists %}
-                {% if artist.artist_id == album.artist_id %}
+              <!-- {% for artist in artists %}
+                {% if album.artist_id.artist_id == artist.artist_id %} -->
                   <p class="MadeBy">
-                    Made By: <a href="{% url 'artistPage' artist.artist_id %}" class="ArtistLink">
-                    {{ artist.name }}
-                    </a>
+                    Made By: <a href="{% url 'artistPage' album.artist_id.artist_id %}" class="ArtistLink"> {{ album.artist_id.name }} </a>
                   </p>
-                {% endif %}
-              {% endfor %}
-            </a>
+                <!-- {% endif %}
+              {% endfor %} -->
           <p class="ProducedBy">
-            Produced By: <a href="#" class="ProducerLink">Producer Name</a>
+            Produced By:
+            {% for artist_producer in album.artist_producers.all %}
+              <a href="#" class="ProducerLink">{{ artist_producer.name }}</a>
+            {% endfor %}
+            {% for producer in album.producers.all %}
+              <a href="#" class="ProducerLink">{{ producer.name }}</a>
+            {% endfor %}
           </p>
-          <h2 class="OverallScore">Score: *Overall Score Here*</h2>
+          <h2 class="OverallScore"> score: {{ album.overall_score|floatformat:2 }} / 10</h2>
         </div>
-        <p class="GenreParagraph">Genres: *place albums genres here*</p>
+        <p class="GenreParagraph">Genres: 
+          {% for genre in album.genres.all %}
+            {{ genre.get_genre_display }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
       </div>
     {% endfor %} 
     {% endblock %}
