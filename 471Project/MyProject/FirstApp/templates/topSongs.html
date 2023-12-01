@@ -73,90 +73,29 @@
   <body>
     {% block content %}
     <h4 class="TopSongsPageTitle">Top Songs</h4>
+
+    {% for song in songs %}
     <div class="SingleSong">
       <div class="FirstLine">
-        <h2 class="RankingNumber">1.</h2>
-        <a href="{% url 'singleSongPage' %}" class="SongLink">Song Name</a>
+        <h2 class="RankingNumber">{{ forloop.counter }}.</h2>
+        <a href="{% url 'singleSongPage' %}" class="SongLink">{{ song.name}}</a>
         <p class="MadeBy">
           Made By: <a href="#" class="ArtistLink">Artist Name</a>
         </p>
         <p class="ProducedBy">
           Produced By: <a href="#" class="ProducerLink">Producer Name</a>
         </p>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
+        <h2 class="OverallScore">
+          Score: {{ song.overall_score|floatformat:2 }} / 10
+        </h2>
       </div>
-      <p class="GenreParagraph">Genres: *place songs genres here*</p>
+      <p class="GenreParagraph">
+        Genres: 
+        {% for genre in artist.artist_genre_set.all %} 
+          {{ genre.get_genre_display }}{% if not forloop.last %}, {% endif %}
+        {% endfor %}
+      </p>
     </div>
-    <div class="SingleSong">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">2.</h2>
-        <a href="{% url 'singleSongPage' %}" class="SongLink">Song Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
-      </div>
-      <p class="GenreParagraph">Genres: *place songs genres here*</p>
-    </div>
-    <div class="SingleSong">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">3.</h2>
-        <a href="{% url 'singleSongPage' %}" class="SongLink">Song Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
-      </div>
-      <p class="GenreParagraph">Genres: *place songs genres here*</p>
-    </div>
-    <div class="SingleSong">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">4.</h2>
-        <a href="{% url 'singleSongPage' %}" class="SongLink">Song Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
-      </div>
-      <p class="GenreParagraph">Genres: *place songs genres here*</p>
-    </div>
-    <div class="SingleSong">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">5.</h2>
-        <a href="{% url 'singleSongPage' %}" class="SongLink">Song Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
-      </div>
-      <p class="GenreParagraph">Genres: *place songs genres here*</p>
-    </div>
-    <div class="SingleSong">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">6.</h2>
-        <a href="{% url 'singleSongPage' %}" class="SongLink">Song Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
-      </div>
-      <p class="GenreParagraph">Genres: *place song genres here*</p>
-    </div>
-    {% endblock %}
+    {% endfor %} {% endblock %}
   </body>
 </html>

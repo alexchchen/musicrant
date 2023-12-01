@@ -100,8 +100,20 @@ def topAlbumsPage(request):
 
 
 def topSongsPage(request):
+    songs = Song.objects.annotate(
+        overall_score = Avg(
+            (F('ratings__originality_score') +
+             F('ratings__lyric_score') +
+             F('ratings__vibe_score') +
+             F('ratings__instrumental_score')) / 4
+        )
+    ).order_by('-overall_score')[:10]
+
     template = loader.get_template('topSongs.html')
-    return HttpResponse(template.render())
+    context = {
+        'songs': songs
+    }
+    return HttpResponse(template.render(context, request))
 
 
 def loginPage(request):
