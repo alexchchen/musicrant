@@ -6,11 +6,18 @@ from .models import *
 
 class ProfileInline(admin.StackedInline):
     model = Profile
+    max_num = 1
     can_delete = False
-    verbose_name_plural = "profile"
     
 class UserAdmin(BaseUserAdmin):
-    inlines = [ProfileInline]
+    def add_view(self, *args, **kwargs):
+        self.inlines = []
+        return super(UserAdmin, self).add_view(*args, **kwargs)
+
+    def change_view(self, *args, **kwargs):
+        self.inlines = [ProfileInline]
+        return super(UserAdmin, self).change_view(*args, **kwargs)
+  
     list_display = ("username", "fname", "lname", "age", "gender")
     
     def fname(self, obj):
