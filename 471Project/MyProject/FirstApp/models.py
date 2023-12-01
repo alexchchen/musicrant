@@ -64,8 +64,8 @@ class Producer(models.Model):
     producer_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
     bio = models.TextField(blank=True)
-    albums_produced = models.ManyToManyField('Album', through='Produces_Album')
-    singles_produced = models.ManyToManyField('Song', through='Produces_Single')
+    albums_produced = models.ManyToManyField('Album', through='Produces_Album', related_name="producers")
+    singles_produced = models.ManyToManyField('Song', through='Produces_Single', related_name="producers")
         
 
 class Producer_Genre(models.Model):
