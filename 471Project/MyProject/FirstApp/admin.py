@@ -1,10 +1,33 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from .models import *
 
 # Register your models here.
 
-class UserAdmin(admin.ModelAdmin):
-    list_display = ("username", "fname", "lname", "date_joined")
+class ProfileInline(admin.StackedInline):
+    model = Profile
+    max_num = 1
+    can_delete = False
+    
+class UserAdmin(BaseUserAdmin):
+    def add_view(self, *args, **kwargs):
+        self.inlines = []
+        return super(UserAdmin, self).add_view(*args, **kwargs)
+
+    def change_view(self, *args, **kwargs):
+        self.inlines = [ProfileInline]
+        return super(UserAdmin, self).change_view(*args, **kwargs)
+  
+    list_display = ("username", "fname", "lname", "age", "gender")
+    
+    def fname(self, obj):
+        return Profile.objects.get(user=obj).fname
+    def lname(self, obj):
+        return Profile.objects.get(user=obj).lname
+    def age(self, obj):
+        return Profile.objects.get(user=obj).age
+    def gender(self, obj):
+        return Profile.objects.get(user=obj).gender
 
 class ArtistAdmin(admin.ModelAdmin):
     list_display = ("artist_id", "name")
@@ -72,6 +95,7 @@ class ProducesTheirAlbumAdmin(admin.ModelAdmin):
 class ProducesTheirSingleAdmin(admin.ModelAdmin):
     list_display = ("artist_id", "song_id")
     
+admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Artist, ArtistAdmin)
 admin.site.register(Artist_Genre, ArtistGenreAdmin)
