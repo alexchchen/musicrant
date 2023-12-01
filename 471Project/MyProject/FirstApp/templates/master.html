@@ -83,7 +83,9 @@
   <body>
     <header>
       <div class="HeaderStyle">
-        <a href="#"> <h1 id="headerTitle">Musicrant</h1> </a>
+        <a href="{% url 'homePage' %}">
+          <h1 id="headerTitle">Musicrant</h1>
+        </a>
         <div class="searchField">
           <form action="" , method="SEARCH">
             <label id="searchText"> Search: </label>
@@ -100,14 +102,14 @@
     </header>
     <div class="sidenav">
       <aside id="sidebar">
-        <a href="#">Top artists</a>
-        <a href="#">Top albums</a>
-        <a href="#">Top songs</a>
+        <a href="{% url 'topArtistsPage' %}">Top artists</a>
+        <a href="{% url 'topAlbumsPage' %}">Top albums</a>
+        <a href="{% url 'topSongsPage' %}">Top songs</a>
         {% if adminFlag == 1%}
         <a href="#">Admin tools</a>
         {%endif%}
-        <a href="#">Profile</a>
-        <a href="#">Logout</a>
+        <a href="{% url 'userPage' %}">Profile</a>
+        <a href="{% url 'loginPage' %}">Logout</a>
       </aside>
     </div>
     {% block content %} {% endblock %}

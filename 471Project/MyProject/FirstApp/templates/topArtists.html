@@ -46,6 +46,7 @@
   </head>
   <body>
     {% block content %}
+
     <h4 class="TopArtistsPageTitle">Top Artists</h4>
     
     {% for artist in artists %}
@@ -63,6 +64,7 @@
           {% endfor %}
         </p>
       </div>
+    {% endfor %}
     {% endblock %}
   </body>
 </html>

@@ -60,7 +60,7 @@ class Artist(models.Model):
         
         
 class Artist_Genre(models.Model):
-    artist_id = models.ForeignKey('Artist', on_delete=models.CASCADE)
+    artist_id = models.ForeignKey('Artist', on_delete=models.CASCADE, related_name='genres')
     genre = models.CharField(max_length=50, choices=Genre.choices)
     
     class Meta:
@@ -88,7 +88,7 @@ class Producer(models.Model):
         
 
 class Producer_Genre(models.Model):
-    producer_id = models.ForeignKey('Producer', on_delete=models.CASCADE)
+    producer_id = models.ForeignKey('Producer', on_delete=models.CASCADE, related_name='genres')
     genre = models.CharField(max_length=50, choices=Genre.choices)
     
     class Meta:
@@ -101,7 +101,7 @@ class Producer_Genre(models.Model):
         
 class Album(models.Model):
     album_id = models.AutoField(primary_key=True)
-    artist_id = models.ForeignKey('Artist', on_delete=models.CASCADE)
+    artist_id = models.ForeignKey('Artist', on_delete=models.CASCADE, related_name='albums')
     name = models.CharField(max_length=128)
     date_released = models.DateField()
     
@@ -114,7 +114,7 @@ class Album(models.Model):
         
         
 class Album_Genre(models.Model):
-    album_id = models.ForeignKey('Album', on_delete=models.CASCADE)
+    album_id = models.ForeignKey('Album', on_delete=models.CASCADE, related_name='genres')
     genre = models.CharField(max_length=50, choices=Genre.choices)
     
     class Meta:
@@ -127,8 +127,8 @@ class Album_Genre(models.Model):
 
 class Song(models.Model):
     song_id = models.AutoField(primary_key=True)
-    artist_id = models.ForeignKey('Artist', on_delete=models.CASCADE)
-    album_id = models.ForeignKey('Album', null=True, blank=True, on_delete=models.SET_NULL)
+    artist_id = models.ForeignKey('Artist', on_delete=models.CASCADE, related_name='songs')
+    album_id = models.ForeignKey('Album', null=True, blank=True, on_delete=models.SET_NULL, related_name='songs')
     name = models.CharField(max_length=128)
     date_released = models.DateField()
     
@@ -141,7 +141,7 @@ class Song(models.Model):
         
         
 class Song_Genre(models.Model):
-    song_id = models.ForeignKey('Song', on_delete=models.CASCADE)
+    song_id = models.ForeignKey('Song', on_delete=models.CASCADE, related_name='genres')
     genre = models.CharField(max_length=50, choices=Genre.choices)
     
     class Meta:
@@ -154,8 +154,8 @@ class Song_Genre(models.Model):
         
 class Song_Rating(models.Model):
     rating_id = models.AutoField(primary_key=True)
-    username = models.ForeignKey('User', on_delete=models.CASCADE)
-    song_id = models.ForeignKey('Song', on_delete=models.CASCADE)
+    username = models.ForeignKey('User', on_delete=models.CASCADE, related_name='song_ratings')
+    song_id = models.ForeignKey('Song', on_delete=models.CASCADE, related_name='ratings')
     originality_score = models.IntegerField()
     lyric_score = models.IntegerField()
     vibe_score = models.IntegerField()
@@ -188,13 +188,13 @@ class Song_Rating(models.Model):
 
 class Album_Rating(models.Model):
     rating_id = models.AutoField(primary_key=True)
+    username = models.ForeignKey('User', on_delete=models.CASCADE, related_name='album_ratings')
+    album_id = models.ForeignKey('Album', on_delete=models.CASCADE, related_name='ratings')
     originality_score = models.IntegerField()
     lyric_score = models.IntegerField()
     vibe_score = models.IntegerField()
     instrumental_score = models.IntegerField()
     album_flow_score = models.IntegerField()
-    username = models.ForeignKey('User', on_delete=models.CASCADE)
-    album_id = models.ForeignKey('Album', on_delete=models.CASCADE)
     date_given = models.DateField(auto_now_add=True)
     
     class Meta:
@@ -228,8 +228,8 @@ class Album_Rating(models.Model):
 class Song_Review(models.Model):
     review_id = models.AutoField(primary_key=True)
     username = models.ForeignKey('User', on_delete=models.CASCADE, related_name='song_reviews_posted')
-    song_id = models.ForeignKey('Song', on_delete=models.CASCADE)
-    rating_id = models.ForeignKey('Song_Rating', on_delete=models.CASCADE)
+    song_id = models.ForeignKey('Song', on_delete=models.CASCADE, related_name='reviews')
+    rating_id = models.ForeignKey('Song_Rating', on_delete=models.CASCADE, related_name='review')
     title = models.CharField(max_length=50)
     body = models.TextField()
     upvotes = models.IntegerField(default=0)
@@ -248,8 +248,8 @@ class Song_Review(models.Model):
 class Album_Review(models.Model):
     review_id = models.AutoField(primary_key=True)
     username = models.ForeignKey('User', on_delete=models.CASCADE, related_name='album_reviews_posted')
-    album_id = models.ForeignKey('Album', on_delete=models.CASCADE)
-    rating_id = models.ForeignKey('Album_Rating', on_delete=models.CASCADE)
+    album_id = models.ForeignKey('Album', on_delete=models.CASCADE, related_name='reviews')
+    rating_id = models.ForeignKey('Album_Rating', on_delete=models.CASCADE, related_name='review')
     title = models.CharField(max_length=50)
     body = models.TextField()
     upvotes = models.IntegerField(default=0)
@@ -267,7 +267,7 @@ class Album_Review(models.Model):
         
 class Song_Review_Comment(models.Model):
     comment_id = models.AutoField(primary_key=True)
-    review_id = models.ForeignKey('Song_Review', on_delete=models.CASCADE)
+    review_id = models.ForeignKey('Song_Review', on_delete=models.CASCADE, related_name='comments')
     username = models.ForeignKey('User', on_delete=models.CASCADE, related_name='song_review_comments_posted')
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
@@ -285,7 +285,7 @@ class Song_Review_Comment(models.Model):
         
 class Album_Review_Comment(models.Model):
     comment_id = models.AutoField(primary_key=True)
-    review_id = models.ForeignKey('Album_Review', on_delete=models.CASCADE)
+    review_id = models.ForeignKey('Album_Review', on_delete=models.CASCADE, related_name='comments')
     username = models.ForeignKey('User', on_delete=models.CASCADE, related_name='album_review_comments_posted')
     upvotes = models.IntegerField(default=0)
     downvotes = models.IntegerField(default=0)
