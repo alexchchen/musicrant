@@ -149,3 +149,7 @@ def review(request):
 def search(request):
     template = loader.get_template('search.html')
     return HttpResponse(template.render())
+
+def register(request):
+    template = loader.get_template('register.html')
+    return HttpResponse(template.render())
