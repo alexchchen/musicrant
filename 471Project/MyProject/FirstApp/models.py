@@ -44,8 +44,8 @@ class Artist(models.Model):
     artist_id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=128)
     bio = models.TextField()
-    albums_produced = models.ManyToManyField('Album', through='Produces_Their_Album')
-    singles_produced = models.ManyToManyField('Song', through='Produces_Their_Single')
+    albums_produced = models.ManyToManyField('Album', through='Produces_Their_Album', related_name="artist_producers")
+    singles_produced = models.ManyToManyField('Song', through='Produces_Their_Single', related_name="artist_producers")
         
         
 class Artist_Genre(models.Model):
