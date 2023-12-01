@@ -108,10 +108,13 @@ def topSongsPage(request):
              F('ratings__instrumental_score')) / 4
         )
     ).order_by('-overall_score')[:10]
-
+    artists = Artist.objects.all()
+    producers = Producer.objects.all()
     template = loader.get_template('topSongs.html')
     context = {
-        'songs': songs
+        'songs': songs,
+        'artists': artists,
+        'producers': producers
     }
     return HttpResponse(template.render(context, request))
 
