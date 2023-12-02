@@ -53,7 +53,7 @@
       <div class="SingleArtist">
         <div class="FirstLine">
           <h2 class="RankingNumber">{{ forloop.counter }}.</h2>
-          <a href="#" class="ArtistLink">{{ artist.name }}</a>
+          <a href="{% url 'artistPage' artist.artist_id %}" class="ArtistLink">{{ artist.name }}</a>
           <h2 class="OverallScore">Score: {{ artist.overall_score|floatformat:2 }} / 10</h2>
         </div>
         <p class="ArtistBio">{{ artist.bio }}</p>
