@@ -4,6 +4,7 @@ from django.template import loader
 from django.db.models import Avg
 from django.contrib.auth.decorators import login_required
 from .models import *
+from itertools import chain
 
 @login_required
 def profile(request, username):
@@ -17,8 +18,34 @@ def profile(request, username):
 
 @login_required
 def homePage(request):
+    song_reviews = Song_Review.objects.annotate(
+        overall_score =
+            (F('rating_id__originality_score') +
+             F('rating_id__lyric_score') +
+             F('rating_id__vibe_score') +
+             F('rating_id__instrumental_score')) / 4.0 
+    ).annotate(
+        votes = F('upvotes') - F('downvotes')
+    ).order_by('-votes')[:50]
+    
+    album_reviews = Album_Review.objects.annotate(
+        overall_score =
+            (F('rating_id__originality_score') +
+             F('rating_id__lyric_score') +
+             F('rating_id__vibe_score') +
+             F('rating_id__instrumental_score') +
+             F('rating_id__album_flow_score')) / 5.0 
+    ).annotate(
+        votes = F('upvotes') - F('downvotes')
+    ).order_by('-votes')[:50]
+    
+    reviews = list(chain(song_reviews, album_reviews))
+    
     template = loader.get_template('index.html')
-    return HttpResponse(template.render())
+    context = {
+        'reviews': reviews
+    }
+    return HttpResponse(template.render(context, request))
 
 
 @login_required
