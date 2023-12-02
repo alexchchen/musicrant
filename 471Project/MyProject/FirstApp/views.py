@@ -81,10 +81,14 @@ def artistPage(request, artist_id):
 def producerPage(request, producer_id):
     producer = Producer.objects.filter(producer_id=producer_id).annotate(
         overall_score = Avg(
-            (F('songs__ratings__originality_score') +
-             F('songs__ratings__lyric_score') +
-             F('songs__ratings__vibe_score') +
-             F('songs__ratings__instrumental_score')) / 4 
+            (F('albums_produced__songs__ratings__originality_score') +
+             F('albums_produced__songs__ratings__lyric_score') +
+             F('albums_produced__songs__ratings__vibe_score') +
+             F('albums_produced__songs__ratings__instrumental_score') +
+             F('singles_produced__songs__ratings__originality_score') +
+             F('singles_produced__songs__ratings__lyric_score') +
+             F('singles_produced__songs__ratings__vibe_score') +
+             F('singles_produced__songs__ratings__instrumental_score')) / 8 
         )
     )[0]
     
@@ -107,7 +111,7 @@ def producerPage(request, producer_id):
         )
     )
     
-    template = loader.get_template('artist.html')
+    template = loader.get_template('producer.html')
     context = {
         'producer': producer,
         'singles_produced': singles_produced,
