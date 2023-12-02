@@ -85,10 +85,10 @@ def producerPage(request, producer_id):
              F('albums_produced__songs__ratings__lyric_score') +
              F('albums_produced__songs__ratings__vibe_score') +
              F('albums_produced__songs__ratings__instrumental_score') +
-             F('singles_produced__songs__ratings__originality_score') +
-             F('singles_produced__songs__ratings__lyric_score') +
-             F('singles_produced__songs__ratings__vibe_score') +
-             F('singles_produced__songs__ratings__instrumental_score')) / 8 
+             F('singles_produced__ratings__originality_score') +
+             F('singles_produced__ratings__lyric_score') +
+             F('singles_produced__ratings__vibe_score') +
+             F('singles_produced__ratings__instrumental_score')) / 8 
         )
     )[0]
     
