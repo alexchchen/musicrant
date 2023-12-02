@@ -85,10 +85,10 @@
         <p class="ProducedBy">
           Produced By:
           {% for artist_producer in song.artist_producers.all %}
-            <a href="#" class="ProducerLink">{{ artist_producer.name }}</a>
+            <a href="{% url 'artistPage' artist_producer.artist_id %}" class="ProducerLink">{{ artist_producer.name }}</a>
           {% endfor %}
           {% for producer in song.producers.all %}
-            <a href="#" class="ProducerLink">{{ producer.name }}</a>
+            <a href="{% url 'producerPage' producer.producer_id%}" class="ProducerLink">{{ producer.name }}</a>
           {% endfor %}
         </p>
         <h2 class="OverallScore">
