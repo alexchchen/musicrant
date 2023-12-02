@@ -31,7 +31,6 @@ def topArtistsPage(request):
              F('songs__ratings__instrumental_score')) / 4 
         )
     ).order_by('-overall_score')[:10]
-
     template = loader.get_template('topArtists.html')
     context = {
         'artists': artists
@@ -79,9 +78,46 @@ def artistPage(request, artist_id):
 
 
 @login_required
-def producerPage(request):
+def producerPage(request, producer_id):
+    producer = Producer.objects.filter(producer_id=producer_id).annotate(
+        overall_score = Avg(
+            (F('albums_produced__songs__ratings__originality_score') +
+             F('albums_produced__songs__ratings__lyric_score') +
+             F('albums_produced__songs__ratings__vibe_score') +
+             F('albums_produced__songs__ratings__instrumental_score') +
+             F('singles_produced__ratings__originality_score') +
+             F('singles_produced__ratings__lyric_score') +
+             F('singles_produced__ratings__vibe_score') +
+             F('singles_produced__ratings__instrumental_score')) / 8 
+        )
+    )[0]
+    
+    singles_produced = producer.singles_produced.annotate(
+        overall_score = Avg(
+            (F('ratings__originality_score') +
+             F('ratings__lyric_score') +
+             F('ratings__vibe_score') +
+             F('ratings__instrumental_score')) / 4 
+        )
+    )
+    
+    albums_produced = producer.albums_produced.annotate(
+        overall_score = Avg(
+            (F('ratings__originality_score') +
+             F('ratings__lyric_score') +
+             F('ratings__vibe_score') +
+             F('ratings__instrumental_score') +
+             F('ratings__album_flow_score')) / 5 
+        )
+    )
+    
     template = loader.get_template('producer.html')
-    return HttpResponse(template.render())
+    context = {
+        'producer': producer,
+        'singles_produced': singles_produced,
+        'albums_produced': albums_produced
+    }
+    return HttpResponse(template.render(context, request))
 
 @login_required
 def giveSongRating(request):

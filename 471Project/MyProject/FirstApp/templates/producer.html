@@ -87,130 +87,60 @@
     <body>
         {% block content %}
         <div class="ArtistTitle">
-            <h1 id="title">Producer: *producer name*</h1>
-            <h2 id="overallScore"> Overall Score: Score here </h2>
+            <h1 id="title">Producer: {{ producer.name }}</h1>
+            <h2 id="overallScore"> {{ producer.overall_score|floatformat:2 }} / 10</h2>
         </div>
         <br>
         <br>
         <br>
         <br>
         <h3 id="genres">
-            Genres: *place genres here*
+            Genres:
+            {% for genre in producer.genres.all %} 
+                {{ genre.get_genre_display }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
         </h3>
         <div class="bio">
             <p>
-                Bio: Lorem ipsum dolor sit amet consectetur adipisicing elit. Cupiditate eligendi id quos voluptates unde doloribus praesentium sit, labore, deleniti aspernatur obcaecati. Est necessitatibus ipsum natus, dignissimos accusamus sint libero similique nulla facere ratione, quibusdam, pariatur reiciendis a mollitia labore corporis. Natus itaque ratione nesciunt enim laborum nemo nihil alias modi perferendis incidunt. Molestiae temporibus, ipsum tempore saepe ex fuga. Earum quo magni sed, vel autem quas dolore quidem corporis, facere eius assumenda nam temporibus. Quidem tempora alias exercitationem at enim deserunt quos a officia inventore temporibus facilis neque sunt, vel tempore voluptatibus dolores veritatis, natus porro quisquam ipsam accusantium quasi placeat libero? Quo, cum suscipit dolorum culpa reiciendis esse, laboriosam sed, quibusdam excepturi sit eos et exercitationem cupiditate iure impedit fuga dolore inventore mollitia officia velit? Iste repellendus fuga necessitatibus aut quibusdam, accusantium nobis aspernatur facere, error illum numquam similique asperiores sed! Exercitationem laboriosam dignissimos consectetur maxime! Sit modi amet molestias illum ipsa quidem, autem error mollitia in? Ipsa numquam obcaecati nam accusamus quasi sit dolor sapiente quidem quae adipisci, sequi beatae temporibus in totam maxime tempora error unde natus quisquam. Alias ipsum iste ipsa assumenda tempore obcaecati exercitationem eligendi? Animi porro nobis eligendi consequatur laboriosam voluptatibus minima, eos inventore.
+                Bio: {{ producer.bio }}
             </p>
         </div>
         <div class="songAlbumList">
             <div class="songList">
                 <h3 id="songListTitle">
-                    Songs
+                    Singles Produced
                 </h3>
-                <div class="songTitleAndScore">
-                    <div class="songName">
-                        <p> <a href="#" id="songLink">*SongTitleHere*</a> </p>
+                {% for song in singles_produced %}
+                    <div class="songTitleAndScore">
+                        <div class="songName">
+                            <p> <a href="#" id="songLink">{{ song.name }}</a> </p>
+                        </div>
+                        <div class="songRating">
+                            <p>Score: {{ song.overall_score|floatformat:2 }} / 10</p>
+                        </div>
                     </div>
-                    <div class="songRating">
-                        <p>Score: *score here*</p>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <br>
-                <div class="songTitleAndScore">
-                    <div class="songName">
-                        <p> <a href="#" id="songLink">*SongTitleHere*</a> </p>
-                    </div>
-                    <div class="songRating">
-                        <p> Score: *score here*</p>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <br>
-                <div class="songTitleAndScore">
-                    <div class="songName">
-                        <p> <a href="#" id="songLink">*SongTitleHere*</a> </p>
-                    </div>
-                    <div class="songRating">
-                        <p> Score: *score here*</p>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <br>
-                <div class="songTitleAndScore">
-                    <div class="songName">
-                        <p> <a href="#" id="songLink">*SongTitleHere*</a> </p>
-                    </div>
-                    <div class="songRating">
-                        <p> Score: *score here*</p>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <br>
+                    <br>
+                    <br>
+                    <br>
+                {% endfor %}
             </div>
             <div class="albumList">
                 <h3 id="albumListTitle">
                     Albums
                 </h3>
-                <div class="songTitleAndScore">
-                    <div class="songName">
-                        <p> <a href="#" id="songLink">*albumTitleHere*</a> </p>
+                {% for album in albums_produced %}
+                    <div class="songTitleAndScore">
+                        <div class="songName">
+                            <p> <a href="#" id="songLink">{{ album.name }} </a> </p>
+                        </div>
+                        <div class="songRating">
+                            <p>Score: {{ album.overall_score|floatformat:2 }} / 10</p>
+                        </div>
                     </div>
-                    <div class="songRating">
-                        <p>Score: *score here*</p>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <br>
-                <div class="songTitleAndScore">
-                    <div class="songName">
-                        <p> <a href="#" id="songLink">*albumTitleHere*</a> </p>
-                    </div>
-                    <div class="songRating">
-                        <p>Score: *score here*</p>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <br>
-                <div class="songTitleAndScore">
-                    <div class="songName">
-                        <p> <a href="#" id="songLink">*albumTitleHere*</a> </p>
-                    </div>
-                    <div class="songRating">
-                        <p>Score: *score here*</p>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <br>
-                <div class="songTitleAndScore">
-                    <div class="songName">
-                        <p> <a href="#" id="songLink">*albumTitleHere*</a> </p>
-                    </div>
-                    <div class="songRating">
-                        <p>Score: *score here*</p>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <br>
-                <div class="songTitleAndScore">
-                    <div class="songName">
-                        <p> <a href="#" id="songLink">*albumTitleHere*</a> </p>
-                    </div>
-                    <div class="songRating">
-                        <p>Score: *score here*</p>
-                    </div>
-                </div>
-                <br>
-                <br>
-                <br>
+                    <br>
+                    <br>
+                    <br>
+                {% endfor %}
             </div>
         </div>
         {% endblock %}
