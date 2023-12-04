@@ -6,15 +6,6 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from itertools import chain
 
-@login_required
-def profile(request, username):
-    user = User.objects.get(username=username)
-    template = loader.get_template('profile.html')
-    context = {
-        'user': user,
-    }
-    return HttpResponse(template.render(context, request))
-
 
 @login_required
 def homePage(request):
