@@ -12,7 +12,7 @@ urlpatterns = [
     path('topSongs/', views.topSongsPage, name ='topSongsPage'),
     path('login/', auth_views.LoginView.as_view(template_name="login.html", next_page="/"), name ='login'),
     path('logout/', auth_views.LogoutView.as_view(), name = 'logout'),
-    path('user/', views.userPage, name ='userPage'),
+    path('user/<str:username>', views.userPage, name ='userPage'),
     path('singleSong/', views.singleSongPage, name ='singleSongPage'),
     path('singleAlbum/', views.singleAlbumPage, name ='singleAlbumPage'),
     path('giveReview/', views.giveReview, name='giveReviewPage'),
