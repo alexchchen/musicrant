@@ -240,13 +240,13 @@ def userPage(request, username):
 
 
 @login_required
-def singleSongPage(request):
+def singleSongPage(request, song_id):
     template = loader.get_template('singleSong.html')
     return HttpResponse(template.render())
 
 
 @login_required
-def singleAlbumPage(request):
+def singleAlbumPage(request, album_id):
     template = loader.get_template('singleAlbum.html')
     context = {
         
@@ -267,8 +267,10 @@ def giveAlbumReview(request):
 @login_required
 def review(request):
     template = loader.get_template('review.html')
-    return HttpResponse(template.render())
-
+    context = {
+        
+    }
+    return HttpResponse(template.render(context, request))
 
 @login_required
 def search(request):
