@@ -182,12 +182,12 @@
     <div class="firstLine"> 
       <h1 class="dateReleased">Date Released: {{ album.date_released }}</h1>
       <h1 class="ArtistName">
-        Artist: <a href="#" id="artistLink">{{ album.artist_id.name}}</a>
+        Artist: <a href="{% url 'artistPage' album.artist_id %}" id="artistLink">{{ album.artist_id.name}}</a>
       </h1>
       <h1 class="ProducerName">
         Producer: 
         {% for producer in album.producers.all %}
-        <a href="#" id="producerLink">{{ producer.name }}</a>
+        <a href="{% url 'producerPage' producer.producer_id %}" id="producerLink">{{ producer.name }}</a>
         {% endfor %}
       </h1>
       <h1 class="score">Score: {{ album.album_overall_score|floatformat:2 }}/10</h1>
@@ -226,7 +226,7 @@
         </p>
         <label id="upvotesLabel">Upvotes: {{ review.upvotes }}</label>
         <button id="upButton" type="button">👍</button>
-        <label id="downvotesLabel">Downvotes {{ review.downvotes }}: </label>
+        <label id="downvotesLabel">Downvotes: {{ review.downvotes }}</label>
         <button id="downButton" type="button">👎</button>
       </article>
     </div>
