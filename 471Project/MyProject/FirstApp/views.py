@@ -152,13 +152,15 @@ def producerPage(request, producer_id):
 @login_required
 def giveSongRating(request):
     template = loader.get_template('giveSongRating.html')
-    return HttpResponse(template.render())
+    context = {}
+    return HttpResponse(template.render(context, request))
 
 
 @login_required
 def giveAlbumRating(request):
     template = loader.get_template('giveAlbumRating.html')
-    return HttpResponse(template.render())
+    context = {}
+    return HttpResponse(template.render(context, request))
 
 
 @login_required
@@ -322,12 +324,14 @@ def singleAlbumPage(request, album_id):
 @login_required
 def giveSongReview(request):
     template = loader.get_template('giveSongReview.html')
-    return HttpResponse(template.render())
+    context = {}
+    return HttpResponse(template.render(context, request))
 
 @login_required
 def giveAlbumReview(request):
     template = loader.get_template('giveAlbumReview.html')
-    return HttpResponse(template.render())
+    context = {}
+    return HttpResponse(template.render(context, request))
 
 
 @login_required
@@ -368,7 +372,8 @@ def albumReview(request, review_id):
 @login_required
 def search(request):
     template = loader.get_template('search.html')
-    return HttpResponse(template.render())
+    context = {}
+    return HttpResponse(template.render(context, request))
 
 
 def register(request):
