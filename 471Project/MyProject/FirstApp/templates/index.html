@@ -110,7 +110,11 @@
       <div class="homePageReview">
         <article id="reviewArticle">
           <div class="reviewTitleSection">
-            <a href="{% url 'reviewPage' %}" id="reviewTitleLink">
+            {% if review.song_id %}
+            <a href="{% url 'songReviewPage' review.review_id %}" id="reviewTitleLink">
+            {% elif review.album_id %}
+            <a href="{% url 'albumReviewPage' review.review_id %}" id="reviewTitleLink">            
+            {% endif %}
               <h3 id="reviewTitle">{{ review.title }}</h3>
             </a>
             <h4 id="reviewScore">Score: {{ review.overall_score|floatformat:2 }} / 10</h4>

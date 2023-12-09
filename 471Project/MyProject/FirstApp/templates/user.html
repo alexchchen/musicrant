@@ -99,9 +99,9 @@
         <article id="reviewArticle">
           <div class="reviewTitleSection">
             {% if review.song_id %}
-              <a href="{% url 'songReviewPage' review.review_id %}" id="reviewTitleLink">
+            <a href="{% url 'songReviewPage' review.review_id %}" id="reviewTitleLink">
             {% elif review.album_id %}
-              <a href="{% url 'albumReviewPage' review.review_id %}" id="reviewTitleLink">            
+            <a href="{% url 'albumReviewPage' review.review_id %}" id="reviewTitleLink">            
             {% endif %}
               <h3 id="reviewTitle">{{ review.title }}</h3>
             </a>
