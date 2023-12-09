@@ -38,6 +38,9 @@ class Profile(models.Model):
                 name = 'check_user_age'
             ),
         ]
+        
+    def __str__(self):
+        return self.user.username
        
         
 class Artist(models.Model):
@@ -47,7 +50,10 @@ class Artist(models.Model):
     albums_produced = models.ManyToManyField('Album', through='Produces_Their_Album', related_name="artist_producers")
     singles_produced = models.ManyToManyField('Song', through='Produces_Their_Single', related_name="artist_producers")
         
+    def __str__(self):
+        return self.name
         
+
 class Artist_Genre(models.Model):
     artist_id = models.ForeignKey('Artist', on_delete=models.CASCADE, related_name='genres')
     genre = models.CharField(max_length=50, choices=Genre.choices)
@@ -66,6 +72,9 @@ class Producer(models.Model):
     bio = models.TextField(blank=True)
     albums_produced = models.ManyToManyField('Album', through='Produces_Album', related_name="producers")
     singles_produced = models.ManyToManyField('Song', through='Produces_Single', related_name="producers")
+    
+    def __str__(self):
+        return self.name
         
 
 class Producer_Genre(models.Model):
@@ -93,6 +102,9 @@ class Album(models.Model):
             )
         ]
         
+    def __str__(self):
+        return self.name
+        
         
 class Album_Genre(models.Model):
     album_id = models.ForeignKey('Album', on_delete=models.CASCADE, related_name='genres')
@@ -119,6 +131,9 @@ class Song(models.Model):
                 fields=['song_id', 'artist_id'], name='song_primary_key'
             )
         ]
+        
+    def __str__(self):
+        return self.name
         
         
 class Song_Genre(models.Model):
