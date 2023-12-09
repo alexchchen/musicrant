@@ -71,21 +71,21 @@
     {% endif %}
 
     <form method="post" action="{% url 'login' %}">
-    {% csrf_token %}
-    <table class="loginTable">
-    <tr>
-        <td class="usernameText">{{ form.username.label_tag }}</td>
-        <td id="usernameBox">{{ form.username }}</td>
-    </tr>
-    <tr>
-        <td class="passwordText">{{ form.password.label_tag }}</td>
-        <td id="passwordBox">{{ form.password }}</td>
-    </tr>
-    </table>
+      {% csrf_token %}
+      <table class="loginTable">
+      <tr>
+          <td class="usernameText">{{ form.username.label_tag }}</td>
+          <td id="usernameBox">{{ form.username }}</td>
+      </tr>
+      <tr>
+          <td class="passwordText">{{ form.password.label_tag }}</td>
+          <td id="passwordBox">{{ form.password }}</td>
+      </tr>
+      </table>
 
-    <input class="SignIn" type="submit" value="Sign In">
-    <input class="Register" type="submit" value="Register">
-    <input type="hidden" name="next" value="{{ next }}">
+      <input class="SignIn" type="submit" value="Sign In">
+      <input class="Register" type="submit" value="Register">
+      <input type="hidden" name="next" value="{{ next }}">
     </form>
 
     {# Assumes you set up the password_reset view in your URLconf #}
