@@ -298,6 +298,8 @@ def singleAlbumPage(request, album_id):
         album_flow_score = Avg('ratings__album_flow_score')
     )[0]
 
+    songs = Song.objects.filter(album_id=album_id)
+
     reviews = Album_Review.objects.filter(album_id=album_id).annotate (
         overall_score = 
         (F('rating_id__originality_score') +
@@ -312,7 +314,8 @@ def singleAlbumPage(request, album_id):
     template = loader.get_template('singleAlbum.html')
     context = {
         'album': album,
-        'reviews': reviews
+        'reviews': reviews,
+        'songs' : songs
     }
     return HttpResponse(template.render(context, request))
 

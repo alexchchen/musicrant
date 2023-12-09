@@ -87,6 +87,9 @@
       .ThirdLine {
         margin-left: 170px;
       }
+      .songOnAlbum {
+        margin-left: 170px;
+      }
       .Rating {
         font-size: 30px;
         margin-left: 26%;
@@ -100,6 +103,10 @@
         font-size: 16px;
       }
       .allReviews {
+        margin-top: 50px;
+        margin-left: 170px;
+      }
+      .songsOnAlbum {
         margin-left: 170px;
       }
       .singleAlbumPageReview {
@@ -173,6 +180,13 @@
       #downvotesLabel {
         margin-block: 5px;
       }
+      #songOnAlbumLink {
+        color: black;
+        text-decoration: none;
+      }
+      #songOnAlbumLink:hover {
+        color: grey;
+      }
       {% endblock %}
     </style>
   </head>
@@ -209,6 +223,12 @@
       <button class="Rating">Give Rating</button>
       <button class="Review">Give Review</button>
     </div>
+    <h2 class="songOnAlbum">Songs On Album:</h2>
+    {% for song in songs %}
+      <div class="songOnAlbum">
+        <a href="#" id="songOnAlbumLink">{{ song.name }}</a>
+      </div>
+    {% endfor %}
     <h2 class="allReviews">All Reviews:</h2>
     {% for review in reviews %}
     <div class="singleAlbumPageReview">
