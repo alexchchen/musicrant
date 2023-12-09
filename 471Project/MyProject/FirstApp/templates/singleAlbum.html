@@ -203,7 +203,7 @@
     <div class="ThirdLine">
       <p class="GenreParagraph">Genres: 
         {% for genre in album.genres.all %}
-        {{ genre.get_genre_display }} {% if not forloop.last %}, {% endif %}
+        {{ genre.get_genre_display }}{% if not forloop.last %}, {% endif %}
         {% endfor %}
       </p>
       <button class="Rating">Give Rating</button>
