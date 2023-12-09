@@ -20,5 +20,6 @@ urlpatterns = [
     path('giveSongReview/', views.giveAlbumReview, name='giveAlbumReviewPage'),
     path('search/', views.search, name='searchPage'),
     path('register/', views.register, name='registerPage'),
-    path('review/', views.review, name='reviewPage')
+    path('songReview/<int:review_id>', views.songReview, name='songReviewPage'),
+    path('albumReview/<int:review_id>', views.albumReview, name='albumReviewPage')
 ]

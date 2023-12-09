@@ -1,0 +1,168 @@
+{% extends "master.html" %}
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Review</title>
+        <style>
+            {% block pageStyle %}
+            #datePosted {
+                padding-left: 170px;
+                color: black;
+            }
+            #profileName {
+                padding-left: 170px;
+                color: black;
+            }
+            #songName {
+                padding-left: 170px;
+                color: black;
+            }
+            #artistName {
+                padding-left: 170px;
+                color: black;
+            }
+            #reviewTitle {
+                padding-left: 170px;
+            }
+            #reviewLink {
+                text-decoration: none;
+                color: black;
+            }
+            #reviewLink:hover{
+                color: gray;
+            }
+            #artistLink {
+                color: black;
+                text-decoration: none;
+            }
+            #artistLink:hover{
+                color: gray;
+            }
+            #userLink{
+                color: black;
+                text-decoration: none;
+            }
+            #userLink:hover{
+                color: gray;
+            }
+            #reviewBody{
+                padding-left: 170px;
+                padding-right: 2%;
+                text-align: justify;
+            }
+            #genreParagraph{
+                padding-left: 170px;
+                color: gray;
+            }
+            #upvotesLabel{
+                padding-left: 170px;
+            }
+            #scorePara{
+                padding-left: 170px;
+            }
+            #commentsHeading{
+                padding-left: 170px;
+            }
+            #commentForm{
+                padding-left: 170px;
+            }
+            #wrComment{
+                resize: none;
+                width: 97.5%;
+                padding-right: 2%;
+                height: 100px;
+            }
+            #formList{
+                list-style-type: none;
+                padding-left: 0px;
+            }
+            .comments {
+                margin-left: 170px;
+                border-style: solid;
+                border-color: gray;
+                border-width: 1px;
+                padding-right: 2%;
+                padding-bottom: 5px;
+            }
+            #commentorLink{
+                text-decoration: none;
+                color: black;
+            }
+            #commentorLink:hover{
+                color:grey;
+            }
+            #commentorName {
+                padding-left: 5px;
+            }
+            #commentDatePosted{
+                padding-left: 5px;
+            }
+            #commentBody{
+                padding-left: 5px;
+            }
+            #upvotesLabelComment{
+                padding-left: 5px;
+            }
+            {% endblock %}
+        </style>
+    </head>
+    <body>
+        {% block content %}
+        <h1 id="reviewTitle">
+            {{ review.title }}
+        </h1>
+        <h3 id="datePosted">{{ review.date_posted }}</h2>
+        <h2 id="profileName">User: <a href="{% url 'userPage' review.username.username %}" id="userLink">{{ review.username.username }}</a> </h2>
+        <h2 id="songName">Album: <a href="{% url 'singleAlbumPage' review.album_id.album_id %}" id="reviewLink">{{ review.album_id.name }}</a></h2>
+        <h2 id="artistName">Artist: <a href="{% url 'artistPage' review.album_id.artist_id.artist_id %}"id=artistLink>{{ review.album_id.artist_id.name }}</a></h2>
+        <p id="genreParagraph">
+            Genres:
+            {% for genre in review.album_id.genres.all %} 
+                {{ genre.get_genre_display }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
+        </p>
+        <p id="scorePara">Originality score: {{ review.rating_id.originality_score }}/10</p>
+        <p id="scorePara">Lyric score: {{ review.rating_id.lyric_score }}/10</p>
+        <p id="scorePara">Vibe score: {{ review.rating_id.vibe_score }}/10</p>
+        <p id="scorePara">Instrumental score: {{ review.rating_id.instrumental_score }}/10</p>
+        <p id="scorePara">Album flow score: {{ review.rating_id.album_flow_score }}/10</p>
+        <p id="scorePara">Overall score: {{ review.overall_score|floatformat:2 }}/10</p>
+        <p id="reviewBody">
+            {{ review.body }}
+        </p>
+        <label id="upvotesLabel">Upvotes: {{ review.upvotes }}</label>
+        <button id="upButton" type="button">👍</button>
+        <label id="downvotesLabel">Downvotes: {{ review.downvotes }}</label>
+        <button id="downButton" type="button">👎</button>
+        <h3 id="commentsHeading">
+            Comments
+        </h3>
+        <form action="" id="commentForm">
+            <ul id="formList">
+                <li>
+                    <textarea name="writeComment" placeholder="Add a comment..." id="wrComment"></textarea>
+
+                </li>
+                <li>
+                    <input type="submit" name="submit" id="submit" value="Post">
+                </li>
+            </ul>
+        </form>
+        {% for comment in review.comments.all %}
+            <div class="comments">
+                <h4 id="commentorName">
+                    <a href="{% url 'userPage' comment.username.username %}" id="commentorLink">{{ comment.username.username }}</a>
+                </h4>
+                <p id="commentDatePosted">{{ comment.date_posted }}</p>
+                <p id="commentBody">{{ comment.body }}</p>
+                <label id="upvotesLabelComment">Upvotes: {{ comment.upvotes }}</label>
+                <button id="upButtonComment" type="button">👍</button>
+                <label id="downvotesLabelComment">Downvotes: {{ comment.downvotes }}</label>
+                <button id="downButtonComment" type="button">👎</button>
+            </div>
+            <br>
+        {% endfor %}
+        {% endblock %}
+    </body>
+</html>

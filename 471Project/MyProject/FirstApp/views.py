@@ -296,12 +296,39 @@ def giveAlbumReview(request):
 
 
 @login_required
-def review(request):
-    template = loader.get_template('review.html')
+def songReview(request, review_id):
+    review = Song_Review.objects.filter(review_id=review_id).annotate(
+        overall_score =
+            (F('rating_id__originality_score') +
+             F('rating_id__lyric_score') +
+             F('rating_id__vibe_score') +
+             F('rating_id__instrumental_score')) / 4.0
+    )[0]
+    
+    template = loader.get_template('songReview.html')
     context = {
-        
+        'review': review
     }
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def albumReview(request, review_id):
+    review = Album_Review.objects.filter(review_id=review_id).annotate(
+        overall_score =
+            (F('rating_id__originality_score') +
+             F('rating_id__lyric_score') +
+             F('rating_id__vibe_score') +
+             F('rating_id__instrumental_score') +
+             F('rating_id__album_flow_score')) / 5.0
+    )[0]
+    
+    template = loader.get_template('albumReview.html')
+    context = {
+        'review': review
+    }
+    return HttpResponse(template.render(context, request))
+
 
 @login_required
 def search(request):
