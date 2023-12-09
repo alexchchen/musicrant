@@ -275,6 +275,7 @@ def search(request):
     template = loader.get_template('search.html')
     return HttpResponse(template.render())
 
+
 def register(request):
     form = RegisterForm(auto_id=True)
     
