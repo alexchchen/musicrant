@@ -107,9 +107,9 @@
           <br />
           <h4 id="reviewAlbumSongName">
             {% if review.song_id %}
-              Song: <a href="#" id="albumLink">{{ review.song_id.name }}</a>
+              Song: <a href="{% url 'singleSongPage' review.song_id.song_id %}" id="albumLink">{{ review.song_id.name }}</a>
             {% elif review.album_id %}
-              Album: <a href="#" id="albumLink">{{ review.album_id.name }}</a>              
+              Album: <a href="{% url 'singleAlbumPage' review.album_id.album_id %}" id="albumLink">{{ review.album_id.name }}</a>              
             {% endif %}
           </h4>
           <h4 id="reviewArtistName">

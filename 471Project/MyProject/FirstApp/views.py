@@ -278,9 +278,44 @@ def singleSongPage(request, song_id):
 
 @login_required
 def singleAlbumPage(request, album_id):
+    album = Album.objects.filter(album_id=album_id).annotate(
+        album_overall_score = Avg(
+            (F('ratings__originality_score') + 
+             F('ratings__lyric_score') +
+             F('ratings__vibe_score') +
+             F('ratings__instrumental_score') + 
+             F('ratings__album_flow_score')) / 5  
+        )
+    ).annotate(
+        originality_score = Avg(F('ratings__originality_score'))
+    ).annotate(
+        lyric_score = Avg(F('ratings__lyric_score'))
+    ).annotate(
+        vibe_score = Avg(F('ratings__vibe_score'))
+    ).annotate(
+        instrumental_score = Avg(F('ratings__instrumental_score'))
+    ).annotate(
+        album_flow_score = Avg('ratings__album_flow_score')
+    )[0]
+
+    songs = Song.objects.filter(album_id=album_id)
+
+    reviews = Album_Review.objects.filter(album_id=album_id).annotate (
+        overall_score = 
+        (F('rating_id__originality_score') +
+         F('rating_id__lyric_score') +
+         F('rating_id__vibe_score') +
+         F('rating_id__instrumental_score') +
+         F('rating_id__instrumental_score')) / 5.0
+    ).annotate(
+        votes = F('upvotes') - F('downvotes')
+    ).order_by('-votes')[:50]
+    
     template = loader.get_template('singleAlbum.html')
     context = {
-        
+        'album': album,
+        'reviews': reviews,
+        'songs' : songs
     }
     return HttpResponse(template.render(context, request))
 
