@@ -1,10 +1,22 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.db.models import Avg
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import *
+from .forms import RegisterForm
 from itertools import chain
+
+
+@login_required
+def profile(request, username):
+    user = User.objects.get(username=username)
+    template = loader.get_template('profile.html')
+    context = {
+        'user': user,
+    }
+    return HttpResponse(template.render(context, request))
 
 
 @login_required
@@ -137,17 +149,38 @@ def producerPage(request, producer_id):
     }
     return HttpResponse(template.render(context, request))
 
+@login_required
+def giveSongRating(request):
+    template = loader.get_template('giveSongRating.html')
+    return HttpResponse(template.render())
+
 
 @login_required
-def giveRating(request):
-    template = loader.get_template('giveRating.html')
+def giveAlbumRating(request):
+    template = loader.get_template('giveAlbumRating.html')
     return HttpResponse(template.render())
 
 
 @login_required
 def topAlbumsPage(request):
+    albums = Album.objects.annotate(
+        overall_score = Avg(
+            (F('ratings__originality_score') + 
+             F('ratings__lyric_score') +
+             F('ratings__vibe_score') +
+             F('ratings__instrumental_score') +
+             F('ratings__album_flow_score')) / 5
+        )
+    ).order_by('-overall_score')[:10]
+    artists = Artist.objects.all()
+    producers = Producer.objects.all()
     template = loader.get_template('topAlbums.html')
-    return HttpResponse(template.render())
+    context = {
+        'albums': albums,
+        'artists': artists,
+        'producers': producers
+    }
+    return HttpResponse(template.render(context, request))
 
 
 @login_required
@@ -247,14 +280,18 @@ def singleSongPage(request, song_id):
 def singleAlbumPage(request):
     template = loader.get_template('singleAlbum.html')
     context = {
-
+        
     }
     return HttpResponse(template.render(context, request))
 
+@login_required
+def giveSongReview(request):
+    template = loader.get_template('giveSongReview.html')
+    return HttpResponse(template.render())
 
 @login_required
-def giveReview(request):
-    template = loader.get_template('giveReview.html')
+def giveAlbumReview(request):
+    template = loader.get_template('giveAlbumReview.html')
     return HttpResponse(template.render())
 
 
@@ -269,6 +306,29 @@ def search(request):
     template = loader.get_template('search.html')
     return HttpResponse(template.render())
 
+
 def register(request):
+    form = RegisterForm(auto_id=True)
+    
+    if request.method == 'POST':
+        form = RegisterForm(request.POST, auto_id=True)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            user.profile.fname = form.cleaned_data.get('fname')
+            user.profile.lname = form.cleaned_data.get('lname')
+            user.profile.age = form.cleaned_data.get('age')
+            user.profile.gender = form.cleaned_data.get('gender')
+            user.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+
+            return redirect('/')
+    
     template = loader.get_template('register.html')
-    return HttpResponse(template.render())
+    context = {
+        'form': form
+    }
+    return HttpResponse(template.render(context, request))

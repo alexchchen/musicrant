@@ -73,90 +73,36 @@
   <body>
     {% block content %}
     <h4 class="TopAlbumsPageTitle">Top Albums</h4>
-    <div class="SingleAlbum">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">1.</h2>
-        <a href="{% url 'singleAlbumPage' %}" class="AlbumLink">Album Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
+    {% for album in albums %}
+      <div class="SingleAlbum">
+        <div class="FirstLine">
+          <h2 class="RankingNumber">{{ forloop.counter }}.</h2>
+          <a href="{% url 'singleAlbumPage' album.album_id %}" class="AlbumLink">{{ album.name }}</a>
+              <!-- {% for artist in artists %}
+                {% if album.artist_id.artist_id == artist.artist_id %} -->
+                  <p class="MadeBy">
+                    Made By: <a href="{% url 'artistPage' album.artist_id.artist_id %}" class="ArtistLink"> {{ album.artist_id.name }} </a>
+                  </p>
+                <!-- {% endif %}
+              {% endfor %} -->
+          <p class="ProducedBy">
+            Produced By:
+            {% for artist_producer in album.artist_producers.all %}
+              <a href="{% url 'artistPage' album.artist_id.artist_id %}" class="ProducerLink">{{ artist_producer.name }}</a>
+            {% endfor %}
+            {% for producer in album.producers.all %}
+              <a href="{% url 'producerPage' producer.producer_id %}" class="ProducerLink">{{ producer.name }}</a>
+            {% endfor %}
+          </p>
+          <h2 class="OverallScore"> score: {{ album.overall_score|floatformat:2 }} / 10</h2>
+        </div>
+        <p class="GenreParagraph">Genres: 
+          {% for genre in album.genres.all %}
+            {{ genre.get_genre_display }}{% if not forloop.last %}, {% endif %}
+            {% endfor %}
         </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
       </div>
-      <p class="GenreParagraph">Genres: *place albums genres here*</p>
-    </div>
-    <div class="SingleAlbum">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">2.</h2>
-        <a href="{% url 'singleAlbumPage' %}" class="AlbumLink">Album Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
-      </div>
-      <p class="GenreParagraph">Genres: *place albums genres here*</p>
-    </div>
-    <div class="SingleAlbum">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">3.</h2>
-        <a href="{% url 'singleAlbumPage' %}" class="AlbumLink">Album Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
-      </div>
-      <p class="GenreParagraph">Genres: *place albums genres here*</p>
-    </div>
-    <div class="SingleAlbum">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">4.</h2>
-        <a href="{% url 'singleAlbumPage' %}" class="AlbumLink">Album Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
-      </div>
-      <p class="GenreParagraph">Genres: *place albums genres here*</p>
-    </div>
-    <div class="SingleAlbum">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">5.</h2>
-        <a href="{% url 'singleAlbumPage' %}" class="AlbumLink">Album Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
-      </div>
-      <p class="GenreParagraph">Genres: *place albums genres here*</p>
-    </div>
-    <div class="SingleAlbum">
-      <div class="FirstLine">
-        <h2 class="RankingNumber">6.</h2>
-        <a href="{% url 'singleAlbumPage' %}" class="AlbumLink">Album Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-        <h2 class="OverallScore">Score: *Overall Score Here*</h2>
-      </div>
-      <p class="GenreParagraph">Genres: *place albums genres here*</p>
-    </div>
+    {% endfor %} 
     {% endblock %}
   </body>
 </html>
