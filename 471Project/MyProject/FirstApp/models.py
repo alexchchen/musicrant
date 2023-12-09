@@ -180,6 +180,9 @@ class Song_Rating(models.Model):
                 fields=['rating_id', 'username'], name='song_rating_primary_key'
             )
         ]
+    
+    def __str__(self):
+        return str(self.rating_id)
         
 
 class Album_Rating(models.Model):
@@ -219,6 +222,9 @@ class Album_Rating(models.Model):
                 fields=['rating_id', 'username'], name='album_rating_primary_key'
             )
         ]
+    
+    def __str__(self):
+        return str(self.rating_id)
 
 
 class Song_Review(models.Model):
@@ -239,6 +245,9 @@ class Song_Review(models.Model):
                 fields=['review_id', 'username'], name='song_review_primary_key'
             )
         ]
+        
+    def __str__(self):
+        return str(self.review_id)
 
 
 class Album_Review(models.Model):
@@ -259,6 +268,9 @@ class Album_Review(models.Model):
                 fields=['review_id', 'username'], name='album_review_primary_key'
             )
         ]
+
+    def __str__(self):
+        return str(self.review_id)
         
         
 class Song_Review_Comment(models.Model):
@@ -278,6 +290,9 @@ class Song_Review_Comment(models.Model):
             )
         ]
         
+    def __str__(self):
+        return str(self.comment_id)
+        
         
 class Album_Review_Comment(models.Model):
     comment_id = models.AutoField(primary_key=True)
@@ -295,6 +310,9 @@ class Album_Review_Comment(models.Model):
                 fields=['comment_id', 'review_id'], name='album_review_comment_primary_key'
             )
         ]
+        
+    def __str__(self):
+        return str(self.comment_id)
         
         
 class Upvotes_Downvotes_Song_Review(models.Model):
