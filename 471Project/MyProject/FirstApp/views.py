@@ -6,15 +6,6 @@ from django.contrib.auth.decorators import login_required
 from .models import *
 from itertools import chain
 
-@login_required
-def profile(request, username):
-    user = User.objects.get(username=username)
-    template = loader.get_template('profile.html')
-    context = {
-        'user': user,
-    }
-    return HttpResponse(template.render(context, request))
-
 
 @login_required
 def homePage(request):
@@ -39,8 +30,8 @@ def homePage(request):
         votes = F('upvotes') - F('downvotes')
     ).order_by('-votes')[:50]
     
-    reviews = list(chain(song_reviews, album_reviews))
-    
+    reviews = list(sorted(chain(song_reviews, album_reviews), key=lambda x: x.votes, reverse=True))
+        
     template = loader.get_template('index.html')
     context = {
         'reviews': reviews
