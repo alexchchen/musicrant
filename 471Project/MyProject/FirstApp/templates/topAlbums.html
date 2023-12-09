@@ -88,10 +88,10 @@
           <p class="ProducedBy">
             Produced By:
             {% for artist_producer in album.artist_producers.all %}
-              <a href="{% url 'producer' artist_producer.artist_id %}" class="ProducerLink">{{ artist_producer.name }}</a>
+              <a href="{% url 'artistPage' album.artist_id.artist_id %}" class="ProducerLink">{{ artist_producer.name }}</a>
             {% endfor %}
             {% for producer in album.producers.all %}
-              <a href="{% url 'producer' producer.producer_id %}" class="ProducerLink">{{ producer.name }}</a>
+              <a href="{% url 'producerPage' producer.producer_id %}" class="ProducerLink">{{ producer.name }}</a>
             {% endfor %}
           </p>
           <h2 class="OverallScore"> score: {{ album.overall_score|floatformat:2 }} / 10</h2>
