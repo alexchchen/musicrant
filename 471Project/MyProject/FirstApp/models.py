@@ -51,7 +51,7 @@ class Artist(models.Model):
     singles_produced = models.ManyToManyField('Song', through='Produces_Their_Single', related_name="artist_producers")
         
     def __str__(self):
-        return self.name
+        return str(self.artist_id)
         
 
 class Artist_Genre(models.Model):
@@ -74,7 +74,7 @@ class Producer(models.Model):
     singles_produced = models.ManyToManyField('Song', through='Produces_Single', related_name="producers")
     
     def __str__(self):
-        return self.name
+        return str(self.producer_id)
         
 
 class Producer_Genre(models.Model):
@@ -103,7 +103,7 @@ class Album(models.Model):
         ]
         
     def __str__(self):
-        return self.name
+        return str(self.album_id)
         
         
 class Album_Genre(models.Model):
@@ -133,7 +133,7 @@ class Song(models.Model):
         ]
         
     def __str__(self):
-        return self.name
+        return str(self.song_id)
         
         
 class Song_Genre(models.Model):

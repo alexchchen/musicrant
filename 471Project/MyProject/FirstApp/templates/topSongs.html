@@ -78,17 +78,17 @@
     <div class="SingleSong">
       <div class="FirstLine">
         <h2 class="RankingNumber">{{ forloop.counter }}.</h2>
-        <a href="{% url 'singleSongPage' %}" class="SongLink">{{ song.name}}</a>
+        <a href="{% url 'singleSongPage' song.song_id %}" class="SongLink">{{ song.name}}</a>
         <p class="MadeBy">
           Made By: <a href="{% url 'artistPage' song.artist_id.artist_id %}" class="ArtistLink">{{ song.artist_id.name }}</a>
         </p>
         <p class="ProducedBy">
           Produced By:
           {% for artist_producer in song.artist_producers.all %}
-            <a href="#" class="ProducerLink">{{ artist_producer.name }}</a>
+            <a href="{% url 'artistPage' artist_producer.artist_id %}" class="ProducerLink">{{ artist_producer.name }}</a>
           {% endfor %}
           {% for producer in song.producers.all %}
-            <a href="#" class="ProducerLink">{{ producer.name }}</a>
+            <a href="{% url 'producerPage' producer.producer_id%}" class="ProducerLink">{{ producer.name }}</a>
           {% endfor %}
         </p>
         <h2 class="OverallScore">
