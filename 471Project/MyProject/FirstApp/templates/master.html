@@ -108,7 +108,7 @@
         {% if adminFlag == 1%}
         <a href="#">Admin tools</a>
         {%endif%}
-        <a href="{% url 'userPage' user.username %}">Profile</a>
+        <a href="{% url 'userPage' %}">Profile</a>
         <a href="{% url 'logout' %}">Logout</a>
       </aside>
     </div>

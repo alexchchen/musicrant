@@ -4,39 +4,21 @@ from django.template import loader
 from django.db.models import Avg
 from django.contrib.auth.decorators import login_required
 from .models import *
-from itertools import chain
+
+@login_required
+def profile(request, username):
+    user = User.objects.get(username=username)
+    template = loader.get_template('profile.html')
+    context = {
+        'user': user,
+    }
+    return HttpResponse(template.render(context, request))
 
 
 @login_required
 def homePage(request):
-    song_reviews = Song_Review.objects.annotate(
-        overall_score =
-            (F('rating_id__originality_score') +
-             F('rating_id__lyric_score') +
-             F('rating_id__vibe_score') +
-             F('rating_id__instrumental_score')) / 4.0 
-    ).annotate(
-        votes = F('upvotes') - F('downvotes')
-    ).order_by('-votes')[:50]
-    
-    album_reviews = Album_Review.objects.annotate(
-        overall_score =
-            (F('rating_id__originality_score') +
-             F('rating_id__lyric_score') +
-             F('rating_id__vibe_score') +
-             F('rating_id__instrumental_score') +
-             F('rating_id__album_flow_score')) / 5.0 
-    ).annotate(
-        votes = F('upvotes') - F('downvotes')
-    ).order_by('-votes')[:50]
-    
-    reviews = list(sorted(chain(song_reviews, album_reviews), key=lambda x: x.votes, reverse=True))
-        
     template = loader.get_template('index.html')
-    context = {
-        'reviews': reviews
-    }
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render())
 
 
 @login_required
@@ -193,38 +175,9 @@ def topSongsPage(request):
 
 
 @login_required
-def userPage(request, username):
-    user = User.objects.get(username=username)
-    
-    song_reviews = Song_Review.objects.filter(username=user.id).annotate(
-        overall_score =
-            (F('rating_id__originality_score') +
-             F('rating_id__lyric_score') +
-             F('rating_id__vibe_score') +
-             F('rating_id__instrumental_score')) / 4.0 
-    ).annotate(
-        votes = F('upvotes') - F('downvotes')
-    ).order_by('-votes')[:50]
-    
-    album_reviews = Album_Review.objects.filter(username=user.id).annotate(
-        overall_score =
-            (F('rating_id__originality_score') +
-             F('rating_id__lyric_score') +
-             F('rating_id__vibe_score') +
-             F('rating_id__instrumental_score') +
-             F('rating_id__album_flow_score')) / 5.0 
-    ).annotate(
-        votes = F('upvotes') - F('downvotes')
-    ).order_by('-votes')[:50]
-    
-    reviews = list(sorted(chain(song_reviews, album_reviews), key=lambda x: x.votes, reverse=True))    
-    
+def userPage(request):
     template = loader.get_template('user.html')
-    context = {
-        'user': user,
-        'reviews': reviews
-    }
-    return HttpResponse(template.render(context, request))
+    return HttpResponse(template.render())
 
 
 @login_required

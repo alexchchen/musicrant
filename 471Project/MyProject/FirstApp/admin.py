@@ -54,10 +54,10 @@ class SongGenreAdmin(admin.ModelAdmin):
     list_display = ("song_id", "genre")
     
 class SongRatingAdmin(admin.ModelAdmin):
-    list_display = ("rating_id", "username", "song_id", "originality_score", "lyric_score", "vibe_score", "instrumental_score", "date_given")
+    list_display = ("rating_id", "username", "song_id", "date_given")
     
 class AlbumRatingAdmin(admin.ModelAdmin):
-    list_display = ("rating_id", "username", "album_id", "originality_score", "lyric_score", "vibe_score", "instrumental_score", "album_flow_score", "date_given")
+    list_display = ("rating_id", "username", "album_id", "date_given")
     
 class SongReviewAdmin(admin.ModelAdmin):
     list_display = ("review_id", "username", "song_id", "rating_id", "title", "date_posted")
