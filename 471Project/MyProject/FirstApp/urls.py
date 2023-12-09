@@ -14,7 +14,7 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name="login.html", next_page="/"), name ='login'),
     path('logout/', auth_views.LogoutView.as_view(), name = 'logout'),
     path('user/<str:username>', views.userPage, name ='userPage'),
-    path('song/<int:song_id>', views.singleSongPage, name ='songPage'),
+    path('song/<int:song_id>', views.singleSongPage, name ='singleSongPage'),
     path('album/<int:album_id>', views.singleAlbumPage, name ='singleAlbumPage'),
     path('giveSongReview/', views.giveSongReview, name='giveSongReviewPage'),
     path('giveSongReview/', views.giveAlbumReview, name='giveAlbumReviewPage'),

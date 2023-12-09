@@ -78,7 +78,7 @@
     <div class="SingleSong">
       <div class="FirstLine">
         <h2 class="RankingNumber">{{ forloop.counter }}.</h2>
-        <a href="{% url 'singleSongPage' %}" class="SongLink">{{ song.name}}</a>
+        <a href="{% url 'singleSongPage' song.song_id %}" class="SongLink">{{ song.name}}</a>
         <p class="MadeBy">
           Made By: <a href="{% url 'artistPage' song.artist_id.artist_id %}" class="ArtistLink">{{ song.artist_id.name }}</a>
         </p>
