@@ -1,9 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.db.models import Avg
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import *
+from .forms import RegisterForm
+from itertools import chain
+
 
 @login_required
 def profile(request, username):
@@ -189,7 +193,10 @@ def singleSongPage(request):
 @login_required
 def singleAlbumPage(request):
     template = loader.get_template('singleAlbum.html')
-    return HttpResponse(template.render())
+    context = {
+        
+    }
+    return HttpResponse(template.render(context, request))
 
 @login_required
 def giveSongReview(request):
@@ -214,5 +221,27 @@ def search(request):
     return HttpResponse(template.render())
 
 def register(request):
+    form = RegisterForm(auto_id=True)
+    
+    if request.method == 'POST':
+        form = RegisterForm(request.POST, auto_id=True)
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            user.profile.fname = form.cleaned_data.get('fname')
+            user.profile.lname = form.cleaned_data.get('lname')
+            user.profile.age = form.cleaned_data.get('age')
+            user.profile.gender = form.cleaned_data.get('gender')
+            user.save()
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password1')
+            user = authenticate(username=username, password=password)
+            login(request, user)
+
+            return redirect('/')
+    
     template = loader.get_template('register.html')
-    return HttpResponse(template.render())
+    context = {
+        'form': form
+    }
+    return HttpResponse(template.render(context, request))
