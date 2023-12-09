@@ -220,20 +220,8 @@
           </div>
           <br />
           <br />
-          <h4 id="reviewSongName">
-            Song: <a href="#" id="songLink">{{ review.song_id.name }}</a>
-          </h4>
-          <h4 id="reviewArtistName">
-            Artist: <a href="#" id="artistLink">{{ review.song_id.artist_id.name }}</a>
-          </h4>
           <p id="reviewBody">
             {{ review.body }}
-          </p>
-          <p id="genreParagraph">
-            Genres:
-            {% for genre in review.genres.all %} 
-              {{ genre.get_genre_display }}{% if not forloop.last %}, {% endif %}
-            {% endfor %}
           </p>
           <label id="upvotesLabel">Upvotes: {{ review.upvotes }}</label>
           <button id="upButton" type="button">👍</button>
