@@ -2,10 +2,11 @@ from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import loader
 from django.db.models import Avg
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import *
-from .forms import RegisterForm
+from .forms import RegisterForm, SongRatingForm
 from itertools import chain
 
 
@@ -153,9 +154,51 @@ def producerPage(request, producer_id):
 def giveSongRating(request, song_id):
     song = Song.objects.get(song_id=song_id)
     
+    song_rating = Song_Rating.objects.get(username=request.user, song_id=song_id)
+    
+    if request.method == 'POST':
+        form = SongRatingForm(request.POST)
+        if form.is_valid():
+            originality_score = int(form.cleaned_data['originality_score'])
+            lyric_score = int(form.cleaned_data['lyric_score'])
+            vibe_score = int(form.cleaned_data['vibe_score'])
+            instrumental_score = int(form.cleaned_data['instrumental_score'])
+
+            if song_rating is None:
+                song_rating = Song_Rating(
+                    username = request.user,
+                    song_id = song,
+                    originality_score = originality_score,
+                    lyric_score = lyric_score,
+                    vibe_score = vibe_score,
+                    instrumental_score = instrumental_score
+                )
+            else:
+                song_rating.originality_score = originality_score
+                song_rating.lyric_score = lyric_score
+                song_rating.vibe_score = vibe_score
+                song_rating.instrumental_score = instrumental_score
+                
+            song_rating.save()
+            
+            messages.success(request, 'Song rating successfully given!')
+    else:
+        if song_rating is None:
+            form = SongRatingForm()
+        else:
+            form = SongRatingForm(
+                initial = {
+                    'originality_score': song_rating.originality_score,
+                    'lyric_score': song_rating.lyric_score,
+                    'vibe_score': song_rating.vibe_score,
+                    'instrumental_score': song_rating.instrumental_score
+                }
+            )
+    
     template = loader.get_template('giveSongRating.html')
     context = {
-        'song': song
+        'song': song,
+        'form': form
     }
     return HttpResponse(template.render(context, request))
 

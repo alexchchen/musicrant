@@ -23,74 +23,28 @@
             #artistLink:hover{
                 color: gray;
             }
+            #successMessage {
+                padding-left: 170px;
+            }
             {% endblock %}
         </style>
     </head>
     <body>
         {% block content %}
-            <h1 id="title">Give rating to: {{ song.name }}</h1>
-            <h2 id="artistName">Artist: <a href="#"id=artistLink> {{ song.artist_id.name }}</a></h2>
+            <h1 id="title">Give rating to: <a href="{% url 'singleSongPage' song.song_id %}"id=artistLink>{{ song.name }}</a></h1>
+            <h2 id="artistName">Artist: <a href="{% url 'artistPage' song.artist_id.artist_id %}"id=artistLink>{{ song.artist_id.name }}</a></h2>
             <div class="form">
-                <form action="", method = "RATE">
-                    <label for="originality">Originality Score: </label>
-                    <select name="origScore" id="originalityScore">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-                    <label for="lyric">Lyric Score: </label>
-                    <select name="lyrScore" id="lyricScore">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-                    <label for="vibe">Vibe Score: </label>
-                    <select name="vibScore" id="vibeScore">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-                    <label for="instrumental">Instrumental Score: </label>
-                    <select name="instScore" id="instrumentalScore">
-                        <option value="0">0</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4">4</option>
-                        <option value="5">5</option>
-                        <option value="6">6</option>
-                        <option value="7">7</option>
-                        <option value="8">8</option>
-                        <option value="9">9</option>
-                        <option value="10">10</option>
-                    </select>
-                    <input type="submit" name = "submit" value="Submit">
+                <form action = "" method = "post"> 
+                    {% csrf_token %} 
+                    {{ form }} 
+                    <input type="submit" value="Submit"> 
                 </form>
             </div>
+            {% if messages %}
+                {% for message in messages %}
+                    <p id="successMessage">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
         {% endblock %}
     </body>
     
