@@ -177,7 +177,7 @@ class Song_Rating(models.Model):
                 name = 'check_song_rating_instrumental_score'
             ),
             models.UniqueConstraint(
-                fields=['rating_id', 'username'], name='song_rating_primary_key'
+                fields=['song_id', 'username'], name='song_rating_primary_key'
             )
         ]
     
@@ -219,7 +219,7 @@ class Album_Rating(models.Model):
                 name = 'check_album_rating_album_flow_score'
             ),
             models.UniqueConstraint(
-                fields=['rating_id', 'username'], name='album_rating_primary_key'
+                fields=['album_id', 'username'], name='album_rating_primary_key'
             )
         ]
     
