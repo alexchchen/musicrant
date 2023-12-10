@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import *
-from .forms import RegisterForm, SongRatingForm, AlbumRatingForm, SongReviewForm
+from .forms import RegisterForm, SongRatingForm, AlbumRatingForm, SongReviewForm, AlbumReviewForm
 from itertools import chain
 
 
@@ -424,6 +424,7 @@ def singleAlbumPage(request, album_id):
     }
     return HttpResponse(template.render(context, request))
 
+
 @login_required
 def giveSongReview(request, song_id):
     song = Song.objects.get(song_id=song_id)
@@ -515,10 +516,101 @@ def giveSongReview(request, song_id):
     }
     return HttpResponse(template.render(context, request))
 
+
 @login_required
-def giveAlbumReview(request):
+def giveAlbumReview(request, album_id):
+    album = Album.objects.get(album_id=album_id)
+    
+    try:
+        album_rating = Album_Rating.objects.get(username=request.user, album_id=album_id)
+    except Album_Rating.DoesNotExist:
+        album_rating = None
+        
+    try:
+        album_review = Album_Review.objects.get(username=request.user, album_id=album_id)
+    except Album_Review.DoesNotExist:
+        album_review = None
+        
+    if request.method == 'POST':
+        rating_form = AlbumRatingForm(request.POST)
+        review_form = AlbumReviewForm(request.POST, auto_id=True)
+        if rating_form.is_valid() and review_form.is_valid():
+            originality_score = int(rating_form.cleaned_data['originality_score'])
+            lyric_score = int(rating_form.cleaned_data['lyric_score'])
+            vibe_score = int(rating_form.cleaned_data['vibe_score'])
+            instrumental_score = int(rating_form.cleaned_data['instrumental_score'])
+            album_flow_score = int(rating_form.cleaned_data['album_flow_score'])
+            
+            if album_rating is None:
+                album_rating = Album_Rating(
+                    username = request.user,
+                    album_id = album,
+                    originality_score = originality_score,
+                    lyric_score = lyric_score,
+                    vibe_score = vibe_score,
+                    instrumental_score = instrumental_score,
+                    album_flow_score = album_flow_score
+                )
+            else:
+                album_rating.originality_score = originality_score
+                album_rating.lyric_score = lyric_score
+                album_rating.vibe_score = vibe_score
+                album_rating.instrumental_score = instrumental_score
+                album_rating.album_flow_score = album_flow_score
+                
+            album_rating.save()
+            
+            title = review_form.cleaned_data['title']
+            body = review_form.cleaned_data['body']
+            
+            if album_review is None:
+                album_review = Album_Review(
+                    username = request.user,
+                    album_id = album,
+                    rating_id = album_rating,
+                    title = title,
+                    body = body
+                )
+            else:
+                album_review.rating_id = album_rating
+                album_review.title = title
+                album_review.body = body
+                
+            album_review.save()
+                
+            return redirect('albumReviewPage', review_id=album_review.review_id)
+    
+    else:
+        if album_rating is None:
+            rating_form = AlbumRatingForm()
+        else:
+            rating_form = AlbumRatingForm(
+                initial = {
+                    'originality_score': album_rating.originality_score,
+                    'lyric_score': album_rating.lyric_score,
+                    'vibe_score': album_rating.vibe_score,
+                    'instrumental_score': album_rating.instrumental_score,
+                    'album_flow_score': album_rating.album_flow_score
+                }
+            )
+        if album_review is None:
+            review_form = AlbumReviewForm(auto_id=True)
+        else:
+            review_form = AlbumReviewForm(
+                auto_id = True,
+                initial = {
+                    'title': album_review.title,
+                    'body': album_review.body
+                }
+            )
+    
     template = loader.get_template('giveAlbumReview.html')
-    return HttpResponse(template.render())
+    context = {
+        'album': album,
+        'rating_form': rating_form,
+        'review_form': review_form
+    }
+    return HttpResponse(template.render(context, request))
 
 
 @login_required

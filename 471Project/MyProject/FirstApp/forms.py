@@ -55,3 +55,7 @@ class AlbumRatingForm(Form):
 class SongReviewForm(Form):
     title = forms.CharField(label="Title")
     body = forms.CharField(label="Body", widget=forms.Textarea)
+    
+class AlbumReviewForm(Form):
+    title = forms.CharField(label="Title")
+    body = forms.CharField(label="Body", widget=forms.Textarea)
