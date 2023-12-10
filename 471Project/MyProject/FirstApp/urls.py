@@ -8,7 +8,7 @@ urlpatterns = [
     path('artist/<int:artist_id>', views.artistPage, name='artistPage'),
     path('producer/<int:producer_id>', views.producerPage, name='producerPage'),
     path('song/<int:song_id>/giveRating/', views.giveSongRating, name='giveSongRating'),
-    path('giveAlbumRating', views.giveAlbumRating, name='giveAlbumRating'),
+    path('album/<int:album_id>/giveRating/', views.giveAlbumRating, name='giveAlbumRating'),
     path('topAlbums/', views.topAlbumsPage, name ='topAlbumsPage'),
     path('topSongs/', views.topSongsPage, name ='topSongsPage'),
     path('login/', auth_views.LoginView.as_view(template_name="login.html", next_page="/"), name ='login'),

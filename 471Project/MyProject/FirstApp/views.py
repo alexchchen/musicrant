@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import *
-from .forms import RegisterForm, SongRatingForm
+from .forms import RegisterForm, SongRatingForm, AlbumRatingForm
 from itertools import chain
 
 
@@ -154,7 +154,10 @@ def producerPage(request, producer_id):
 def giveSongRating(request, song_id):
     song = Song.objects.get(song_id=song_id)
     
-    song_rating = Song_Rating.objects.get(username=request.user, song_id=song_id)
+    try:
+        song_rating = Song_Rating.objects.get(username=request.user, song_id=song_id)
+    except Song_Rating.DoesNotExist:
+        song_rating = None
     
     if request.method == 'POST':
         form = SongRatingForm(request.POST)
@@ -204,9 +207,63 @@ def giveSongRating(request, song_id):
 
 
 @login_required
-def giveAlbumRating(request):
+def giveAlbumRating(request, album_id):
+    album = Album.objects.get(album_id=album_id)
+    
+    try:
+        album_rating = Album_Rating.objects.get(username=request.user, album_id=album_id)
+    except Album_Rating.DoesNotExist:
+        album_rating = None
+    
+    if request.method == 'POST':
+        form = AlbumRatingForm(request.POST)
+        if form.is_valid():
+            originality_score = int(form.cleaned_data['originality_score'])
+            lyric_score = int(form.cleaned_data['lyric_score'])
+            vibe_score = int(form.cleaned_data['vibe_score'])
+            instrumental_score = int(form.cleaned_data['instrumental_score'])
+            album_flow_score = int(form.cleaned_data['album_flow_score'])
+            
+            if album_rating is None:
+                album_rating = Album_Rating(
+                    username = request.user,
+                    album_id = album,
+                    originality_score = originality_score,
+                    lyric_score = lyric_score,
+                    vibe_score = vibe_score,
+                    instrumental_score = instrumental_score,
+                    album_flow_score = album_flow_score
+                )
+            else:
+                album_rating.originality_score = originality_score
+                album_rating.lyric_score = lyric_score
+                album_rating.vibe_score = vibe_score
+                album_rating.instrumental_score = instrumental_score
+                album_rating.album_flow_score = album_flow_score
+                
+            album_rating.save()
+            
+            messages.success(request, 'Album rating successfully given!')
+    else:
+        if album_rating is None:
+            form = AlbumRatingForm()
+        else:
+            form = AlbumRatingForm(
+                initial = {
+                    'originality_score': album_rating.originality_score,
+                    'lyric_score': album_rating.lyric_score,
+                    'vibe_score': album_rating.vibe_score,
+                    'instrumental_score': album_rating.instrumental_score,
+                    'album_flow_score': album_rating.album_flow_score
+                }
+            )
+    
     template = loader.get_template('giveAlbumRating.html')
-    return HttpResponse(template.render())
+    context = {
+        'album': album,
+        'form': form
+    }
+    return HttpResponse(template.render(context, request))
 
 
 @login_required

@@ -2,7 +2,6 @@ from django import forms
 from django.forms import Form
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import Song_Rating
 
 SCORE_CHOICES = [
     (0, '0'),
@@ -45,3 +44,10 @@ class SongRatingForm(Form):
     lyric_score = forms.ChoiceField(label='Lyric Score', choices=SCORE_CHOICES)
     vibe_score = forms.ChoiceField(label='Vibe Score', choices=SCORE_CHOICES)
     instrumental_score = forms.ChoiceField(label='Instrumental Score', choices=SCORE_CHOICES)
+    
+class AlbumRatingForm(Form):
+    originality_score = forms.ChoiceField(label='Originality Score', choices=SCORE_CHOICES)
+    lyric_score = forms.ChoiceField(label='Lyric Score', choices=SCORE_CHOICES)
+    vibe_score = forms.ChoiceField(label='Vibe Score', choices=SCORE_CHOICES)
+    instrumental_score = forms.ChoiceField(label='Instrumental Score', choices=SCORE_CHOICES)
+    album_flow_score = forms.ChoiceField(label='Album Flow Score', choices=SCORE_CHOICES)
