@@ -150,9 +150,14 @@ def producerPage(request, producer_id):
     return HttpResponse(template.render(context, request))
 
 @login_required
-def giveSongRating(request):
+def giveSongRating(request, song_id):
+    song = Song.objects.get(song_id=song_id)
+    
     template = loader.get_template('giveSongRating.html')
-    return HttpResponse(template.render())
+    context = {
+        'song': song
+    }
+    return HttpResponse(template.render(context, request))
 
 
 @login_required
