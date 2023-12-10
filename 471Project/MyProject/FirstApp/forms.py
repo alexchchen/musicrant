@@ -51,3 +51,7 @@ class AlbumRatingForm(Form):
     vibe_score = forms.ChoiceField(label='Vibe Score', choices=SCORE_CHOICES)
     instrumental_score = forms.ChoiceField(label='Instrumental Score', choices=SCORE_CHOICES)
     album_flow_score = forms.ChoiceField(label='Album Flow Score', choices=SCORE_CHOICES)
+    
+class SongReviewForm(Form):
+    title = forms.CharField(label="Title")
+    body = forms.CharField(label="Body", widget=forms.Textarea)

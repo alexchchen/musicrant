@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import *
-from .forms import RegisterForm, SongRatingForm, AlbumRatingForm
+from .forms import RegisterForm, SongRatingForm, AlbumRatingForm, SongReviewForm
 from itertools import chain
 
 
@@ -425,9 +425,95 @@ def singleAlbumPage(request, album_id):
     return HttpResponse(template.render(context, request))
 
 @login_required
-def giveSongReview(request):
+def giveSongReview(request, song_id):
+    song = Song.objects.get(song_id=song_id)
+    
+    try:
+        song_rating = Song_Rating.objects.get(username=request.user, song_id=song_id)
+    except Song_Rating.DoesNotExist:
+        song_rating = None
+        
+    try:
+        song_review = Song_Review.objects.get(username=request.user, song_id=song_id)
+    except Song_Review.DoesNotExist:
+        song_review = None
+        
+    if request.method == 'POST':
+        rating_form = SongRatingForm(request.POST)
+        review_form = SongReviewForm(request.POST, auto_id=True)
+        if rating_form.is_valid() and review_form.is_valid():
+            originality_score = int(rating_form.cleaned_data['originality_score'])
+            lyric_score = int(rating_form.cleaned_data['lyric_score'])
+            vibe_score = int(rating_form.cleaned_data['vibe_score'])
+            instrumental_score = int(rating_form.cleaned_data['instrumental_score'])
+            
+            if song_rating is None:
+                song_rating = Song_Rating(
+                    username = request.user,
+                    song_id = song,
+                    originality_score = originality_score,
+                    lyric_score = lyric_score,
+                    vibe_score = vibe_score,
+                    instrumental_score = instrumental_score
+                )
+            else:
+                song_rating.originality_score = originality_score
+                song_rating.lyric_score = lyric_score
+                song_rating.vibe_score = vibe_score
+                song_rating.instrumental_score = instrumental_score
+                
+            song_rating.save()
+            
+            title = review_form.cleaned_data['title']
+            body = review_form.cleaned_data['body']
+            
+            if song_review is None:
+                song_review = Song_Review(
+                    username = request.user,
+                    song_id = song,
+                    rating_id = song_rating,
+                    title = title,
+                    body = body
+                )
+            else:
+                song_review.rating_id = song_rating
+                song_review.title = title
+                song_review.body = body
+                
+            song_review.save()
+                
+            return redirect('songReviewPage', review_id=song_review.review_id)
+    
+    else:
+        if song_rating is None:
+            rating_form = SongRatingForm()
+        else:
+            rating_form = SongRatingForm(
+                initial = {
+                    'originality_score': song_rating.originality_score,
+                    'lyric_score': song_rating.lyric_score,
+                    'vibe_score': song_rating.vibe_score,
+                    'instrumental_score': song_rating.instrumental_score
+                }
+            )
+        if song_review is None:
+            review_form = SongReviewForm(auto_id=True)
+        else:
+            review_form = SongReviewForm(
+                auto_id = True,
+                initial = {
+                    'title': song_review.title,
+                    'body': song_review.body
+                }
+            )
+    
     template = loader.get_template('giveSongReview.html')
-    return HttpResponse(template.render())
+    context = {
+        'song': song,
+        'rating_form': rating_form,
+        'review_form': review_form
+    }
+    return HttpResponse(template.render(context, request))
 
 @login_required
 def giveAlbumReview(request):

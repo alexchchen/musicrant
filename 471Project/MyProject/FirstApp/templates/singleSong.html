@@ -206,7 +206,7 @@
         {% endfor %}
       </p>
       <a href="{% url 'giveSongRating' song.song_id %}"><button class="Rating">Give Rating</button></a>
-      <button class="Review">Give Review</button>
+      <a href="{% url 'giveSongReview' song.song_id %}"><button class="Review">Give Review</button></a>
     </div>
     <h2 class="allReviews">All Reviews:</h2>
     {% for review in reviews %}

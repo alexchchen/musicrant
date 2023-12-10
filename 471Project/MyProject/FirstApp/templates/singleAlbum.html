@@ -221,7 +221,7 @@
         {% endfor %}
       </p>
       <a href="{% url 'giveAlbumRating' album.album_id %}"><button class="Rating">Give Rating</button></a>
-      <button class="Review">Give Review</button>
+      <a href="{% url 'giveAlbumReview' album.album_id %}"><button class="Review">Give Review</button></a>
     </div>
     <h2 class="songOnAlbum">Songs On Album:</h2>
     {% for song in songs %}
