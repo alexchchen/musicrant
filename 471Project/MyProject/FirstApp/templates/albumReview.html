@@ -116,18 +116,18 @@
         <h2 id="profileName">User: <a href="{% url 'userPage' review.username.username %}" id="userLink">{{ review.username.username }}</a> </h2>
         <h2 id="songName">Album: <a href="{% url 'singleAlbumPage' review.album_id.album_id %}" id="reviewLink">{{ review.album_id.name }}</a></h2>
         <h2 id="artistName">Artist: <a href="{% url 'artistPage' review.album_id.artist_id.artist_id %}"id=artistLink>{{ review.album_id.artist_id.name }}</a></h2>
-        <p id="genreParagraph">
+        <h4 id="genreParagraph">
             Genres:
             {% for genre in review.album_id.genres.all %} 
                 {{ genre.get_genre_display }}{% if not forloop.last %}, {% endif %}
             {% endfor %}
-        </p>
-        <p id="scorePara">Originality score: {{ review.rating_id.originality_score }}/10</p>
-        <p id="scorePara">Lyric score: {{ review.rating_id.lyric_score }}/10</p>
-        <p id="scorePara">Vibe score: {{ review.rating_id.vibe_score }}/10</p>
-        <p id="scorePara">Instrumental score: {{ review.rating_id.instrumental_score }}/10</p>
-        <p id="scorePara">Album flow score: {{ review.rating_id.album_flow_score }}/10</p>
-        <p id="scorePara">Overall score: {{ review.overall_score|floatformat:2 }}/10</p>
+        </h4>
+        <h4 id="scorePara">Originality score: {{ review.rating_id.originality_score }}/10</h4>
+        <h4 id="scorePara">Lyric score: {{ review.rating_id.lyric_score }}/10</h4>
+        <h4 id="scorePara">Vibe score: {{ review.rating_id.vibe_score }}/10</h4>
+        <h4 id="scorePara">Instrumental score: {{ review.rating_id.instrumental_score }}/10</h4>
+        <h4 id="scorePara">Album flow score: {{ review.rating_id.album_flow_score }}/10</h4>
+        <h4 id="scorePara">Overall score: {{ review.overall_score|floatformat:2 }}/10</h4>
         <p id="reviewBody">
             {{ review.body }}
         </p>
