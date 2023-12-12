@@ -187,10 +187,10 @@
       </h1>
       <h1 class="ProducerName">
         Producer:
+        {% for artist_producer in song.artist_producers.all %}
+          <a href="{% url 'artistPage' artist_producer.artist_id %}" id="producerLink">{{ artist_producer.name }}</a>
+        {% endfor %}  
         {% for producer in song.producers.all %}
-          <a href="{% url 'producerPage' producer.producer_id %}" id="producerLink">{{ producer.name }}</a>
-        {% endfor %}
-        {% for producer in song.album_id.producers.all %}
           <a href="{% url 'producerPage' producer.producer_id %}" id="producerLink">{{ producer.name }}</a>
         {% endfor %}
       </h1>
