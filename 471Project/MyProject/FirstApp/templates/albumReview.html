@@ -58,6 +58,12 @@
             #upvotesLabel{
                 padding-left: 170px;
             }
+            #downvotesLabel{
+                padding-left: 170px;
+            }
+            .votedOn {
+                font-weight: bold;
+            }
             #scorePara{
                 padding-left: 170px;
             }
@@ -67,7 +73,7 @@
             #commentForm{
                 padding-left: 170px;
             }
-            #wrComment{
+            #body {
                 resize: none;
                 width: 97.5%;
                 padding-right: 2%;
@@ -104,6 +110,9 @@
             #upvotesLabelComment{
                 padding-left: 5px;
             }
+            #downvotesLabelComment{
+                padding-left: 5px;
+            }
             {% endblock %}
         </style>
     </head>
@@ -116,50 +125,74 @@
         <h2 id="profileName">User: <a href="{% url 'userPage' review.username.username %}" id="userLink">{{ review.username.username }}</a> </h2>
         <h2 id="songName">Album: <a href="{% url 'singleAlbumPage' review.album_id.album_id %}" id="reviewLink">{{ review.album_id.name }}</a></h2>
         <h2 id="artistName">Artist: <a href="{% url 'artistPage' review.album_id.artist_id.artist_id %}"id=artistLink>{{ review.album_id.artist_id.name }}</a></h2>
-        <p id="genreParagraph">
+        <h4 id="genreParagraph">
             Genres:
             {% for genre in review.album_id.genres.all %} 
                 {{ genre.get_genre_display }}{% if not forloop.last %}, {% endif %}
             {% endfor %}
-        </p>
-        <p id="scorePara">Originality score: {{ review.rating_id.originality_score }}/10</p>
-        <p id="scorePara">Lyric score: {{ review.rating_id.lyric_score }}/10</p>
-        <p id="scorePara">Vibe score: {{ review.rating_id.vibe_score }}/10</p>
-        <p id="scorePara">Instrumental score: {{ review.rating_id.instrumental_score }}/10</p>
-        <p id="scorePara">Album flow score: {{ review.rating_id.album_flow_score }}/10</p>
-        <p id="scorePara">Overall score: {{ review.overall_score|floatformat:2 }}/10</p>
+        </h4>
+        <h4 id="scorePara">Originality score: {{ review.rating_id.originality_score }}/10</h4>
+        <h4 id="scorePara">Lyric score: {{ review.rating_id.lyric_score }}/10</h4>
+        <h4 id="scorePara">Vibe score: {{ review.rating_id.vibe_score }}/10</h4>
+        <h4 id="scorePara">Instrumental score: {{ review.rating_id.instrumental_score }}/10</h4>
+        <h4 id="scorePara">Album flow score: {{ review.rating_id.album_flow_score }}/10</h4>
+        <h4 id="scorePara">Overall score: {{ review.overall_score|floatformat:2 }}/10</h4>
         <p id="reviewBody">
             {{ review.body }}
         </p>
-        <label id="upvotesLabel">Upvotes: {{ review.upvotes }}</label>
-        <button id="upButton" type="button">👍</button>
-        <label id="downvotesLabel">Downvotes: {{ review.downvotes }}</label>
-        <button id="downButton" type="button">👎</button>
+        <form method="post" action="{% url 'upvoteAlbumReview' review.review_id %}">
+            {% csrf_token %}
+            <label id="upvotesLabel" {% if vote_type is True %} class="votedOn" {% endif %}>
+                Upvotes: {{ review.upvotes }}
+            </label>
+            <input type="hidden" name="prev" value="{{ request.path }}">
+            <button id="upButton" type="submit">👍</button>
+        </form>
+        <form method="post" action="{% url 'downvoteAlbumReview' review.review_id %}">
+            {% csrf_token %}
+            <label id="downvotesLabel" {% if vote_type is False %} class="votedOn" {% endif %}>
+                Downvotes: {{ review.downvotes }}
+            </label>
+            <input type="hidden" name="prev" value="{{ request.path }}">
+            <button id="downButton" type="submit">👎</button>
+        </form>
         <h3 id="commentsHeading">
             Comments
         </h3>
-        <form action="" id="commentForm">
+        <form action="" method="post" id="commentForm">
+            {% csrf_token %}
             <ul id="formList">
                 <li>
-                    <textarea name="writeComment" placeholder="Add a comment..." id="wrComment"></textarea>
-
+                    {{ comment_form.body }}
                 </li>
                 <li>
                     <input type="submit" name="submit" id="submit" value="Post">
                 </li>
             </ul>
         </form>
-        {% for comment in review.comments.all %}
+        {% for comment in comments %}
             <div class="comments">
                 <h4 id="commentorName">
                     <a href="{% url 'userPage' comment.username.username %}" id="commentorLink">{{ comment.username.username }}</a>
                 </h4>
                 <p id="commentDatePosted">{{ comment.date_posted }}</p>
                 <p id="commentBody">{{ comment.body }}</p>
-                <label id="upvotesLabelComment">Upvotes: {{ comment.upvotes }}</label>
-                <button id="upButtonComment" type="button">👍</button>
-                <label id="downvotesLabelComment">Downvotes: {{ comment.downvotes }}</label>
-                <button id="downButtonComment" type="button">👎</button>
+                <form method="post" action="{% url 'upvoteAlbumReviewComment' review.review_id comment.comment_id %}">
+                    {% csrf_token %}
+                    <label id="upvotesLabelComment" {% if comment.vote_type is True %} class="votedOn" {% endif %}>
+                        Upvotes: {{ comment.upvotes }}
+                    </label>
+                    <input type="hidden" name="prev" value="{{ request.path }}">
+                    <button id="upButtonComment" type="submit">👍</button>
+                </form>
+                <form method="post" action="{% url 'downvoteAlbumReviewComment' review.review_id comment.comment_id %}">
+                    {% csrf_token %}
+                    <label id="downvotesLabelComment" {% if comment.vote_type is False %} class="votedOn" {% endif %}>
+                        Downvotes: {{ comment.downvotes }}
+                    </label>
+                    <input type="hidden" name="prev" value="{{ request.path }}">
+                    <button id="downButtonComment" type="submit">👎</button>
+                </form>    
             </div>
             <br>
         {% endfor %}

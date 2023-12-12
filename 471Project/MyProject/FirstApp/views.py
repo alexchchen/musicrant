@@ -1,11 +1,12 @@
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import loader
-from django.db.models import Avg
+from django.db.models import Avg, Case, When, Exists, OuterRef, Value, BooleanField, Subquery
+from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import *
-from .forms import RegisterForm
+from .forms import RegisterForm, SongRatingForm, AlbumRatingForm, SongReviewForm, AlbumReviewForm, CommentForm
 from itertools import chain
 
 
@@ -29,7 +30,26 @@ def homePage(request):
              F('rating_id__instrumental_score')) / 4.0 
     ).annotate(
         votes = F('upvotes') - F('downvotes')
-    ).order_by('-votes')[:50]
+    ).order_by('-votes')[:50].annotate(
+        vote_type = Case(
+            When(
+                Exists(
+                    Upvotes_Downvotes_Song_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    )
+                ),
+                then=Subquery(
+                    Upvotes_Downvotes_Song_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    ).values('vote_type')[:1]
+                )
+            ),
+            default=Value(None),
+            output_field=BooleanField()
+        )
+    )
     
     album_reviews = Album_Review.objects.annotate(
         overall_score =
@@ -40,7 +60,26 @@ def homePage(request):
              F('rating_id__album_flow_score')) / 5.0 
     ).annotate(
         votes = F('upvotes') - F('downvotes')
-    ).order_by('-votes')[:50]
+    ).order_by('-votes')[:50].annotate(
+        vote_type = Case(
+            When(
+                Exists(
+                    Upvotes_Downvotes_Album_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    )
+                ),
+                then=Subquery(
+                    Upvotes_Downvotes_Album_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    ).values('vote_type')[:1]
+                )
+            ),
+            default=Value(None),
+            output_field=BooleanField()
+        )
+    )
     
     reviews = list(sorted(chain(song_reviews, album_reviews), key=lambda x: x.votes, reverse=True))
         
@@ -150,16 +189,118 @@ def producerPage(request, producer_id):
     return HttpResponse(template.render(context, request))
 
 @login_required
-def giveSongRating(request):
+def giveSongRating(request, song_id):
+    song = Song.objects.get(song_id=song_id)
+    
+    try:
+        song_rating = Song_Rating.objects.get(username=request.user, song_id=song_id)
+    except Song_Rating.DoesNotExist:
+        song_rating = None
+    
+    if request.method == 'POST':
+        form = SongRatingForm(request.POST)
+        if form.is_valid():
+            originality_score = int(form.cleaned_data['originality_score'])
+            lyric_score = int(form.cleaned_data['lyric_score'])
+            vibe_score = int(form.cleaned_data['vibe_score'])
+            instrumental_score = int(form.cleaned_data['instrumental_score'])
+
+            if song_rating is None:
+                song_rating = Song_Rating(
+                    username = request.user,
+                    song_id = song,
+                    originality_score = originality_score,
+                    lyric_score = lyric_score,
+                    vibe_score = vibe_score,
+                    instrumental_score = instrumental_score
+                )
+            else:
+                song_rating.originality_score = originality_score
+                song_rating.lyric_score = lyric_score
+                song_rating.vibe_score = vibe_score
+                song_rating.instrumental_score = instrumental_score
+                
+            song_rating.save()
+            
+            messages.success(request, 'Song rating successfully given!')
+    else:
+        if song_rating is None:
+            form = SongRatingForm()
+        else:
+            form = SongRatingForm(
+                initial = {
+                    'originality_score': song_rating.originality_score,
+                    'lyric_score': song_rating.lyric_score,
+                    'vibe_score': song_rating.vibe_score,
+                    'instrumental_score': song_rating.instrumental_score
+                }
+            )
+    
     template = loader.get_template('giveSongRating.html')
-    context = {}
+    context = {
+        'song': song,
+        'form': form
+    }
     return HttpResponse(template.render(context, request))
 
 
 @login_required
-def giveAlbumRating(request):
+def giveAlbumRating(request, album_id):
+    album = Album.objects.get(album_id=album_id)
+    
+    try:
+        album_rating = Album_Rating.objects.get(username=request.user, album_id=album_id)
+    except Album_Rating.DoesNotExist:
+        album_rating = None
+    
+    if request.method == 'POST':
+        form = AlbumRatingForm(request.POST)
+        if form.is_valid():
+            originality_score = int(form.cleaned_data['originality_score'])
+            lyric_score = int(form.cleaned_data['lyric_score'])
+            vibe_score = int(form.cleaned_data['vibe_score'])
+            instrumental_score = int(form.cleaned_data['instrumental_score'])
+            album_flow_score = int(form.cleaned_data['album_flow_score'])
+            
+            if album_rating is None:
+                album_rating = Album_Rating(
+                    username = request.user,
+                    album_id = album,
+                    originality_score = originality_score,
+                    lyric_score = lyric_score,
+                    vibe_score = vibe_score,
+                    instrumental_score = instrumental_score,
+                    album_flow_score = album_flow_score
+                )
+            else:
+                album_rating.originality_score = originality_score
+                album_rating.lyric_score = lyric_score
+                album_rating.vibe_score = vibe_score
+                album_rating.instrumental_score = instrumental_score
+                album_rating.album_flow_score = album_flow_score
+                
+            album_rating.save()
+            
+            messages.success(request, 'Album rating successfully given!')
+    else:
+        if album_rating is None:
+            form = AlbumRatingForm()
+        else:
+            form = AlbumRatingForm(
+                initial = {
+                    'originality_score': album_rating.originality_score,
+                    'lyric_score': album_rating.lyric_score,
+                    'vibe_score': album_rating.vibe_score,
+                    'instrumental_score': album_rating.instrumental_score,
+                    'album_flow_score': album_rating.album_flow_score
+                }
+            )
+    
     template = loader.get_template('giveAlbumRating.html')
-    context = {}
+    context = {
+        'album': album,
+        'form': form
+    }
     return HttpResponse(template.render(context, request))
 
 
@@ -218,7 +359,26 @@ def userPage(request, username):
              F('rating_id__instrumental_score')) / 4.0 
     ).annotate(
         votes = F('upvotes') - F('downvotes')
-    ).order_by('-votes')[:50]
+    ).order_by('-votes')[:50].annotate(
+        vote_type = Case(
+            When(
+                Exists(
+                    Upvotes_Downvotes_Song_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    )
+                ),
+                then=Subquery(
+                    Upvotes_Downvotes_Song_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    ).values('vote_type')[:1]
+                )
+            ),
+            default=Value(None),
+            output_field=BooleanField()
+        )
+    )
     
     album_reviews = Album_Review.objects.filter(username=user.id).annotate(
         overall_score =
@@ -229,7 +389,26 @@ def userPage(request, username):
              F('rating_id__album_flow_score')) / 5.0 
     ).annotate(
         votes = F('upvotes') - F('downvotes')
-    ).order_by('-votes')[:50]
+    ).order_by('-votes')[:50].annotate(
+        vote_type = Case(
+            When(
+                Exists(
+                    Upvotes_Downvotes_Album_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    )
+                ),
+                then=Subquery(
+                    Upvotes_Downvotes_Album_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    ).values('vote_type')[:1]
+                )
+            ),
+            default=Value(None),
+            output_field=BooleanField()
+        )
+    )
     
     reviews = list(sorted(chain(song_reviews, album_reviews), key=lambda x: x.votes, reverse=True))    
     
@@ -268,7 +447,26 @@ def singleSongPage(request, song_id):
              F('rating_id__instrumental_score')) / 4.0 
     ).annotate(
         votes = F('upvotes') - F('downvotes')
-    ).order_by('-votes')[:50]
+    ).order_by('-votes')[:50].annotate(
+        vote_type = Case(
+            When(
+                Exists(
+                    Upvotes_Downvotes_Song_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    )
+                ),
+                then=Subquery(
+                    Upvotes_Downvotes_Song_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    ).values('vote_type')[:1]
+                )
+            ),
+            default=Value(None),
+            output_field=BooleanField()
+        )
+    )
  
     template = loader.get_template('singleSong.html')
     context = {
@@ -311,7 +509,26 @@ def singleAlbumPage(request, album_id):
          F('rating_id__instrumental_score')) / 5.0
     ).annotate(
         votes = F('upvotes') - F('downvotes')
-    ).order_by('-votes')[:50]
+    ).order_by('-votes')[:50].annotate(
+        vote_type = Case(
+            When(
+                Exists(
+                    Upvotes_Downvotes_Album_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    )
+                ),
+                then=Subquery(
+                    Upvotes_Downvotes_Album_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    ).values('vote_type')[:1]
+                )
+            ),
+            default=Value(None),
+            output_field=BooleanField()
+        )
+    )
     
     template = loader.get_template('singleAlbum.html')
     context = {
@@ -321,16 +538,192 @@ def singleAlbumPage(request, album_id):
     }
     return HttpResponse(template.render(context, request))
 
-@login_required
-def giveSongReview(request):
-    template = loader.get_template('giveSongReview.html')
-    context = {}
-    return HttpResponse(template.render(context, request))
 
 @login_required
-def giveAlbumReview(request):
+def giveSongReview(request, song_id):
+    song = Song.objects.get(song_id=song_id)
+    
+    try:
+        song_rating = Song_Rating.objects.get(username=request.user, song_id=song_id)
+    except Song_Rating.DoesNotExist:
+        song_rating = None
+        
+    try:
+        song_review = Song_Review.objects.get(username=request.user, song_id=song_id)
+    except Song_Review.DoesNotExist:
+        song_review = None
+        
+    if request.method == 'POST':
+        rating_form = SongRatingForm(request.POST)
+        review_form = SongReviewForm(request.POST, auto_id=True)
+        if rating_form.is_valid() and review_form.is_valid():
+            originality_score = int(rating_form.cleaned_data['originality_score'])
+            lyric_score = int(rating_form.cleaned_data['lyric_score'])
+            vibe_score = int(rating_form.cleaned_data['vibe_score'])
+            instrumental_score = int(rating_form.cleaned_data['instrumental_score'])
+            
+            if song_rating is None:
+                song_rating = Song_Rating(
+                    username = request.user,
+                    song_id = song,
+                    originality_score = originality_score,
+                    lyric_score = lyric_score,
+                    vibe_score = vibe_score,
+                    instrumental_score = instrumental_score
+                )
+            else:
+                song_rating.originality_score = originality_score
+                song_rating.lyric_score = lyric_score
+                song_rating.vibe_score = vibe_score
+                song_rating.instrumental_score = instrumental_score
+                
+            song_rating.save()
+            
+            title = review_form.cleaned_data['title']
+            body = review_form.cleaned_data['body']
+            
+            if song_review is None:
+                song_review = Song_Review(
+                    username = request.user,
+                    song_id = song,
+                    rating_id = song_rating,
+                    title = title,
+                    body = body
+                )
+            else:
+                song_review.rating_id = song_rating
+                song_review.title = title
+                song_review.body = body
+                
+            song_review.save()
+                
+            return redirect('songReviewPage', review_id=song_review.review_id)
+    
+    else:
+        if song_rating is None:
+            rating_form = SongRatingForm()
+        else:
+            rating_form = SongRatingForm(
+                initial = {
+                    'originality_score': song_rating.originality_score,
+                    'lyric_score': song_rating.lyric_score,
+                    'vibe_score': song_rating.vibe_score,
+                    'instrumental_score': song_rating.instrumental_score
+                }
+            )
+        if song_review is None:
+            review_form = SongReviewForm(auto_id=True)
+        else:
+            review_form = SongReviewForm(
+                auto_id = True,
+                initial = {
+                    'title': song_review.title,
+                    'body': song_review.body
+                }
+            )
+    
+    template = loader.get_template('giveSongReview.html')
+    context = {
+        'song': song,
+        'rating_form': rating_form,
+        'review_form': review_form
+    }
+    return HttpResponse(template.render(context, request))
+
+
+@login_required
+def giveAlbumReview(request, album_id):
+    album = Album.objects.get(album_id=album_id)
+    
+    try:
+        album_rating = Album_Rating.objects.get(username=request.user, album_id=album_id)
+    except Album_Rating.DoesNotExist:
+        album_rating = None
+        
+    try:
+        album_review = Album_Review.objects.get(username=request.user, album_id=album_id)
+    except Album_Review.DoesNotExist:
+        album_review = None
+        
+    if request.method == 'POST':
+        rating_form = AlbumRatingForm(request.POST)
+        review_form = AlbumReviewForm(request.POST, auto_id=True)
+        if rating_form.is_valid() and review_form.is_valid():
+            originality_score = int(rating_form.cleaned_data['originality_score'])
+            lyric_score = int(rating_form.cleaned_data['lyric_score'])
+            vibe_score = int(rating_form.cleaned_data['vibe_score'])
+            instrumental_score = int(rating_form.cleaned_data['instrumental_score'])
+            album_flow_score = int(rating_form.cleaned_data['album_flow_score'])
+            
+            if album_rating is None:
+                album_rating = Album_Rating(
+                    username = request.user,
+                    album_id = album,
+                    originality_score = originality_score,
+                    lyric_score = lyric_score,
+                    vibe_score = vibe_score,
+                    instrumental_score = instrumental_score,
+                    album_flow_score = album_flow_score
+                )
+            else:
+                album_rating.originality_score = originality_score
+                album_rating.lyric_score = lyric_score
+                album_rating.vibe_score = vibe_score
+                album_rating.instrumental_score = instrumental_score
+                album_rating.album_flow_score = album_flow_score
+                
+            album_rating.save()
+            
+            title = review_form.cleaned_data['title']
+            body = review_form.cleaned_data['body']
+            
+            if album_review is None:
+                album_review = Album_Review(
+                    username = request.user,
+                    album_id = album,
+                    rating_id = album_rating,
+                    title = title,
+                    body = body
+                )
+            else:
+                album_review.rating_id = album_rating
+                album_review.title = title
+                album_review.body = body
+                
+            album_review.save()
+                
+            return redirect('albumReviewPage', review_id=album_review.review_id)
+    
+    else:
+        if album_rating is None:
+            rating_form = AlbumRatingForm()
+        else:
+            rating_form = AlbumRatingForm(
+                initial = {
+                    'originality_score': album_rating.originality_score,
+                    'lyric_score': album_rating.lyric_score,
+                    'vibe_score': album_rating.vibe_score,
+                    'instrumental_score': album_rating.instrumental_score,
+                    'album_flow_score': album_rating.album_flow_score
+                }
+            )
+        if album_review is None:
+            review_form = AlbumReviewForm(auto_id=True)
+        else:
+            review_form = AlbumReviewForm(
+                auto_id = True,
+                initial = {
+                    'title': album_review.title,
+                    'body': album_review.body
+                }
+            )
+    
     template = loader.get_template('giveAlbumReview.html')
-    context = {}
+    context = {
+        'album': album,
+        'rating_form': rating_form,
+        'review_form': review_form
+    }
     return HttpResponse(template.render(context, request))
 
 
@@ -344,9 +737,52 @@ def songReview(request, review_id):
              F('rating_id__instrumental_score')) / 4.0
     )[0]
     
+    if review.voted_users.filter(username=request.user).exists():
+        vote_type = review.upvotes_downvotes_song_review_set.get(username=request.user).vote_type
+    else:
+        vote_type = None
+        
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST, auto_id=True)
+        if comment_form.is_valid():
+            body = comment_form.cleaned_data['body']
+            comment = Song_Review_Comment(
+                review_id = review,
+                username = request.user,
+                body = body
+            )
+            comment.save()
+            return redirect('songReviewPage', review_id=review_id)
+    else:
+        comment_form = CommentForm(auto_id=True)
+    
+    comments = review.comments.annotate(
+        vote_type = Case(
+            When(
+                Exists(
+                    Upvotes_Downvotes_Song_Review_Comment.objects.filter(
+                        comment_id=OuterRef('comment_id'),
+                        username=request.user
+                    )
+                ),
+                then=Subquery(
+                    Upvotes_Downvotes_Song_Review_Comment.objects.filter(
+                        comment_id=OuterRef('comment_id'),
+                        username=request.user
+                    ).values('vote_type')[:1]
+                )
+            ),
+            default=Value(None),
+            output_field=BooleanField()
+        )
+    )
+    
     template = loader.get_template('songReview.html')
     context = {
-        'review': review
+        'review': review,
+        'comment_form': comment_form,
+        'comments': comments,
+        'vote_type': vote_type
     }
     return HttpResponse(template.render(context, request))
 
@@ -362,9 +798,52 @@ def albumReview(request, review_id):
              F('rating_id__album_flow_score')) / 5.0
     )[0]
     
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST, auto_id=True)
+        if comment_form.is_valid():
+            body = comment_form.cleaned_data['body']
+            comment = Album_Review_Comment(
+                review_id = review,
+                username = request.user,
+                body = body
+            )
+            comment.save()
+            return redirect('albumReviewPage', review_id=review_id)
+    else:
+        comment_form = CommentForm(auto_id=True)    
+    
+    comments = review.comments.annotate(
+        vote_type = Case(
+            When(
+                Exists(
+                    Upvotes_Downvotes_Album_Review_Comment.objects.filter(
+                        comment_id=OuterRef('comment_id'),
+                        username=request.user
+                    )
+                ),
+                then=Subquery(
+                    Upvotes_Downvotes_Album_Review_Comment.objects.filter(
+                        comment_id=OuterRef('comment_id'),
+                        username=request.user
+                    ).values('vote_type')[:1]
+                )
+            ),
+            default=Value(None),
+            output_field=BooleanField()
+        )
+    )
+    
+    if review.voted_users.filter(username=request.user).exists():
+        vote_type = review.upvotes_downvotes_album_review_set.get(username=request.user).vote_type
+    else:
+        vote_type = None
+    
     template = loader.get_template('albumReview.html')
     context = {
-        'review': review
+        'review': review,
+        'comment_form': comment_form,
+        'comments': comments,
+        'vote_type': vote_type
     }
     return HttpResponse(template.render(context, request))
 
@@ -374,6 +853,265 @@ def search(request):
     template = loader.get_template('search.html')
     context = {}
     return HttpResponse(template.render(context, request))
+
+
+@login_required
+def upvoteSongReview(request, review_id):
+    review = Song_Review.objects.get(review_id=review_id)
+    
+    if review.voted_users.filter(username=request.user).exists():
+        upvotes_downvotes_song_review = review.upvotes_downvotes_song_review_set.get(username=request.user)
+        if upvotes_downvotes_song_review.vote_type == False:
+            review.downvotes -= 1
+            review.upvotes += 1
+            review.save()
+            
+            upvotes_downvotes_song_review.vote_type = True
+            upvotes_downvotes_song_review.save()
+        else:
+            review.upvotes -= 1
+            review.save()
+            upvotes_downvotes_song_review.delete()
+    else:
+        review.upvotes += 1
+        review.save()
+        
+        upvotes_downvotes_song_review = Upvotes_Downvotes_Song_Review(
+            username = request.user,
+            review_id = review,
+            vote_type = True
+        )
+        upvotes_downvotes_song_review.save()
+    
+    prev = request.POST.get('prev', '/')
+    return redirect(prev)
+
+@login_required
+def downvoteSongReview(request, review_id):
+    review = Song_Review.objects.get(review_id=review_id)
+    
+    if review.voted_users.filter(username=request.user).exists():
+        upvotes_downvotes_song_review = review.upvotes_downvotes_song_review_set.get(username=request.user)
+        if upvotes_downvotes_song_review.vote_type == True:
+            review.upvotes -= 1
+            review.downvotes += 1
+            review.save()
+            
+            upvotes_downvotes_song_review.vote_type = False
+            upvotes_downvotes_song_review.save()
+        else:
+            review.downvotes -= 1
+            review.save()
+            upvotes_downvotes_song_review.delete()
+    else:
+        review.downvotes += 1
+        review.save()
+        
+        upvotes_downvotes_song_review = Upvotes_Downvotes_Song_Review(
+            username = request.user,
+            review_id = review,
+            vote_type = False
+        )
+        upvotes_downvotes_song_review.save()
+    
+    prev = request.POST.get('prev', '/')
+    return redirect(prev)
+
+
+@login_required
+def upvoteAlbumReview(request, review_id):
+    review = Album_Review.objects.get(review_id=review_id)
+    
+    if review.voted_users.filter(username=request.user).exists():
+        upvotes_downvotes_album_review = review.upvotes_downvotes_album_review_set.get(username=request.user)
+        if upvotes_downvotes_album_review.vote_type == False:
+            review.downvotes -= 1
+            review.upvotes += 1
+            review.save()
+            
+            upvotes_downvotes_album_review.vote_type = True
+            upvotes_downvotes_album_review.save()
+        else:
+            review.upvotes -= 1
+            review.save()
+            upvotes_downvotes_album_review.delete()
+    else:
+        review.upvotes += 1
+        review.save()
+        
+        upvotes_downvotes_album_review = Upvotes_Downvotes_Album_Review(
+            username = request.user,
+            review_id = review,
+            vote_type = True
+        )
+        upvotes_downvotes_album_review.save()
+    
+    prev = request.POST.get('prev', '/')
+    return redirect(prev)
+
+
+@login_required
+def downvoteAlbumReview(request, review_id):
+    review = Album_Review.objects.get(review_id=review_id)
+    
+    if review.voted_users.filter(username=request.user).exists():
+        upvotes_downvotes_album_review = review.upvotes_downvotes_album_review_set.get(username=request.user)
+        if upvotes_downvotes_album_review.vote_type == True:
+            review.upvotes -= 1
+            review.downvotes += 1
+            review.save()
+            
+            upvotes_downvotes_album_review.vote_type = False
+            upvotes_downvotes_album_review.save()
+        else:
+            review.downvotes -= 1
+            review.save()
+            upvotes_downvotes_album_review.delete()
+    else:
+        review.downvotes += 1
+        review.save()
+        
+        upvotes_downvotes_album_review = Upvotes_Downvotes_Album_Review(
+            username = request.user,
+            review_id = review,
+            vote_type = False
+        )
+        upvotes_downvotes_album_review.save()
+    
+    prev = request.POST.get('prev', '/')
+    return redirect(prev)
+
+
+@login_required
+def upvoteSongReviewComment(request, review_id, comment_id):
+    review = Song_Review.objects.get(review_id=review_id)
+    comment = Song_Review_Comment.objects.get(comment_id=comment_id)
+    
+    if comment.voted_users.filter(username=request.user).exists():
+        upvotes_downvotes_song_review_comment = comment.upvotes_downvotes_song_review_comment_set.get(username=request.user)
+        if upvotes_downvotes_song_review_comment.vote_type == False:
+            comment.downvotes -= 1
+            comment.upvotes += 1
+            comment.save()
+            
+            upvotes_downvotes_song_review_comment.vote_type = True
+            upvotes_downvotes_song_review_comment.save()
+        else:
+            comment.upvotes -= 1
+            comment.save()
+            upvotes_downvotes_song_review_comment.delete()
+    else:
+        comment.upvotes += 1
+        comment.save()
+        
+        upvotes_downvotes_song_review_comment = Upvotes_Downvotes_Song_Review_Comment(
+            username = request.user,
+            comment_id = comment,
+            vote_type = True
+        )
+        upvotes_downvotes_song_review_comment.save()
+    
+    prev = request.POST.get('prev', '/')
+    return redirect(prev)
+
+
+@login_required
+def downvoteSongReviewComment(request, review_id, comment_id):
+    review = Song_Review.objects.get(review_id=review_id)
+    comment = Song_Review_Comment.objects.get(comment_id=comment_id)
+    
+    if comment.voted_users.filter(username=request.user).exists():
+        upvotes_downvotes_song_review_comment = comment.upvotes_downvotes_song_review_comment_set.get(username=request.user)
+        if upvotes_downvotes_song_review_comment.vote_type == True:
+            comment.upvotes -= 1
+            comment.downvotes += 1
+            comment.save()
+            
+            upvotes_downvotes_song_review_comment.vote_type = False
+            upvotes_downvotes_song_review_comment.save()
+        else:
+            comment.downvotes -= 1
+            comment.save()
+            upvotes_downvotes_song_review_comment.delete()
+    else:
+        comment.downvotes += 1
+        comment.save()
+        
+        upvotes_downvotes_song_review_comment = Upvotes_Downvotes_Song_Review_Comment(
+            username = request.user,
+            comment_id = comment,
+            vote_type = False
+        )
+        upvotes_downvotes_song_review_comment.save()
+    
+    prev = request.POST.get('prev', '/')
+    return redirect(prev)
+
+
+@login_required
+def upvoteAlbumReviewComment(request, review_id, comment_id):
+    review = Album_Review.objects.get(review_id=review_id)
+    comment = Album_Review_Comment.objects.get(comment_id=comment_id)
+    
+    if comment.voted_users.filter(username=request.user).exists():
+        upvotes_downvotes_album_review_comment = comment.upvotes_downvotes_album_review_comment_set.get(username=request.user)
+        if upvotes_downvotes_album_review_comment.vote_type == False:
+            comment.downvotes -= 1
+            comment.upvotes += 1
+            comment.save()
+            
+            upvotes_downvotes_album_review_comment.vote_type = True
+            upvotes_downvotes_album_review_comment.save()
+        else:
+            comment.upvotes -= 1
+            comment.save()
+            upvotes_downvotes_album_review_comment.delete()
+    else:
+        comment.upvotes += 1
+        comment.save()
+        
+        upvotes_downvotes_album_review_comment = Upvotes_Downvotes_Album_Review_Comment(
+            username = request.user,
+            comment_id = comment,
+            vote_type = True
+        )
+        upvotes_downvotes_album_review_comment.save()
+    
+    prev = request.POST.get('prev', '/')
+    return redirect(prev)
+
+
+@login_required
+def downvoteAlbumReviewComment(request, review_id, comment_id):
+    review = Album_Review.objects.get(review_id=review_id)
+    comment = Album_Review_Comment.objects.get(comment_id=comment_id)
+    
+    if comment.voted_users.filter(username=request.user).exists():
+        upvotes_downvotes_album_review_comment = comment.upvotes_downvotes_album_review_comment_set.get(username=request.user)
+        if upvotes_downvotes_album_review_comment.vote_type == True:
+            comment.upvotes -= 1
+            comment.downvotes += 1
+            comment.save()
+            
+            upvotes_downvotes_album_review_comment.vote_type = False
+            upvotes_downvotes_album_review_comment.save()
+        else:
+            comment.downvotes -= 1
+            comment.save()
+            upvotes_downvotes_album_review_comment.delete()
+    else:
+        comment.downvotes += 1
+        comment.save()
+        
+        upvotes_downvotes_album_review_comment = Upvotes_Downvotes_Album_Review_Comment(
+            username = request.user,
+            comment_id = comment,
+            vote_type = False
+        )
+        upvotes_downvotes_album_review_comment.save()
+    
+    prev = request.POST.get('prev', '/')
+    return redirect(prev)
 
 
 def register(request):

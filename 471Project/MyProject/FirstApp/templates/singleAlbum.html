@@ -178,8 +178,12 @@
         margin-block-end: 5px;
       }
       #downvotesLabel {
+        padding-left: 2%;
         margin-block: 5px;
       }
+      .votedOn {
+        font-weight: bold;
+      }  
       #songOnAlbumLink {
         color: black;
         text-decoration: none;
@@ -220,8 +224,8 @@
         {{ genre.get_genre_display }}{% if not forloop.last %}, {% endif %}
         {% endfor %}
       </p>
-      <button class="Rating">Give Rating</button>
-      <button class="Review">Give Review</button>
+      <a href="{% url 'giveAlbumRating' album.album_id %}"><button class="Rating">Give Rating</button></a>
+      <a href="{% url 'giveAlbumReview' album.album_id %}"><button class="Review">Give Review</button></a>
     </div>
     <h2 class="songOnAlbum">Songs On Album:</h2>
     {% for song in songs %}
@@ -244,10 +248,22 @@
         <p id="reviewBody">
           {{ review.body }}
         </p>
-        <label id="upvotesLabel">Upvotes: {{ review.upvotes }}</label>
-        <button id="upButton" type="button">👍</button>
-        <label id="downvotesLabel">Downvotes: {{ review.downvotes }}</label>
-        <button id="downButton" type="button">👎</button>
+        <form method="post" action="{% url 'upvoteAlbumReview' review.review_id %}">
+          {% csrf_token %}
+          <label id="upvotesLabel" {% if review.vote_type is True %} class="votedOn" {% endif %}>
+            Upvotes: {{ review.upvotes }}
+          </label>
+          <input type="hidden" name="prev" value="{{ request.path }}">
+          <button id="upButton" type="submit">👍</button>
+        </form>
+        <form method="post" action="{% url 'downvoteAlbumReview' review.review_id %}">
+          {% csrf_token %}
+          <label id="downvotesLabel" {% if review.vote_type is False %} class="votedOn" {% endif %}>
+            Downvotes: {{ review.downvotes }}
+          </label>
+          <input type="hidden" name="prev" value="{{ request.path }}">
+          <button id="downButton" type="submit">👎</button>
+        </form>
       </article>
     </div>
     <br />
