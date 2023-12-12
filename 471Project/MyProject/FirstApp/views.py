@@ -798,6 +798,20 @@ def albumReview(request, review_id):
              F('rating_id__album_flow_score')) / 5.0
     )[0]
     
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST, auto_id=True)
+        if comment_form.is_valid():
+            body = comment_form.cleaned_data['body']
+            comment = Album_Review_Comment(
+                review_id = review,
+                username = request.user,
+                body = body
+            )
+            comment.save()
+            return redirect('albumReviewPage', review_id=review_id)
+    else:
+        comment_form = CommentForm(auto_id=True)    
+    
     comments = review.comments.annotate(
         vote_type = Case(
             When(
@@ -827,6 +841,7 @@ def albumReview(request, review_id):
     template = loader.get_template('albumReview.html')
     context = {
         'review': review,
+        'comment_form': comment_form,
         'comments': comments,
         'vote_type': vote_type
     }

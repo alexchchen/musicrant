@@ -73,7 +73,7 @@
             #commentForm{
                 padding-left: 170px;
             }
-            #wrComment{
+            #body {
                 resize: none;
                 width: 97.5%;
                 padding-right: 2%;
@@ -159,11 +159,11 @@
         <h3 id="commentsHeading">
             Comments
         </h3>
-        <form action="" id="commentForm">
+        <form action="" method="post" id="commentForm">
+            {% csrf_token %}
             <ul id="formList">
                 <li>
-                    <textarea name="writeComment" placeholder="Add a comment..." id="wrComment"></textarea>
-
+                    {{ comment_form.body }}
                 </li>
                 <li>
                     <input type="submit" name="submit" id="submit" value="Post">
