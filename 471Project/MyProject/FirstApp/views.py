@@ -99,7 +99,7 @@ def topArtistsPage(request):
              F('songs__ratings__vibe_score') +
              F('songs__ratings__instrumental_score')) / 4 
         )
-    ).order_by('-overall_score')[:10]
+    ).order_by('-overall_score')[:50]
     template = loader.get_template('topArtists.html')
     context = {
         'artists': artists
@@ -314,7 +314,7 @@ def topAlbumsPage(request):
              F('ratings__instrumental_score') +
              F('ratings__album_flow_score')) / 5
         )
-    ).order_by('-overall_score')[:10]
+    ).order_by('-overall_score')[:50]
     artists = Artist.objects.all()
     producers = Producer.objects.all()
     template = loader.get_template('topAlbums.html')
@@ -335,7 +335,7 @@ def topSongsPage(request):
              F('ratings__vibe_score') +
              F('ratings__instrumental_score')) / 4
         )
-    ).order_by('-overall_score')[:10]
+    ).order_by('-overall_score')[:50]
     artists = Artist.objects.all()
     producers = Producer.objects.all()
     template = loader.get_template('topSongs.html')
