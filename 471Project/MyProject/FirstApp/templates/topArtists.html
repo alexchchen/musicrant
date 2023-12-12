@@ -59,7 +59,7 @@
         <p class="ArtistBio">{{ artist.bio }}</p>
         <p class="GenreParagraph">
           Genres: 
-          {% for genre in artist.artist_genre_set.all %} 
+          {% for genre in artist.genres.all %} 
             {{ genre.get_genre_display }}{% if not forloop.last %}, {% endif %}
           {% endfor %}
         </p>
