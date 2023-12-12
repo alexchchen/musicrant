@@ -164,10 +164,6 @@
               <a href="{% url 'producerPage' producer.producer_id %}" class="ProducerLink">{{ producer.name }}</a>
               {% if not forloop.last %}, {% endif %}
             {% endfor %}
-            {% for producer in song.album_id.producers.all %}
-              <a href="{% url 'producerPage' producer.producer_id %}" class="ProducerLink">{{ producer.name }}</a>
-              {% if not forloop.last %}, {% endif %}
-            {% endfor %}
           </p>
         </div>
       {% endfor %}
