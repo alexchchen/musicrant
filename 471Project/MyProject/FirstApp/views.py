@@ -11,16 +11,6 @@ from itertools import chain
 
 
 @login_required
-def profile(request, username):
-    user = User.objects.get(username=username)
-    template = loader.get_template('profile.html')
-    context = {
-        'user': user,
-    }
-    return HttpResponse(template.render(context, request))
-
-
-@login_required
 def homePage(request):
     song_reviews = Song_Review.objects.annotate(
         overall_score =
