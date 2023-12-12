@@ -27,7 +27,7 @@
       }
 
       #searchBox {
-        width: 230px;
+        width: 275px;
       }
 
       .searchField {
@@ -87,12 +87,13 @@
           <h1 id="headerTitle">Musicrant</h1>
         </a>
         <div class="searchField">
-          <form action="" , method="SEARCH">
-            <label id="searchText"> Search: </label>
+          <form method="get" action="{% url 'searchPage' %}">
+            {% csrf_token %}
+            <label id="searchText">Search: </label>
             <input
               id="searchBox"
               type="text"
-              name="Search: "
+              name="query"
               placeholder="Search for artists, albums, songs, and users"
             />
             <input type="submit" name="submit" value="🔎" />

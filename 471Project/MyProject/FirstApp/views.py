@@ -79,7 +79,7 @@ def homePage(request):
             default=Value(None),
             output_field=BooleanField()
         )
-    )
+    )        
     
     reviews = list(sorted(chain(song_reviews, album_reviews), key=lambda x: x.votes, reverse=True))
         
@@ -850,8 +850,22 @@ def albumReview(request, review_id):
 
 @login_required
 def search(request):
+    query = request.GET.get('query')
+    print(query)
+    
+    artists = Artist.objects.filter(Q(name__icontains=query))
+    albums = Album.objects.filter(Q(name__icontains=query))
+    songs = Song.objects.filter(Q(name__icontains=query))
+    users = User.objects.filter(Q(username__icontains=query))
+    
     template = loader.get_template('search.html')
-    return HttpResponse(template.render())
+    context = {
+        'artists': artists,
+        'albums': albums,
+        'songs': songs,
+        'users': users
+    }
+    return HttpResponse(template.render(context, request))
 
 
 @login_required
