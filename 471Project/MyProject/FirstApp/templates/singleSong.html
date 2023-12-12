@@ -169,6 +169,9 @@
       #downvotesLabel {
         margin-block: 5px;
       }
+      .votedOn {
+        font-weight: bold;
+      }      
       {% endblock %}
     </style>
   </head>
@@ -223,9 +226,13 @@
           <p id="reviewBody">
             {{ review.body }}
           </p>
-          <label id="upvotesLabel">Upvotes: {{ review.upvotes }}</label>
+          <label id="upvotesLabel" {% if review.vote_type is True %} class="votedOn" {% endif %}>
+            Upvotes: {{ review.upvotes }}
+          </label>
           <button id="upButton" type="button">👍</button>
-          <label id="downvotesLabel">Downvotes: {{ review.downvotes }}</label>
+          <label id="downvotesLabel" {% if review.vote_type is False %} class="votedOn" {% endif %}>
+            Downvotes: {{ review.downvotes }}
+          </label>
           <button id="downButton" type="button">👎</button>
         </article>
       </div>

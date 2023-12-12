@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from django.http import HttpResponse
 from django.template import loader
-from django.db.models import Avg
+from django.db.models import Avg, Case, When, Exists, OuterRef, Value, BooleanField, Subquery
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
@@ -371,7 +371,26 @@ def singleSongPage(request, song_id):
              F('rating_id__instrumental_score')) / 4.0 
     ).annotate(
         votes = F('upvotes') - F('downvotes')
-    ).order_by('-votes')[:50]
+    ).order_by('-votes')[:50].annotate(
+        vote_type = Case(
+            When(
+                Exists(
+                    Upvotes_Downvotes_Song_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    )
+                ),
+                then=Subquery(
+                    Upvotes_Downvotes_Song_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    ).values('vote_type')[:1]
+                )
+            ),
+            default=Value(None),
+            output_field=BooleanField()
+        )
+    )
  
     template = loader.get_template('singleSong.html')
     context = {
