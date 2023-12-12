@@ -58,6 +58,12 @@
             #upvotesLabel{
                 padding-left: 170px;
             }
+            #downvotesLabel{
+                padding-left: 170px;
+            }
+            .votedOn {
+                font-weight: bold;
+            }
             #scorePara{
                 padding-left: 170px;
             }
@@ -131,10 +137,20 @@
         <p id="reviewBody">
             {{ review.body }}
         </p>
-        <label id="upvotesLabel">Upvotes: {{ review.upvotes }}</label>
-        <button id="upButton" type="button">👍</button>
-        <label id="downvotesLabel">Downvotes: {{ review.downvotes }}</label>
-        <button id="downButton" type="button">👎</button>
+        <form method="post" action="{% url 'upvoteAlbumReview' review.review_id %}">
+            {% csrf_token %}
+            <label id="upvotesLabel" {% if vote_type is True %} class="votedOn" {% endif %}>
+                Upvotes: {{ review.upvotes }}
+            </label>
+            <button id="upButton" type="submit">👍</button>
+        </form>
+        <form method="post" action="{% url 'downvoteAlbumReview' review.review_id %}">
+            {% csrf_token %}
+            <label id="downvotesLabel" {% if vote_type is False %} class="votedOn" {% endif %}>
+                Downvotes: {{ review.downvotes }}
+            </label>
+            <button id="downButton" type="submit">👎</button>
+        </form>
         <h3 id="commentsHeading">
             Comments
         </h3>

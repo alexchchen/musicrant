@@ -433,7 +433,26 @@ def singleAlbumPage(request, album_id):
          F('rating_id__instrumental_score')) / 5.0
     ).annotate(
         votes = F('upvotes') - F('downvotes')
-    ).order_by('-votes')[:50]
+    ).order_by('-votes')[:50].annotate(
+        vote_type = Case(
+            When(
+                Exists(
+                    Upvotes_Downvotes_Album_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    )
+                ),
+                then=Subquery(
+                    Upvotes_Downvotes_Album_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    ).values('vote_type')[:1]
+                )
+            ),
+            default=Value(None),
+            output_field=BooleanField()
+        )
+    )
     
     template = loader.get_template('singleAlbum.html')
     context = {
@@ -666,9 +685,15 @@ def albumReview(request, review_id):
              F('rating_id__album_flow_score')) / 5.0
     )[0]
     
+    if review.voted_users.filter(username=request.user).exists():
+        vote_type = review.upvotes_downvotes_album_review_set.get(username=request.user).vote_type
+    else:
+        vote_type = None
+    
     template = loader.get_template('albumReview.html')
     context = {
-        'review': review
+        'review': review,
+        'vote_type': vote_type
     }
     return HttpResponse(template.render(context, request))
 
@@ -742,12 +767,64 @@ def downvoteSongReview(request, review_id):
 
 @login_required
 def upvoteAlbumReview(request, review_id):
-    pass
+    review = Album_Review.objects.get(review_id=review_id)
+    
+    if review.voted_users.filter(username=request.user).exists():
+        upvotes_downvotes_album_review = review.upvotes_downvotes_album_review_set.get(username=request.user)
+        if upvotes_downvotes_album_review.vote_type == False:
+            review.downvotes -= 1
+            review.upvotes += 1
+            review.save()
+            
+            upvotes_downvotes_album_review.vote_type = True
+            upvotes_downvotes_album_review.save()
+        else:
+            review.upvotes -= 1
+            review.save()
+            upvotes_downvotes_album_review.delete()
+    else:
+        review.upvotes += 1
+        review.save()
+        
+        upvotes_downvotes_album_review = Upvotes_Downvotes_Album_Review(
+            username = request.user,
+            review_id = review,
+            vote_type = True
+        )
+        upvotes_downvotes_album_review.save()
+    
+    return redirect('albumReviewPage', review_id)
 
 
 @login_required
 def downvoteAlbumReview(request, review_id):
-    pass
+    review = Album_Review.objects.get(review_id=review_id)
+    
+    if review.voted_users.filter(username=request.user).exists():
+        upvotes_downvotes_album_review = review.upvotes_downvotes_album_review_set.get(username=request.user)
+        if upvotes_downvotes_album_review.vote_type == True:
+            review.upvotes -= 1
+            review.downvotes += 1
+            review.save()
+            
+            upvotes_downvotes_album_review.vote_type = False
+            upvotes_downvotes_album_review.save()
+        else:
+            review.downvotes -= 1
+            review.save()
+            upvotes_downvotes_album_review.delete()
+    else:
+        review.downvotes += 1
+        review.save()
+        
+        upvotes_downvotes_album_review = Upvotes_Downvotes_Album_Review(
+            username = request.user,
+            review_id = review,
+            vote_type = False
+        )
+        upvotes_downvotes_album_review.save()
+    
+    return redirect('albumReviewPage', review_id)
 
 
 @login_required
