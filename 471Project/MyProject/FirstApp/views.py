@@ -623,9 +623,15 @@ def songReview(request, review_id):
              F('rating_id__instrumental_score')) / 4.0
     )[0]
     
+    if review.voted_users.filter(username=request.user).exists():
+        vote_type = review.upvotes_downvotes_song_review_set.get(username=request.user).vote_type
+    else:
+        vote_type = None
+    
     template = loader.get_template('songReview.html')
     context = {
-        'review': review
+        'review': review,
+        'vote_type': vote_type
     }
     return HttpResponse(template.render(context, request))
 
@@ -652,6 +658,97 @@ def albumReview(request, review_id):
 def search(request):
     template = loader.get_template('search.html')
     return HttpResponse(template.render())
+
+
+@login_required
+def upvoteSongReview(request, review_id):
+    review = Song_Review.objects.get(review_id=review_id)
+    
+    if review.voted_users.filter(username=request.user).exists():
+        upvotes_downvotes_song_review = review.upvotes_downvotes_song_review_set.get(username=request.user)
+        if upvotes_downvotes_song_review.vote_type == False:
+            review.downvotes -= 1
+            review.upvotes += 1
+            review.save()
+            
+            upvotes_downvotes_song_review.vote_type = True
+            upvotes_downvotes_song_review.save()
+        else:
+            review.upvotes -= 1
+            review.save()
+            upvotes_downvotes_song_review.delete()
+    else:
+        review.upvotes += 1
+        review.save()
+        
+        upvotes_downvotes_song_review = Upvotes_Downvotes_Song_Review(
+            username = request.user,
+            review_id = review,
+            vote_type = True
+        )
+        upvotes_downvotes_song_review.save()
+    
+    return redirect('songReviewPage', review_id)
+
+@login_required
+def downvoteSongReview(request, review_id):
+    review = Song_Review.objects.get(review_id=review_id)
+    
+    if review.voted_users.filter(username=request.user).exists():
+        upvotes_downvotes_song_review = review.upvotes_downvotes_song_review_set.get(username=request.user)
+        if upvotes_downvotes_song_review.vote_type == True:
+            review.upvotes -= 1
+            review.downvotes += 1
+            review.save()
+            
+            upvotes_downvotes_song_review.vote_type = False
+            upvotes_downvotes_song_review.save()
+        else:
+            review.downvotes -= 1
+            review.save()
+            upvotes_downvotes_song_review.delete()
+    else:
+        review.downvotes += 1
+        review.save()
+        
+        upvotes_downvotes_song_review = Upvotes_Downvotes_Song_Review(
+            username = request.user,
+            review_id = review,
+            vote_type = False
+        )
+        upvotes_downvotes_song_review.save()
+    
+    return redirect('songReviewPage', review_id)
+
+
+@login_required
+def upvoteAlbumReview(request, review_id):
+    pass
+
+
+@login_required
+def downvoteAlbumReview(request, review_id):
+    pass
+
+
+@login_required
+def upvoteSongReviewComment(request, review_id, comment_id):
+    pass
+
+
+@login_required
+def downvoteSongReviewComment(request, review_id, comment_id):
+    pass
+
+
+@login_required
+def upvoteAlbumReviewComment(request, review_id, comment_id):
+    pass
+
+
+@login_required
+def downvoteAlbumReviewComment(request, review_id, comment_id):
+    pass
 
 
 def register(request):

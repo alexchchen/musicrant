@@ -21,5 +21,13 @@ urlpatterns = [
     path('search/', views.search, name='searchPage'),
     path('register/', views.register, name='registerPage'),
     path('songReview/<int:review_id>', views.songReview, name='songReviewPage'),
-    path('albumReview/<int:review_id>', views.albumReview, name='albumReviewPage')
+    path('albumReview/<int:review_id>', views.albumReview, name='albumReviewPage'),
+    path('songReview/<int:review_id>/upvote', views.upvoteSongReview, name='upvoteSongReview'),
+    path('songReview/<int:review_id>/downvote', views.downvoteSongReview, name='downvoteSongReview'),
+    path('albumReview/<int:review_id>/upvote', views.upvoteAlbumReview, name='upvoteAlbumReview'),
+    path('albumReview/<int:review_id>/downvote', views.downvoteAlbumReview, name='downvoteAlbumReview'),
+    path('songReview/<int:review_id>/comment/<int:comment_id>/upvote', views.upvoteSongReviewComment, name='upvoteSongReviewComment'),
+    path('songReview/<int:review_id>/comment/<int:commend_id>/downvote', views.downvoteSongReviewComment, name='downvoteSongReviewComment'),
+    path('albumReview/<int:review_id>/comment/<int:comment_id>/upvote', views.upvoteAlbumReviewComment, name='upvoteAlbumReviewComment'),
+    path('albumReview/<int:review_id>/comment/<int:commend_id>/downvote', views.downvoteAlbumReviewComment, name='downvoteAlbumReviewComment'),
 ]
