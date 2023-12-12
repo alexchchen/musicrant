@@ -142,6 +142,7 @@
             <label id="upvotesLabel" {% if vote_type is True %} class="votedOn" {% endif %}>
                 Upvotes: {{ review.upvotes }}
             </label>
+            <input type="hidden" name="prev" value="{{ request.path }}">
             <button id="upButton" type="submit">👍</button>
         </form>
         <form method="post" action="{% url 'downvoteAlbumReview' review.review_id %}">
@@ -149,6 +150,7 @@
             <label id="downvotesLabel" {% if vote_type is False %} class="votedOn" {% endif %}>
                 Downvotes: {{ review.downvotes }}
             </label>
+            <input type="hidden" name="prev" value="{{ request.path }}">
             <button id="downButton" type="submit">👎</button>
         </form>
         <h3 id="commentsHeading">

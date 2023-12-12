@@ -732,7 +732,8 @@ def upvoteSongReview(request, review_id):
         )
         upvotes_downvotes_song_review.save()
     
-    return redirect('songReviewPage', review_id)
+    prev = request.POST.get('prev', '/')
+    return redirect(prev)
 
 @login_required
 def downvoteSongReview(request, review_id):
@@ -762,7 +763,8 @@ def downvoteSongReview(request, review_id):
         )
         upvotes_downvotes_song_review.save()
     
-    return redirect('songReviewPage', review_id)
+    prev = request.POST.get('prev', '/')
+    return redirect(prev)
 
 
 @login_required
@@ -793,7 +795,8 @@ def upvoteAlbumReview(request, review_id):
         )
         upvotes_downvotes_album_review.save()
     
-    return redirect('albumReviewPage', review_id)
+    prev = request.POST.get('prev', '/')
+    return redirect(prev)
 
 
 @login_required
@@ -824,7 +827,8 @@ def downvoteAlbumReview(request, review_id):
         )
         upvotes_downvotes_album_review.save()
     
-    return redirect('albumReviewPage', review_id)
+    prev = request.POST.get('prev', '/')
+    return redirect(prev)
 
 
 @login_required
