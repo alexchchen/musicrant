@@ -27,7 +27,7 @@ urlpatterns = [
     path('albumReview/<int:review_id>/upvote', views.upvoteAlbumReview, name='upvoteAlbumReview'),
     path('albumReview/<int:review_id>/downvote', views.downvoteAlbumReview, name='downvoteAlbumReview'),
     path('songReview/<int:review_id>/comment/<int:comment_id>/upvote', views.upvoteSongReviewComment, name='upvoteSongReviewComment'),
-    path('songReview/<int:review_id>/comment/<int:commend_id>/downvote', views.downvoteSongReviewComment, name='downvoteSongReviewComment'),
+    path('songReview/<int:review_id>/comment/<int:comment_id>/downvote', views.downvoteSongReviewComment, name='downvoteSongReviewComment'),
     path('albumReview/<int:review_id>/comment/<int:comment_id>/upvote', views.upvoteAlbumReviewComment, name='upvoteAlbumReviewComment'),
-    path('albumReview/<int:review_id>/comment/<int:commend_id>/downvote', views.downvoteAlbumReviewComment, name='downvoteAlbumReviewComment'),
+    path('albumReview/<int:review_id>/comment/<int:comment_id>/downvote', views.downvoteAlbumReviewComment, name='downvoteAlbumReviewComment'),
 ]

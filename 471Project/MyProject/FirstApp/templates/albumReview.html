@@ -110,6 +110,9 @@
             #upvotesLabelComment{
                 padding-left: 5px;
             }
+            #downvotesLabelComment{
+                padding-left: 5px;
+            }
             {% endblock %}
         </style>
     </head>
@@ -167,17 +170,29 @@
                 </li>
             </ul>
         </form>
-        {% for comment in review.comments.all %}
+        {% for comment in comments %}
             <div class="comments">
                 <h4 id="commentorName">
                     <a href="{% url 'userPage' comment.username.username %}" id="commentorLink">{{ comment.username.username }}</a>
                 </h4>
                 <p id="commentDatePosted">{{ comment.date_posted }}</p>
                 <p id="commentBody">{{ comment.body }}</p>
-                <label id="upvotesLabelComment">Upvotes: {{ comment.upvotes }}</label>
-                <button id="upButtonComment" type="button">👍</button>
-                <label id="downvotesLabelComment">Downvotes: {{ comment.downvotes }}</label>
-                <button id="downButtonComment" type="button">👎</button>
+                <form method="post" action="{% url 'upvoteAlbumReviewComment' review.review_id comment.comment_id %}">
+                    {% csrf_token %}
+                    <label id="upvotesLabelComment" {% if comment.vote_type is True %} class="votedOn" {% endif %}>
+                        Upvotes: {{ comment.upvotes }}
+                    </label>
+                    <input type="hidden" name="prev" value="{{ request.path }}">
+                    <button id="upButtonComment" type="submit">👍</button>
+                </form>
+                <form method="post" action="{% url 'downvoteAlbumReviewComment' review.review_id comment.comment_id %}">
+                    {% csrf_token %}
+                    <label id="downvotesLabelComment" {% if comment.vote_type is False %} class="votedOn" {% endif %}>
+                        Downvotes: {{ comment.downvotes }}
+                    </label>
+                    <input type="hidden" name="prev" value="{{ request.path }}">
+                    <button id="downButtonComment" type="submit">👎</button>
+                </form>    
             </div>
             <br>
         {% endfor %}
