@@ -4,7 +4,7 @@
 
 <html>
   <head>
-    <title>Single Album</title>
+    {% block title %}<title>Musicrant | Album: {{ album.name }}</title>{% endblock %}
     <style>
       {% block pageStyle %}
       .albumPageTitle {

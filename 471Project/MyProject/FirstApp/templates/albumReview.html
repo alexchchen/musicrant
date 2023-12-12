@@ -3,7 +3,7 @@
 
 <html>
     <head>
-        <title>Review</title>
+        {% block title %}<title>Musicrant | Review: {{ review.title }}</title>{% endblock %}
         <style>
             {% block pageStyle %}
             #datePosted {

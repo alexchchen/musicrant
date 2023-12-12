@@ -3,7 +3,7 @@
 
 <html>
     <head>
-        <title>Musicrant: producer page</title>
+        {% block title %}<title>Musicrant | Producer: {{ producer.name }}</title>{% endblock %}
         <style>
             {% block pageStyle %}
             .ArtistTitle {
