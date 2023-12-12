@@ -92,12 +92,12 @@
       }
       .Rating {
         font-size: 30px;
-        margin-left: 26%;
+        margin-left: 30%;
         margin-top: 2%;
       }
       .Review {
         font-size: 30px;
-        margin-left: 11%;
+        margin-left: 10%;
       }
       .GenreParagraph {
         font-size: 16px;
@@ -230,7 +230,7 @@
     <h2 class="songOnAlbum">Songs On Album:</h2>
     {% for song in songs %}
       <div class="songOnAlbum">
-        <a href="#" id="songOnAlbumLink">{{ song.name }}</a>
+        <a href="{% url 'singleSongPage' song.song_id %}" id="songOnAlbumLink">{{ song.name }}</a>
       </div>
     {% endfor %}
     <h2 class="allReviews">All Reviews:</h2>

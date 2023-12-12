@@ -131,7 +131,7 @@
         display: grid;
       }
       .ArtistLink2 {
-        margin-left: 30px;
+        margin-left: 40px;
         margin-top: 11px;
         font-size: 20px;
         color: black;
@@ -152,79 +152,25 @@
     </div>
     <br />
     <div class="songBlock">
-      <div class="singleSong">
-        <a href="#" class="SongLink">Song Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-      </div>
-      <div class="singleSong">
-        <a href="#" class="SongLink">Song Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-      </div>
-      <div class="singleSong">
-        <a href="#" class="SongLink">Song Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-      </div>
-      <div class="singleSong">
-        <a href="#" class="SongLink">Song Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-      </div>
-      <div class="singleSong">
-        <a href="#" class="SongLink">Song Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-      </div>
-      <div class="singleSong">
-        <a href="#" class="SongLink">Song Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-      </div>
-      <div class="singleSong">
-        <a href="#" class="SongLink">Song Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-      </div>
-      <div class="singleSong">
-        <a href="#" class="SongLink">Song Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-      </div>
-      <br />
+      {% for song in songs %}
+        <div class="singleSong">
+          <a href="{% url 'singleSongPage' song.song_id %}" class="SongLink">{{ song.name }}</a>
+          <p class="MadeBy">
+            Made By: <a href="{% url 'artistPage' song.artist_id.artist_id %}" class="ArtistLink">{{ song.artist_id.name }}</a>
+          </p>
+          <p class="ProducedBy">
+            Produced By: 
+            {% for producer in song.producers.all %}
+              <a href="{% url 'producerPage' producer.producer_id %}" class="ProducerLink">{{ producer.name }}</a>
+              {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+            {% for producer in song.album_id.producers.all %}
+              <a href="{% url 'producerPage' producer.producer_id %}" class="ProducerLink">{{ producer.name }}</a>
+              {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </p>
+        </div>
+      {% endfor %}
     </div>
     <br />
     <div class="secondLine">
@@ -234,33 +180,21 @@
     </div>
     <br />
     <div class="albumBlock">
-      <div class="singleAlbum">
-        <a href="#" class="albumLink">Album Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-      </div>
-      <div class="singleAlbum">
-        <a href="#" class="albumLink">Album Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-      </div>
-      <div class="singleAlbum">
-        <a href="#" class="albumLink">Album Name</a>
-        <p class="MadeBy">
-          Made By: <a href="#" class="ArtistLink">Artist Name</a>
-        </p>
-        <p class="ProducedBy">
-          Produced By: <a href="#" class="ProducerLink">Producer Name</a>
-        </p>
-      </div>
+      {% for album in albums %}
+        <div class="singleAlbum">
+          <a href="{% url 'singleAlbumPage' album.album_id %}" class="albumLink">{{ album.name }}</a>
+          <p class="MadeBy">
+            Made By: <a href="{% url 'artistPage' album.artist_id.artist_id %}" class="ArtistLink">{{ album.artist_id.name }}</a>
+          </p>
+          <p class="ProducedBy">
+            Produced By: 
+            {% for producer in album.producers.all %}
+              <a href="{% url 'producerPage' producer.producer_id %}" class="ProducerLink">{{ producer.name }}</a>
+              {% if not forloop.last %}, {% endif %}
+            {% endfor %}
+          </p>
+        </div>
+      {% endfor %}
     </div>
     <br />
     <div class="thirdLine">
@@ -270,38 +204,12 @@
     </div>
     <br />
     <div class="artistBlock">
-      <div>
-        <a href="#" class="ArtistLink2">Artist Name</a>
-      </div>
-      <br />
-      <div>
-        <a href="#" class="ArtistLink2">Artist Name</a>
-      </div>
-      <br />
-      <div>
-        <a href="#" class="ArtistLink2">Artist Name</a>
-      </div>
-      <br />
-      <div>
-        <a href="#" class="ArtistLink2">Artist Name</a>
-      </div>
-      <br />
-      <div>
-        <a href="#" class="ArtistLink2">Artist Name</a>
-      </div>
-      <br />
-      <div>
-        <a href="#" class="ArtistLink2">Artist Name</a>
-      </div>
-      <br />
-      <div>
-        <a href="#" class="ArtistLink2">Artist Name</a>
-      </div>
-      <br />
-      <div>
-        <a href="#" class="ArtistLink2">Artist Name</a>
-      </div>
-      <br />
+      {% for artist in artists %}
+        <div>
+          <a href="{% url 'artistPage' artist.artist_id %}" class="ArtistLink2">{{ artist.name }}</a>
+        </div>
+        <br />
+      {% endfor %}
     </div>
     {% endblock %}
   </body>
