@@ -321,7 +321,26 @@ def userPage(request, username):
              F('rating_id__instrumental_score')) / 4.0 
     ).annotate(
         votes = F('upvotes') - F('downvotes')
-    ).order_by('-votes')[:50]
+    ).order_by('-votes')[:50].annotate(
+        vote_type = Case(
+            When(
+                Exists(
+                    Upvotes_Downvotes_Song_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    )
+                ),
+                then=Subquery(
+                    Upvotes_Downvotes_Song_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    ).values('vote_type')[:1]
+                )
+            ),
+            default=Value(None),
+            output_field=BooleanField()
+        )
+    )
     
     album_reviews = Album_Review.objects.filter(username=user.id).annotate(
         overall_score =
@@ -332,7 +351,26 @@ def userPage(request, username):
              F('rating_id__album_flow_score')) / 5.0 
     ).annotate(
         votes = F('upvotes') - F('downvotes')
-    ).order_by('-votes')[:50]
+    ).order_by('-votes')[:50].annotate(
+        vote_type = Case(
+            When(
+                Exists(
+                    Upvotes_Downvotes_Album_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    )
+                ),
+                then=Subquery(
+                    Upvotes_Downvotes_Album_Review.objects.filter(
+                        review_id=OuterRef('review_id'),
+                        username=request.user
+                    ).values('vote_type')[:1]
+                )
+            ),
+            default=Value(None),
+            output_field=BooleanField()
+        )
+    )
     
     reviews = list(sorted(chain(song_reviews, album_reviews), key=lambda x: x.votes, reverse=True))    
     
