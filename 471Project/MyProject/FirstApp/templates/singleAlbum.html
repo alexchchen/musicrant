@@ -230,7 +230,7 @@
     <h2 class="songOnAlbum">Songs On Album:</h2>
     {% for song in songs %}
       <div class="songOnAlbum">
-        <a href="#" id="songOnAlbumLink">{{ song.name }}</a>
+        <a href="{% url 'singleSongPage' song.song_id %}" id="songOnAlbumLink">{{ song.name }}</a>
       </div>
     {% endfor %}
     <h2 class="allReviews">All Reviews:</h2>

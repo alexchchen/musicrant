@@ -182,15 +182,15 @@
     <div class="firstLine">
       <h1 class="dateReleased">Date Released: {{ song.date_released }}</h1>
       <h1 class="ArtistName">
-        Artist: <a href="#" id="artistLink">{{ song.artist_id.name }}</a>
+        Artist: <a href="{% url 'artistPage' song.artist_id.artist_id %}" id="artistLink">{{ song.artist_id.name }}</a>
       </h1>
       <h1 class="ProducerName">
         Producer:
         {% for producer in song.producers.all %}
-          <a href="#" id="producerLink">{{ producer.name }}</a>
+          <a href="{% url 'producerPage' producer.producer_id %}" id="producerLink">{{ producer.name }}</a>
         {% endfor %}
         {% for producer in song.album_id.producers.all %}
-          <a href="#" id="producerLink">{{ producer.name }}</a>
+          <a href="{% url 'producerPage' producer.producer_id %}" id="producerLink">{{ producer.name }}</a>
         {% endfor %}
       </h1>
       <h1 class="score">Score: {{ song.overall_score|floatformat:2 }} / 10</h1>
