@@ -84,8 +84,11 @@
       </table>
 
       <input class="SignIn" type="submit" value="Sign In">
-      <input class="Register" type="submit" value="Register">
       <input type="hidden" name="next" value="{{ next }}">
+    </form>
+
+    <form action="{% url 'registerPage' %}">
+      <input class="Register" type="submit" value="Register">
     </form>
 
     {# Assumes you set up the password_reset view in your URLconf #}
