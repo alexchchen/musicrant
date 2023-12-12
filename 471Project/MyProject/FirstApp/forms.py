@@ -59,3 +59,6 @@ class SongReviewForm(Form):
 class AlbumReviewForm(Form):
     title = forms.CharField(label="Title")
     body = forms.CharField(label="Body", widget=forms.Textarea)
+    
+class CommentForm(Form):
+    body = forms.CharField(label="Body", widget=forms.Textarea(attrs={'placeholder': 'Add a comment...'}))

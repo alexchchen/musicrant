@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .models import *
-from .forms import RegisterForm, SongRatingForm, AlbumRatingForm, SongReviewForm, AlbumReviewForm
+from .forms import RegisterForm, SongRatingForm, AlbumRatingForm, SongReviewForm, AlbumReviewForm, CommentForm
 from itertools import chain
 
 
@@ -737,6 +737,25 @@ def songReview(request, review_id):
              F('rating_id__instrumental_score')) / 4.0
     )[0]
     
+    if review.voted_users.filter(username=request.user).exists():
+        vote_type = review.upvotes_downvotes_song_review_set.get(username=request.user).vote_type
+    else:
+        vote_type = None
+        
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST, auto_id=True)
+        if comment_form.is_valid():
+            body = comment_form.cleaned_data['body']
+            comment = Song_Review_Comment(
+                review_id = review,
+                username = request.user,
+                body = body
+            )
+            comment.save()
+            return redirect('songReviewPage', review_id=review_id)
+    else:
+        comment_form = CommentForm(auto_id=True)
+    
     comments = review.comments.annotate(
         vote_type = Case(
             When(
@@ -758,14 +777,10 @@ def songReview(request, review_id):
         )
     )
     
-    if review.voted_users.filter(username=request.user).exists():
-        vote_type = review.upvotes_downvotes_song_review_set.get(username=request.user).vote_type
-    else:
-        vote_type = None
-    
     template = loader.get_template('songReview.html')
     context = {
         'review': review,
+        'comment_form': comment_form,
         'comments': comments,
         'vote_type': vote_type
     }
