@@ -13,3 +13,5 @@ Compile and run instructions (for Windows):
 Modifying data in the database:
 - The Django Admin page can be accessed at http://127.0.0.1:8000/admin. Login with username `admin` and password `admin`.
 - In the Django Admin page, any of the tables in our database can be modified by creating/editing/deleting entries.
+
+A database dump of the current state of the database is provided in a MySQL text file.
